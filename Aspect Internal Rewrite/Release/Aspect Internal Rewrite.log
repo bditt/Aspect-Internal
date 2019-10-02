@@ -1,0 +1,90 @@
+﻿F:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (Release\) contains files shared from another project (ImGui.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  main.cpp
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4962,1): warning C4005:  'DWRITE_E_FILEFORMAT': macro redefinition
+F:\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h(56407): message :  see previous definition of 'DWRITE_E_FILEFORMAT'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4967,1): warning C4005:  'DWRITE_E_UNEXPECTED': macro redefinition
+F:\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h(56416): message :  see previous definition of 'DWRITE_E_UNEXPECTED'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4972,1): warning C4005:  'DWRITE_E_NOFONT': macro redefinition
+F:\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h(56425): message :  see previous definition of 'DWRITE_E_NOFONT'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4978,1): warning C4005:  'DWRITE_E_FILENOTFOUND': macro redefinition
+F:\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h(56434): message :  see previous definition of 'DWRITE_E_FILENOTFOUND'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4983,1): warning C4005:  'DWRITE_E_FILEACCESS': macro redefinition
+F:\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h(56443): message :  see previous definition of 'DWRITE_E_FILEACCESS'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4988,1): warning C4005:  'DWRITE_E_FONTCOLLECTIONOBSOLETE': macro redefinition
+F:\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h(56452): message :  see previous definition of 'DWRITE_E_FONTCOLLECTIONOBSOLETE'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4993,1): warning C4005:  'DWRITE_E_ALREADYREGISTERED': macro redefinition
+F:\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h(56461): message :  see previous definition of 'DWRITE_E_ALREADYREGISTERED'
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\include\RBX.hpp(65,28): warning C4305:  'initializing': truncation from 'double' to 'float'
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\include\RBX.hpp(205,21): warning C4018:  '<': signed/unsigned mismatch
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\include\RBX.hpp(252,26): warning C4244:  '=': conversion from 'uint32_t' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\include\RBX.hpp(253,26): warning C4244:  '=': conversion from 'uint32_t' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\Security.hpp(146,22): warning C4018:  '<': signed/unsigned mismatch
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\Security.hpp(158,22): warning C4018:  '<': signed/unsigned mismatch
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(21,25): warning C4307:  '*': integral constant overflow
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(23,25): warning C4307:  '*': integral constant overflow
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(25,27): warning C4307:  '*': integral constant overflow
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(27,26): warning C4307:  '*': integral constant overflow
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(29,28): warning C4307:  '*': integral constant overflow
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(31,29): warning C4307:  '*': integral constant overflow
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(33,28): warning C4307:  '*': integral constant overflow
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(35,27): warning C4307:  '*': integral constant overflow
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(101,7): warning C4101:  'buffer': unreferenced local variable
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(131,131): warning C4191:  'reinterpret_cast': unsafe conversion from 'FARPROC' to 'RtlSetUnhandledExceptionFilterFn'
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(131,131): warning C4191:         Calling this function through the result pointer may cause your program to fail
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(412,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(416,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(420,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(424,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(428,37): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(432,37): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(436,37): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(440,37): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(444,32): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(448,32): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(452,32): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(456,32): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(460,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(464,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(468,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(472,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(524,34): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(528,25): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(532,29): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(619,19): warning C4244:  'initializing': conversion from 'float' to 'int', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(658,38): warning C4244:  '=': conversion from 'float' to 'LONG', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(659,34): warning C4244:  '=': conversion from 'float' to 'LONG', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(660,37): warning C4244:  '=': conversion from 'float' to 'LONG', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(661,39): warning C4244:  '=': conversion from 'float' to 'LONG', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(667,94): warning C4244:  'argument': conversion from 'LONG' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(667,77): warning C4244:  'argument': conversion from 'LONG' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(667,54): warning C4244:  'argument': conversion from 'LONG' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(667,38): warning C4244:  'argument': conversion from 'LONG' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(675,57): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(675,34): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(601,9): warning C4101:  'screenPos4': unreferenced local variable
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(720,23): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(721,23): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(813,21): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(842,23): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(843,23): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(909,23): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(909,14): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(916,22): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(917,22): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(932,36): warning C4244:  'argument': conversion from 'float' to 'DWORD', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(932,32): warning C4244:  'argument': conversion from 'float' to 'DWORD', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1055,29): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1055,19): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(968,12): warning C4101:  'screenPos2': unreferenced local variable
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1150,32): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1620,35): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1637,35): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1727,70): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1727,59): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1727,40): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1831,11): warning C4101:  'handle': unreferenced local variable
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(90): warning C4715:  'GetAimKey': not all control paths return a value
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\include\RBX.hpp(345): warning C4715:  'RBX::FindFirstChildOfClass': not all control paths return a value
+F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\include\RBX.hpp(326): warning C4715:  'RBX::FindFirstChild': not all control paths return a value
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Aspect Internal Rewrite.vcxproj -> F:\Source Codes\Aspect Internal Rewrite\Release\Aspect.dll

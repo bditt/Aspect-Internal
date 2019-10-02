@@ -1,0 +1,31 @@
+#pragma once
+#include <sol/sol.hpp>
+#include <Windows.h>
+#include <stdint.h>
+#include <gdiplus.h>
+//#include <d3d11.h>
+#include <d3d11_1.h>
+#include <dwrite.h>
+#include <dwmapi.h>
+#include <DirectXMath.h>
+#include <DirectXPackedVector.h>
+#include <d3dcompiler.h>
+#include <DirectXColors.h>
+#include <ImGui/imgui.h>
+#include <ImGui/imgui_impl_win32.h>
+#include <ImGui/imgui_impl_dx11.h>
+#include <mutex>
+#include <iostream>
+#include <vector>
+#include <exception>
+#include <memory>
+#include <sstream> 
+#include <fstream>
+#include <algorithm>
+#include <Psapi.h>
+#include <cstdint>
+#include "Memory.h"
+#include <DbgHelp.h>
+#include <discord_rpc.h>
+
+#pragma comment(lib, "dbghelp.lib")//
