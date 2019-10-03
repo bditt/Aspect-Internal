@@ -1,5 +1,5 @@
 #pragma once
-#include <sol/sol.hpp>
+#include <sol2/sol.hpp>
 #include <Windows.h>
 #include <stdint.h>
 #include <gdiplus.h>

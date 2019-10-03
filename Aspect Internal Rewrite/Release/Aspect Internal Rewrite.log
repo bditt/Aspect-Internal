@@ -1,90 +1,181 @@
-﻿F:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (Release\) contains files shared from another project (ImGui.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (Release\) contains files shared from another project (ImGui.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_dx11.cpp
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(12,1): warning C4005: 'DXGI_STATUS_OCCLUDED': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55840): message : see previous definition of 'DXGI_STATUS_OCCLUDED'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(13,1): warning C4005: 'DXGI_STATUS_CLIPPED': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55849): message : see previous definition of 'DXGI_STATUS_CLIPPED'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(14,1): warning C4005: 'DXGI_STATUS_NO_REDIRECTION': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55858): message : see previous definition of 'DXGI_STATUS_NO_REDIRECTION'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(15,1): warning C4005: 'DXGI_STATUS_NO_DESKTOP_ACCESS': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55867): message : see previous definition of 'DXGI_STATUS_NO_DESKTOP_ACCESS'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(16,1): warning C4005: 'DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55876): message : see previous definition of 'DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(17,1): warning C4005: 'DXGI_STATUS_MODE_CHANGED': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55885): message : see previous definition of 'DXGI_STATUS_MODE_CHANGED'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(18,1): warning C4005: 'DXGI_STATUS_MODE_CHANGE_IN_PROGRESS': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55894): message : see previous definition of 'DXGI_STATUS_MODE_CHANGE_IN_PROGRESS'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(21,1): warning C4005: 'DXGI_ERROR_INVALID_CALL': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55909): message : see previous definition of 'DXGI_ERROR_INVALID_CALL'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(22,1): warning C4005: 'DXGI_ERROR_NOT_FOUND': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55918): message : see previous definition of 'DXGI_ERROR_NOT_FOUND'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(23,1): warning C4005: 'DXGI_ERROR_MORE_DATA': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55927): message : see previous definition of 'DXGI_ERROR_MORE_DATA'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(24,1): warning C4005: 'DXGI_ERROR_UNSUPPORTED': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55936): message : see previous definition of 'DXGI_ERROR_UNSUPPORTED'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(25,1): warning C4005: 'DXGI_ERROR_DEVICE_REMOVED': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55945): message : see previous definition of 'DXGI_ERROR_DEVICE_REMOVED'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(26,1): warning C4005: 'DXGI_ERROR_DEVICE_HUNG': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55954): message : see previous definition of 'DXGI_ERROR_DEVICE_HUNG'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(27,1): warning C4005: 'DXGI_ERROR_DEVICE_RESET': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55964): message : see previous definition of 'DXGI_ERROR_DEVICE_RESET'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(28,1): warning C4005: 'DXGI_ERROR_WAS_STILL_DRAWING': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55973): message : see previous definition of 'DXGI_ERROR_WAS_STILL_DRAWING'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(29,1): warning C4005: 'DXGI_ERROR_FRAME_STATISTICS_DISJOINT': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55983): message : see previous definition of 'DXGI_ERROR_FRAME_STATISTICS_DISJOINT'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(30,1): warning C4005: 'DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55992): message : see previous definition of 'DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(31,1): warning C4005: 'DXGI_ERROR_DRIVER_INTERNAL_ERROR': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56002): message : see previous definition of 'DXGI_ERROR_DRIVER_INTERNAL_ERROR'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(32,1): warning C4005: 'DXGI_ERROR_NONEXCLUSIVE': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56011): message : see previous definition of 'DXGI_ERROR_NONEXCLUSIVE'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(33,1): warning C4005: 'DXGI_ERROR_NOT_CURRENTLY_AVAILABLE': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56020): message : see previous definition of 'DXGI_ERROR_NOT_CURRENTLY_AVAILABLE'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(34,1): warning C4005: 'DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56030): message : see previous definition of 'DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(35,1): warning C4005: 'DXGI_ERROR_REMOTE_OUTOFMEMORY': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56039): message : see previous definition of 'DXGI_ERROR_REMOTE_OUTOFMEMORY'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3d11.h(917,1): warning C4005: 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56303): message : see previous definition of 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3d11.h(918,1): warning C4005: 'D3D11_ERROR_FILE_NOT_FOUND': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56312): message : see previous definition of 'D3D11_ERROR_FILE_NOT_FOUND'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3d11.h(919,1): warning C4005: 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56322): message : see previous definition of 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3d11.h(920,1): warning C4005: 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56331): message : see previous definition of 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3d10.h(608,1): warning C4005: 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56279): message : see previous definition of 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3d10.h(609,1): warning C4005: 'D3D10_ERROR_FILE_NOT_FOUND': macro redefinition
+  imgui_impl_win32.cpp
+  imgui_widgets.cpp
   main.cpp
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4962,1): warning C4005:  'DWRITE_E_FILEFORMAT': macro redefinition
-F:\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h(56407): message :  see previous definition of 'DWRITE_E_FILEFORMAT'
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4967,1): warning C4005:  'DWRITE_E_UNEXPECTED': macro redefinition
-F:\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h(56416): message :  see previous definition of 'DWRITE_E_UNEXPECTED'
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4972,1): warning C4005:  'DWRITE_E_NOFONT': macro redefinition
-F:\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h(56425): message :  see previous definition of 'DWRITE_E_NOFONT'
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4978,1): warning C4005:  'DWRITE_E_FILENOTFOUND': macro redefinition
-F:\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h(56434): message :  see previous definition of 'DWRITE_E_FILENOTFOUND'
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4983,1): warning C4005:  'DWRITE_E_FILEACCESS': macro redefinition
-F:\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h(56443): message :  see previous definition of 'DWRITE_E_FILEACCESS'
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4988,1): warning C4005:  'DWRITE_E_FONTCOLLECTIONOBSOLETE': macro redefinition
-F:\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h(56452): message :  see previous definition of 'DWRITE_E_FONTCOLLECTIONOBSOLETE'
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4993,1): warning C4005:  'DWRITE_E_ALREADYREGISTERED': macro redefinition
-F:\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h(56461): message :  see previous definition of 'DWRITE_E_ALREADYREGISTERED'
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\include\RBX.hpp(65,28): warning C4305:  'initializing': truncation from 'double' to 'float'
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\include\RBX.hpp(205,21): warning C4018:  '<': signed/unsigned mismatch
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\include\RBX.hpp(252,26): warning C4244:  '=': conversion from 'uint32_t' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\include\RBX.hpp(253,26): warning C4244:  '=': conversion from 'uint32_t' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\Security.hpp(146,22): warning C4018:  '<': signed/unsigned mismatch
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\Security.hpp(158,22): warning C4018:  '<': signed/unsigned mismatch
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(21,25): warning C4307:  '*': integral constant overflow
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(23,25): warning C4307:  '*': integral constant overflow
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(25,27): warning C4307:  '*': integral constant overflow
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(27,26): warning C4307:  '*': integral constant overflow
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(29,28): warning C4307:  '*': integral constant overflow
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(31,29): warning C4307:  '*': integral constant overflow
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(33,28): warning C4307:  '*': integral constant overflow
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(35,27): warning C4307:  '*': integral constant overflow
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(101,7): warning C4101:  'buffer': unreferenced local variable
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(131,131): warning C4191:  'reinterpret_cast': unsafe conversion from 'FARPROC' to 'RtlSetUnhandledExceptionFilterFn'
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(131,131): warning C4191:         Calling this function through the result pointer may cause your program to fail
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(412,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(416,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(420,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(424,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(428,37): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(432,37): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(436,37): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(440,37): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(444,32): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(448,32): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(452,32): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(456,32): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(460,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(464,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(468,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(472,33): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(524,34): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(528,25): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(532,29): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(619,19): warning C4244:  'initializing': conversion from 'float' to 'int', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(658,38): warning C4244:  '=': conversion from 'float' to 'LONG', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(659,34): warning C4244:  '=': conversion from 'float' to 'LONG', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(660,37): warning C4244:  '=': conversion from 'float' to 'LONG', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(661,39): warning C4244:  '=': conversion from 'float' to 'LONG', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(667,94): warning C4244:  'argument': conversion from 'LONG' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(667,77): warning C4244:  'argument': conversion from 'LONG' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(667,54): warning C4244:  'argument': conversion from 'LONG' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(667,38): warning C4244:  'argument': conversion from 'LONG' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(675,57): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(675,34): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(601,9): warning C4101:  'screenPos4': unreferenced local variable
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(720,23): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(721,23): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(813,21): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(842,23): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(843,23): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(909,23): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(909,14): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(916,22): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(917,22): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(932,36): warning C4244:  'argument': conversion from 'float' to 'DWORD', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(932,32): warning C4244:  'argument': conversion from 'float' to 'DWORD', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1055,29): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1055,19): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(968,12): warning C4101:  'screenPos2': unreferenced local variable
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1150,32): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1620,35): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1637,35): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1727,70): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1727,59): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1727,40): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(1831,11): warning C4101:  'handle': unreferenced local variable
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\src\main.cpp(90): warning C4715:  'GetAimKey': not all control paths return a value
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\include\RBX.hpp(345): warning C4715:  'RBX::FindFirstChildOfClass': not all control paths return a value
-F:\Source Codes\Aspect Internal Rewrite\Aspect Internal Rewrite\include\RBX.hpp(326): warning C4715:  'RBX::FindFirstChild': not all control paths return a value
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56288): message : see previous definition of 'D3D10_ERROR_FILE_NOT_FOUND'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4962,1): warning C4005: 'DWRITE_E_FILEFORMAT': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56787): message : see previous definition of 'DWRITE_E_FILEFORMAT'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4967,1): warning C4005: 'DWRITE_E_UNEXPECTED': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56796): message : see previous definition of 'DWRITE_E_UNEXPECTED'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4972,1): warning C4005: 'DWRITE_E_NOFONT': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56805): message : see previous definition of 'DWRITE_E_NOFONT'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4978,1): warning C4005: 'DWRITE_E_FILENOTFOUND': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56814): message : see previous definition of 'DWRITE_E_FILENOTFOUND'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4983,1): warning C4005: 'DWRITE_E_FILEACCESS': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56823): message : see previous definition of 'DWRITE_E_FILEACCESS'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4988,1): warning C4005: 'DWRITE_E_FONTCOLLECTIONOBSOLETE': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56832): message : see previous definition of 'DWRITE_E_FONTCOLLECTIONOBSOLETE'
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dwrite.h(4993,1): warning C4005: 'DWRITE_E_ALREADYREGISTERED': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(56841): message : see previous definition of 'DWRITE_E_ALREADYREGISTERED'
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\include\RBX.hpp(65,28): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\include\RBX.hpp(205,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\include\RBX.hpp(252,26): warning C4244: '=': conversion from 'uint32_t' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\include\RBX.hpp(253,26): warning C4244: '=': conversion from 'uint32_t' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\Security.hpp(146,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\Security.hpp(158,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(101,7): warning C4101: 'buffer': unreferenced local variable
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(131,131): warning C4191: 'reinterpret_cast': unsafe conversion from 'FARPROC' to 'RtlSetUnhandledExceptionFilterFn'
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(131,131): warning C4191:         Calling this function through the result pointer may cause your program to fail
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(412,33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(416,33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(420,33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(424,33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(428,37): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(432,37): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(436,37): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(440,37): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(444,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(448,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(452,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(456,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(460,33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(464,33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(468,33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(472,33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(524,34): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(528,25): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(532,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(619,19): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(658,38): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(659,34): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(660,37): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(661,39): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(667,94): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(667,77): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(667,54): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(667,38): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(675,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(675,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(601,9): warning C4101: 'screenPos4': unreferenced local variable
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(720,23): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(721,23): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(813,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(842,23): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(843,23): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(909,23): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(909,14): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(916,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(917,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(932,36): warning C4244: 'argument': conversion from 'float' to 'DWORD', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(932,32): warning C4244: 'argument': conversion from 'float' to 'DWORD', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(1055,29): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(1055,19): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(968,12): warning C4101: 'screenPos2': unreferenced local variable
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(1150,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(1620,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(1637,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(1727,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(1727,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(1727,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Memory.cpp
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(1831,11): warning C4101: 'handle': unreferenced local variable
+  Generating Code...
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\Memory.cpp(17,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(90): warning C4715: 'GetAimKey': not all control paths return a value
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\include\RBX.hpp(345): warning C4715: 'RBX::FindFirstChildOfClass': not all control paths return a value
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\include\RBX.hpp(326): warning C4715: 'RBX::FindFirstChild': not all control paths return a value
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  Aspect Internal Rewrite.vcxproj -> F:\Source Codes\Aspect Internal Rewrite\Release\Aspect.dll
+cryptlib.lib(cryptlib.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(cryptlib.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(cpu.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(cpu.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(integer.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(integer.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(algparam.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(algparam.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(asn.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(asn.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(base64.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(base64.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(basecode.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(basecode.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(dll.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(dll.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(ec2n.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(ec2n.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(ecp.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(ecp.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(filters.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(filters.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(fips140.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(fips140.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(gf2n.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(gf2n.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(gfpcrypt.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(gfpcrypt.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(hex.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(hex.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(hmac.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(hmac.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(hrtimer.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(hrtimer.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(iterhash.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(iterhash.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(misc.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(misc.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(modes.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(modes.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(mqueue.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(mqueue.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(nbtheory.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(nbtheory.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(osrng.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(osrng.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(pch.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(pch.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(pubkey.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(pubkey.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(queue.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(queue.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(randpool.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(randpool.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(rdtables.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(rdtables.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(rijndael.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(rijndael.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(rijndael_simd.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(rijndael_simd.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(rng.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(rng.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(sha.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(sha.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(sha_simd.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(sha_simd.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+cryptlib.lib(sse_simd.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(sse_simd.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
+  Aspect Internal Rewrite.vcxproj -> C:\Users\Zortex\Desktop\Aspect-Internal\Release\Aspect.dll

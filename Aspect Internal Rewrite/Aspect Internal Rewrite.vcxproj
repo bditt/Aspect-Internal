@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{85386F4B-21A7-4783-A53D-843A7E28B613}</ProjectGuid>
     <RootNamespace>ImGui</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>Aspect Internal</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>F:\Source Codes\sol2\include;F:\Source Codes\ScriptHub\ScriptHub\include\Lua;F:\Source Codes\discord-rpc\win32-static\include;F:\Source Codes\CryptoPP - Internal;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)include</IncludePath>
-    <LibraryPath>F:\Source Codes\CryptoPP - Internal\Win32\Output\Release;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)libs;$(ProjectDir)libs\lua-5.1\include;$(ProjectDir)libs\discord-rpc\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)include;E:\Microsoft Visual Studio\Microsoft Visual Studio 12.0\VC\include</IncludePath>
+    <LibraryPath>$(ProjectDir)libs\cryptopp\Win32\Output\Release;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(WindowsSDK_LibraryPath_x86);$(ProjectDir)libs\lua-5.1\bin;$(ProjectDir)libs\discord-rpc\bin;$(LibraryPath)</LibraryPath>
     <TargetName>Aspect</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -113,7 +113,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>lua51.lib;discord-rpc.lib;cryptlib.lib;d3dcompiler.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>F:\Source Codes\ScriptHub\ScriptHub;F:\Source Codes\discord-rpc\win32-static\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

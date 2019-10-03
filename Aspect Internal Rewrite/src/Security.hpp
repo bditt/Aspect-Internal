@@ -9,9 +9,9 @@
 #include <sstream>
 #include <fstream>
 #include <algorithm>
-#include <modes.h>
-#include <aes.h>
-#include <base64.h>
+#include <cryptopp/modes.h>
+#include <cryptopp/aes.h>
+#include <cryptopp/base64.h>
 #include <WinInet.h>
 #include <intrin.h>       
 #include <iphlpapi.h>
