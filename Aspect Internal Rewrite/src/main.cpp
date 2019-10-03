@@ -818,7 +818,6 @@ bool CalculateBullet(vec3& vLocalOrigin, vec3& vAimSpot, vec3& vTargetVelocity, 
 	return TRUE;
 }
 
-
 void mouse_move(int x, int y)
 {
 	INPUT input;
@@ -1004,7 +1003,7 @@ void Aimbot()
 							if (RBX::WorldToScreen(vpos1, screenPos1, RBX::ViewMatrix))
 							{
 								//std::cout << "WorldToScreen" << std::endl;
-								float distance = DistanceBetweenCross(screenPos1.x, screenPos1.y);
+								float distance = RBX::distanceto(RBX::CLocalCharacter->FindFirstChild<RBXInstance>("Head")->GetPrimitive()->GetBody()->GetPosition(),vpos1);
 								//std::cout << "distance: " << distance << std::endl;
 								if (distance < closest && distance <= RBX::AimFOV)
 								{
@@ -1041,13 +1040,13 @@ void Aimbot()
 					}
 					if (!RBX::CheckFriend(ClosestPlayerName))
 					{
-						AimAtPos(closestx, (closesty));
+						AimAtPos(closestx, closesty);
 					}
 				}
 				else if (RBX::AimType == "Old Aimbot")
 				{
 					//std::cout << "adwadawdawd" << std::endl;
-					AimAtPosOld(closestx, (closesty));
+					AimAtPosOld(closestx, closesty);
 				}
 				else if (RBX::AimType == "3rd Person")
 				{
@@ -1073,7 +1072,6 @@ void Update() {
 	{
 		if (GetAsyncKeyState(0x2D))
 		{
-			IsGuiOpen = !IsGuiOpen;
 			while (GetAsyncKeyState(0x2D)) {}
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(32));
@@ -1299,10 +1297,12 @@ HRESULT WINAPI presentHook(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT F
 		ImGui_ImplDX11_Init(pDevice, pContext);
 		ImGui_ImplDX11_CreateDeviceObjects();
 	}
+
 	UpdatePresence();
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+
 	if (!IsWhitelisted)
 	{
 		if (Aspect::Whitelist::AutoLogin())
@@ -1724,7 +1724,7 @@ HRESULT WINAPI presentHook(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT F
 		if (RBX::AimDrawFOV)
 		{
 			const ImU32 col32 = ImColor(RBX::AimFOVColor);
-			list->AddCircle(ImVec2(RBX::s_width / 2, RBX::s_height / 2), RBX::AimFOV, col32);
+			list->AddCircle(ImVec2(RBX::s_width / 2, RBX::s_height / 2), RBX::AimFOV, col32, 32);
 		}
 		dprint("Checking ESP!\n");
 		if (RBX::ESPEnabled)
@@ -1771,20 +1771,22 @@ LRESULT IMGUI_IMPL_API WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		return result;
 	}
 
-	auto& IO = ImGui::GetIO();
-
 	switch (msg)
 	{
-	case WM_WINDOWPOSCHANGING:
 	case WM_SIZE:
-	{
 		if (pRenderTargetView)
 		{
 			pRenderTargetView->Release();
 			pRenderTargetView = nullptr;
 		}
 		break;
-	}
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case VK_INSERT:
+			IsGuiOpen = !IsGuiOpen;
+			break;
+		}
 	}
 
 	return CallWindowProc(reinterpret_cast<WNDPROC>(originalWndProc), hWnd, msg, wParam, lParam);
