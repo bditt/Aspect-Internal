@@ -138,27 +138,31 @@
     <ClCompile Include="libs\imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="libs\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="libs\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\hacks\aimbot\aimbot.cc" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Memory.cpp" />
+    <ClCompile Include="src\renderer\renderer.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Classes.hpp" />
-    <ClInclude Include="include\D3D.hpp" />
-    <ClInclude Include="include\FunctionWrapper.hpp" />
-    <ClInclude Include="include\ImGui\imconfig.h" />
-    <ClInclude Include="include\ImGui\imgui.h" />
-    <ClInclude Include="include\ImGui\imgui_impl_dx11.h" />
-    <ClInclude Include="include\ImGui\imgui_impl_win32.h" />
-    <ClInclude Include="include\ImGui\imgui_internal.h" />
-    <ClInclude Include="include\ImGui\imstb_rectpack.h" />
-    <ClInclude Include="include\ImGui\imstb_textedit.h" />
-    <ClInclude Include="include\ImGui\imstb_truetype.h" />
-    <ClInclude Include="include\Includes.hpp" />
-    <ClInclude Include="include\RBX.hpp" />
-    <ClInclude Include="include\Retcheck.hpp" />
+    <ClInclude Include="libs\imgui\imconfig.h" />
+    <ClInclude Include="libs\imgui\imgui.h" />
+    <ClInclude Include="libs\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="libs\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="libs\imgui\imgui_internal.h" />
+    <ClInclude Include="libs\imgui\imstb_rectpack.h" />
+    <ClInclude Include="libs\imgui\imstb_textedit.h" />
+    <ClInclude Include="libs\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\commons.h" />
+    <ClInclude Include="src\hacks\aimbot\aimbot.h" />
     <ClInclude Include="src\Memory.h" />
-    <ClInclude Include="src\Security.hpp" />
-    <ClInclude Include="include\xorstr.h" />
+    <ClInclude Include="src\renderer\renderer.h" />
+    <ClInclude Include="src\sdk\classes.h" />
+    <ClInclude Include="src\sdk\sdk.h" />
+    <ClInclude Include="src\sdk\vec.h" />
+    <ClInclude Include="src\security\security.h" />
+    <ClInclude Include="src\security\xorstr.h" />
+    <ClInclude Include="src\settings.h" />
+    <ClInclude Include="src\utils\asprintf.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

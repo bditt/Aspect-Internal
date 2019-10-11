@@ -39,57 +39,69 @@
     <ClCompile Include="libs\imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderer\renderer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hacks\aimbot\aimbot.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\ImGui\imconfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ImGui\imgui.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ImGui\imgui_impl_dx11.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ImGui\imgui_impl_win32.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ImGui\imgui_internal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ImGui\imstb_rectpack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ImGui\imstb_textedit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ImGui\imstb_truetype.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Security.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\xorstr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Memory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\RBX.hpp">
+    <ClInclude Include="src\renderer\renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Classes.hpp">
+    <ClInclude Include="src\sdk\vec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Includes.hpp">
+    <ClInclude Include="src\sdk\classes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\D3D.hpp">
+    <ClInclude Include="src\settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\FunctionWrapper.hpp">
+    <ClInclude Include="libs\imgui\imconfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Retcheck.hpp">
+    <ClInclude Include="libs\imgui\imgui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imgui_impl_dx11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imgui_impl_win32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imgui_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imstb_rectpack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imstb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imstb_textedit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\commons.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sdk\sdk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\security\xorstr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\security\security.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\asprintf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hacks\aimbot\aimbot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
