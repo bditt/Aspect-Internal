@@ -139,6 +139,7 @@ void renderer_t::terminate()
 
 void renderer_t::render()
 {
+	ImGui::GetIO().MouseDrawCursor = g_renderer.gui.open;
 	if (!g_security.authenticated)
 	{
 		ImGui::Begin("login", 0, ImVec2(200, 100), 1.f, ImGuiWindowFlags_NoCollapse);
@@ -169,7 +170,6 @@ void renderer_t::render()
 		return;
 	}
 
-	ImGui::GetIO().MouseDrawCursor = g_renderer.gui.open;
 	if (g_renderer.gui.open)
 	{
 		ImGui::Begin("Aspect", NULL, ImVec2(350, 350), 1.f, ImGuiWindowFlags_NoCollapse | ImGuiConfigFlags_NoMouseCursorChange);
