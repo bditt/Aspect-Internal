@@ -178,9 +178,6 @@ void renderer_t::render()
 			if(ImGui::BeginTabItem("ESP"))
 			{
 				ImGui::Checkbox("- ESP Enabled", &g_settings.esp.enabled);
-				if (ImGui::Button("Remove pingevent"))
-				{
-				}
 				if (ImGui::CollapsingHeader("ESP Names"))
 				{
 					ImGui::Checkbox("- ESP Names Enabled", &g_settings.esp.names);

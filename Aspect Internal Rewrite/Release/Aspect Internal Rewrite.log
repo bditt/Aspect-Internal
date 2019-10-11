@@ -1,5 +1,5 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (Release\) contains files shared from another project (ImGui.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  main.cpp
+  renderer.cc
 C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(12,1): warning C4005: 'DXGI_STATUS_OCCLUDED': macro redefinition
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\winerror.h(55840): message : see previous definition of 'DXGI_STATUS_OCCLUDED'
 C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h(13,1): warning C4005: 'DXGI_STATUS_CLIPPED': macro redefinition
@@ -60,10 +60,25 @@ C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\sdk\sdk.h(57
 C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\sdk\sdk.h(57,10): warning C4477: 'printf' : format string '%p' requires an argument of type 'void *', but variadic argument 2 has type 'uint32_t'
 C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\security\security.h(102,21): warning C4018: '<': signed/unsigned mismatch
 C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\security\security.h(113,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(21,7): warning C4101: 'buffer': unreferenced local variable
-C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(78,37): warning C4191: 'reinterpret_cast': unsafe conversion from 'FARPROC' to 'RtlSetUnhandledExceptionFilterFn'
-C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(78,37): warning C4191:         Calling this function through the result pointer may cause your program to fail
-C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\main.cpp(132,14): warning C4101: 'screenPos2': unreferenced local variable
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(10,32): warning C4099: 'aimbot_t': type name first seen using 'class' now seen using 'struct'
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\hacks\aimbot\aimbot.h(5): message : see declaration of 'aimbot_t'
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(12,36): warning C4099: 'security_t': type name first seen using 'class' now seen using 'struct'
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\security\security.h(14): message : see declaration of 'security_t'
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(298,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(315,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(315,39): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(315,30): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(404,17): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(439,32): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(440,27): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(441,29): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(442,33): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(444,68): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(444,57): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(444,40): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(444,30): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(449,48): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\Zortex\Desktop\Aspect-Internal\Aspect Internal Rewrite\src\renderer\renderer.cc(449,31): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
 cryptlib.lib(cryptlib.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(cryptlib.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
 cryptlib.lib(cpu.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(cpu.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
 cryptlib.lib(integer.obj) : warning LNK4099: PDB 'vc142.pdb' was not found with 'cryptlib.lib(integer.obj)' or at 'C:\Users\Zortex\Desktop\Aspect-Internal\Release\vc142.pdb'; linking object as if no debug info
