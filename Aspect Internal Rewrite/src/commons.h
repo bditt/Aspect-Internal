@@ -17,6 +17,7 @@
 #include <Psapi.h>
 #include <cstdint>
 
+#define _XM_NO_INTRINSICS_
 #include <d3d11.h>
 #include <DirectXMath.h>
 #include <DirectXColors.h>
@@ -27,5 +28,7 @@
 
 #include "Memory.h"
 #include <discord_rpc.h>
+
+
 
 #endif // COMMONS_H

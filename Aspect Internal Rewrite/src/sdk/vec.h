@@ -8,26 +8,11 @@ struct vec2
 struct vec3x
 {
 	float x, y, z;
-};
+}; 
 
-
-typedef float vec4x4_[4][4];
-
-class vec4
+struct vec4
 {
-public:
 	float data[4];
-};
-
-struct vec4x
-{
-	float x, y, z, w;
-};
-
-class vec4x4
-{
-public:
-	float data[4][4];
 };
 
 struct ViewMatrix_t
@@ -161,4 +146,3 @@ public:
 		return *this;
 	}
 };
-

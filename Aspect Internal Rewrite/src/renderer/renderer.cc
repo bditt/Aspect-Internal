@@ -322,7 +322,7 @@ void renderer_t::render()
 				continue;
 			if (INSTANCE_CHECK(child->character))
 				continue;
-			std::cout << "var1" << std::endl;
+
 			/* Local */
 			auto local_player = g_sdk.players->get_local_player();
 			if (INSTANCE_CHECK(local_player))

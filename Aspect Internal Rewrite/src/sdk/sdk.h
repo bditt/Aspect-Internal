@@ -20,6 +20,8 @@ public:
 	RBXService* workspace;
 	RBXService* script_context;
 
+	RBXInstance* camera;
+
 	ViewMatrix_t* view_matrix;
 public:
 	humanoid_sethipheight sethipheight;
@@ -49,6 +51,10 @@ public:
 
 		RBXService* uis = data_model->find_child_class<RBXService>("UserInputService");
 		printf("uis: 0x%p\n", uis);
+
+		workspace = data_model->find_child<RBXService>("Workspace");
+		camera = workspace->find_child<RBXInstance>("Camera");
+		printf("camera: 0x%p", camera);
 
 		uint32_t render_view = *(uint32_t*)(*(uint32_t*)(reinterpret_cast<uintptr_t>(data_model) + 0x74) + 0x1C);
 		uint32_t visual_engine = *(uint32_t*)(render_view + 0x8);
