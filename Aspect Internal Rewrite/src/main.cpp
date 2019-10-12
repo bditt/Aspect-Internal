@@ -177,24 +177,24 @@ unsigned long __stdcall main(LPVOID)
 					{
 						if (!child)
 							continue;
-						if (INSTANCE_VALID(child->character))
+						if (INSTANCE_CHECK(child->character))
 							continue;
 
 						auto child_head = child->character->find_child<RBXInstance>("Head");
-						if (INSTANCE_VALID(child_head))
+						if (INSTANCE_CHECK(child_head))
 							continue;
 
 						auto head_primitive = child_head->get_primitive();
-						if (INSTANCE_VALID(head_primitive))
+						if (INSTANCE_CHECK(head_primitive))
 							continue;
 
 						auto head_body = head_primitive->get_body();
-						if (INSTANCE_VALID(head_body))
+						if (INSTANCE_CHECK(head_body))
 							continue;
 
 						/* Local */
 						auto local_player = g_sdk.players->get_local_player();
-						if (INSTANCE_VALID(local_player))
+						if (INSTANCE_CHECK(local_player))
 							continue;
 
 						if (child->team_id == local_player->team_id)
@@ -204,19 +204,19 @@ unsigned long __stdcall main(LPVOID)
 							continue;
 
 						auto local_character = local_player->character;
-						if (INSTANCE_VALID(local_character))
+						if (INSTANCE_CHECK(local_character))
 							continue;
 
 						auto local_head = local_character->find_child<RBXInstance>("Head");
-						if (INSTANCE_VALID(local_head))
+						if (INSTANCE_CHECK(local_head))
 							continue;
 
 						auto local_head_primitive = local_head->get_primitive();
-						if (INSTANCE_VALID(local_head_primitive))
+						if (INSTANCE_CHECK(local_head_primitive))
 							continue;
 
 						auto local_head_body = local_head_primitive->get_body();
-						if (INSTANCE_VALID(local_head_body))
+						if (INSTANCE_CHECK(local_head_body))
 							continue;
 
 						vec3x head_loc = head_body->get_position();
@@ -240,23 +240,23 @@ unsigned long __stdcall main(LPVOID)
 
 					/* Local */
 					auto local_player = g_sdk.players->get_local_player();
-					if (INSTANCE_VALID(local_player))
+					if (INSTANCE_CHECK(local_player))
 						return;
 
 					auto local_character = local_player->character;
-					if (INSTANCE_VALID(local_character))
+					if (INSTANCE_CHECK(local_character))
 						return;
 
 					auto local_head = local_character->find_child<RBXInstance>("Head");
-					if (INSTANCE_VALID(local_head))
+					if (INSTANCE_CHECK(local_head))
 						return;
 
 					auto local_head_primitive = local_head->get_primitive();
-					if (INSTANCE_VALID(local_head_primitive))
+					if (INSTANCE_CHECK(local_head_primitive))
 						return;
 
 					auto local_head_body = local_head_primitive->get_body();
-					if (INSTANCE_VALID(local_head_body))
+					if (INSTANCE_CHECK(local_head_body))
 						return;
 
 					if (GetAsyncKeyState(VK_NUMPAD4) & 0x8000)

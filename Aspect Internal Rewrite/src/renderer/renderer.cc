@@ -161,7 +161,6 @@ void renderer_t::render()
 			{
 				if (!g_security.authenticate(userbuff, passbuff))
 				{
-					memset(userbuff, 0, 64);
 					memset(passbuff, 0, 64);
 				}
 			}
@@ -283,15 +282,15 @@ void renderer_t::render()
 					[]()
 					{
 						auto local_player = g_sdk.players->get_local_player();
-						if (INSTANCE_VALID(local_player))
+						if (INSTANCE_CHECK(local_player))
 							return;
 
 						auto local_character = local_player->character;
-						if (INSTANCE_VALID(local_character))
+						if (INSTANCE_CHECK(local_character))
 							return;
 
 						auto local_humanoid = local_character->find_child<RBXInstance>("Humanoid");
-						if (INSTANCE_VALID(local_humanoid))
+						if (INSTANCE_CHECK(local_humanoid))
 							return;
 
 						uintptr_t LH = reinterpret_cast<uintptr_t>(local_humanoid);
@@ -321,12 +320,13 @@ void renderer_t::render()
 		{
 			if (!child)
 				continue;
-			if (INSTANCE_VALID(child->character))
+			if (INSTANCE_CHECK(child->character))
 				continue;
-
+			std::cout << "var1" << std::endl;
 			/* Local */
 			auto local_player = g_sdk.players->get_local_player();
-			if (INSTANCE_VALID(local_player))
+			if (INSTANCE_CHECK(local_player))
+				continue;
 
 			/* Don't continue further if we share the same user_id */
 			if (child->user_id == local_player->user_id)
@@ -336,62 +336,62 @@ void renderer_t::render()
 				continue;
 
 			auto local_character = local_player->character;
-			if (INSTANCE_VALID(local_character))
+			if (INSTANCE_CHECK(local_character))
 				continue;
 
 			auto local_head = local_character->find_child<RBXInstance>("Head");
-			if (INSTANCE_VALID(local_head))
+			if (INSTANCE_CHECK(local_head))
 				continue;
 
 			auto local_head_primitive = local_head->get_primitive();
-			if (INSTANCE_VALID(local_head_primitive))
+			if (INSTANCE_CHECK(local_head_primitive))
 				continue;
 
 			auto local_head_body = local_head_primitive->get_body();
-			if (INSTANCE_VALID(local_head_body))
+			if (INSTANCE_CHECK(local_head_body))
 				continue;
 
 			/* Head */
 			auto child_head = child->character->find_child<RBXInstance>("Head");
-			if (INSTANCE_VALID(child_head))
+			if (INSTANCE_CHECK(child_head))
 				continue;
 
 			auto head_primitive = child_head->get_primitive();
-			if (INSTANCE_VALID(head_primitive))
+			if (INSTANCE_CHECK(head_primitive))
 				continue;
 
 			auto head_body = head_primitive->get_body();
-			if (INSTANCE_VALID(head_body))
+			if (INSTANCE_CHECK(head_body))
 				continue;
 
 			/* Leg */
 			auto child_leg = child->character->find_child<RBXInstance>("Left Leg");
-			if (INSTANCE_VALID(child_leg))
+			if (INSTANCE_CHECK(child_leg))
 				child_leg = child->character->find_child<RBXInstance>("LeftLowerLeg");
-			if (INSTANCE_VALID(child_leg))
+			if (INSTANCE_CHECK(child_leg))
 				continue;
 
 			auto leg_primitive = child_leg->get_primitive();
-			if (INSTANCE_VALID(leg_primitive))
+			if (INSTANCE_CHECK(leg_primitive))
 				continue;
 
 			auto leg_body = leg_primitive->get_body();
-			if (INSTANCE_VALID(leg_body))
+			if (INSTANCE_CHECK(leg_body))
 				continue;
 
 			/* torso */
 			auto child_torso = child->character->find_child<RBXInstance>("Torso");
-			if (INSTANCE_VALID(child_torso))
+			if (INSTANCE_CHECK(child_torso))
 				child_torso = child->character->find_child<RBXInstance>("UpperTorso");
-			if (INSTANCE_VALID(child_torso))
+			if (INSTANCE_CHECK(child_torso))
 				continue;
 
 			auto torso_primitive = child_torso->get_primitive();
-			if (INSTANCE_VALID(torso_primitive))
+			if (INSTANCE_CHECK(torso_primitive))
 				continue;
 
 			auto torso_body = torso_primitive->get_body();
-			if (INSTANCE_VALID(torso_body))
+			if (INSTANCE_CHECK(torso_body))
 				continue;
 
 			

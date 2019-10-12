@@ -5,7 +5,7 @@
 #include "classes.h"
 #include "../Memory.h"
 
-#define INSTANCE_VALID(x) (!x || reinterpret_cast<uintptr_t>(x) == 0xF)
+#define INSTANCE_CHECK(x) (!x || reinterpret_cast<uintptr_t>(x) == 0xF)
 
 typedef __int16(__thiscall* humanoid_sethipheight)(uintptr_t Humanoid, float value);
 typedef void* (__cdecl* get_datamodel)(void* dm);
