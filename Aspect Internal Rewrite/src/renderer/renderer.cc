@@ -172,7 +172,7 @@ void renderer_t::render()
 
 	if (g_renderer.gui.open)
 	{
-		ImGui::Begin("Aspect", NULL, ImVec2(350, 350), 1.f, ImGuiWindowFlags_NoCollapse | ImGuiConfigFlags_NoMouseCursorChange);
+		ImGui::Begin("Aspect", 0, ImVec2(350, 350), 1.f, ImGuiWindowFlags_NoCollapse | ImGuiConfigFlags_NoMouseCursorChange);
 		if(ImGui::BeginTabBar("Aspect_tab_bar"))
 		{
 			if(ImGui::BeginTabItem("ESP"))
@@ -324,6 +324,33 @@ void renderer_t::render()
 			if (INSTANCE_VALID(child->character))
 				continue;
 
+			/* Local */
+			auto local_player = g_sdk.players->get_local_player();
+			if (INSTANCE_VALID(local_player))
+
+			/* Don't continue further if we share the same user_id */
+			if (child->user_id == local_player->user_id)
+				continue;
+			/* Don't continue further if teamcheck is on and we are on the same team */
+			if (g_settings.esp.team_check && child->team_id == local_player->team_id)
+				continue;
+
+			auto local_character = local_player->character;
+			if (INSTANCE_VALID(local_character))
+				continue;
+
+			auto local_head = local_character->find_child<RBXInstance>("Head");
+			if (INSTANCE_VALID(local_head))
+				continue;
+
+			auto local_head_primitive = local_head->get_primitive();
+			if (INSTANCE_VALID(local_head_primitive))
+				continue;
+
+			auto local_head_body = local_head_primitive->get_body();
+			if (INSTANCE_VALID(local_head_body))
+				continue;
+
 			/* Head */
 			auto child_head = child->character->find_child<RBXInstance>("Head");
 			if (INSTANCE_VALID(child_head))
@@ -367,33 +394,7 @@ void renderer_t::render()
 			if (INSTANCE_VALID(torso_body))
 				continue;
 
-			/* Local */
-			auto local_player = g_sdk.players->get_local_player();
-			if (INSTANCE_VALID(local_player))
-				continue;
-
-			/* Don't continue further if teamcheck is on and we are on the same team */
-			if (g_settings.esp.team_check && child->team_id == local_player->team_id)
-				continue;
-			/* Don't continue further if we share the same user_id */
-			if (child->user_id == local_player->user_id)
-				continue;
-
-			auto local_character = local_player->character;
-			if (INSTANCE_VALID(local_character))
-				continue;
-
-			auto local_head = local_character->find_child<RBXInstance>("Head");
-			if (INSTANCE_VALID(local_head))
-				continue;
-
-			auto local_head_primitive = local_head->get_primitive();
-			if (INSTANCE_VALID(local_head_primitive))
-				continue;
-
-			auto local_head_body = local_head_primitive->get_body();
-			if (INSTANCE_VALID(local_head_body))
-				continue;
+			
 
 			vec3x head_vec = head_body->get_position();
 			vec3x torso_vec = torso_body->get_position();

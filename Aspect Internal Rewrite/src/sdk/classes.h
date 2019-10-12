@@ -108,6 +108,9 @@ public:
 	template <class T>
 	T* find_child(std::string name)
 	{
+		if (!this->children)
+			return 0;
+
 		for (auto child : *this->children)
 		{
 			if (child->name == name)
@@ -199,6 +202,9 @@ public:
 	template <class T>
 	T* find_child(std::string name)
 	{
+		if (!this->children)
+			return 0;
+
 		for (auto child : *this->children)
 		{
 			if (child->name == name)
@@ -241,6 +247,9 @@ public:
 	template <class T>
 	T* find_child(std::string name)
 	{
+		if (!this->children)
+			return 0;
+
 		for (auto child : *this->children)
 		{
 			if (child->name == name)
@@ -287,6 +296,9 @@ public:
 	template <class T>
 	T* find_child(std::string name)
 	{
+		if (!this->children)
+			return 0;
+
 		for (auto child : *this->children)
 		{
 			if (child->name == name)
@@ -401,6 +413,9 @@ public:
 	template <class T>
 	T* find_child(std::string name)
 	{
+		if (!this->children)
+			return 0;
+
 		for (auto child : *this->children)
 		{
 			if (child->name == name)
