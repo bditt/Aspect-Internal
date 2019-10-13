@@ -396,13 +396,13 @@ void renderer_t::render()
 
 			
 
-			vec3x head_vec = head_body->get_position();
-			vec3x torso_vec = torso_body->get_position();
-			vec3x leg_vec = leg_body->get_position();
+			vec3 head_vec = head_body->get_position();
+			vec3 torso_vec = torso_body->get_position();
+			vec3 leg_vec = leg_body->get_position();
 
-			vec3x local_head_vec = local_head_body->get_position();
+			vec3 local_head_vec = local_head_body->get_position();
 
-			int distance = g_sdk.distance_to<vec3x>(local_head_vec, head_vec);
+			int distance = g_sdk.distance_to<vec3>(local_head_vec, head_vec);
 
 			vec2 screen_leg;
 			leg_vec.y -= 3.0f;
@@ -455,12 +455,12 @@ void renderer_t::render()
 	}
 }
 
-bool renderer_t::w2s(vec3x origin, vec2& screen)
+bool renderer_t::w2s(vec3 origin, vec2& screen)
 {
 	return this->w2s(origin, screen, *g_sdk.view_matrix);
 }
 
-bool renderer_t::w2s(vec3x origin, vec2& screen, ViewMatrix_t matrix)
+bool renderer_t::w2s(vec3 origin, vec2& screen, ViewMatrix_t matrix)
 {
 	vec4 coords;
 	coords.data[0] = origin.x * matrix.matrix[0] + origin.y * matrix.matrix[1] + origin.z * matrix.matrix[2] + matrix.matrix[3];

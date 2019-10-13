@@ -5,11 +5,6 @@ struct vec2
 	float x, y;
 };
 
-struct vec3x
-{
-	float x, y, z;
-}; 
-
 struct vec4
 {
 	float data[4];

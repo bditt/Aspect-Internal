@@ -7,8 +7,8 @@ using present_fn = HRESULT(__stdcall*)(IDXGISwapChain * pSwapChain, UINT SyncInt
 class renderer_t
 {
 public:
-	bool w2s(vec3x origin, vec2& screen);
-	bool w2s(vec3x origin, vec2& screen, ViewMatrix_t matrix);
+	bool w2s(vec3 origin, vec2& screen);
+	bool w2s(vec3 origin, vec2& screen, ViewMatrix_t matrix);
 public:
 	/* D3D11 */
 	ID3D11Device* p_device;

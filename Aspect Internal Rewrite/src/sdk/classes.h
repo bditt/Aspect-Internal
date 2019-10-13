@@ -15,14 +15,14 @@ public:
 	/* 0xE0 */
 	vec3* velocity;
 public:
-	vec3x get_position()
+	vec3 get_position()
 	{ 
 		return *(this->get_position_ptr()); 
 	}
 
-	vec3x* get_position_ptr()
+	vec3* get_position_ptr()
 	{ 
-		return (vec3x*)(reinterpret_cast<uintptr_t>(this) + 0xd4);
+		return (vec3*)(reinterpret_cast<uintptr_t>(this) + 0xd4);
 	}
 
 	void set_pos_x(float x)

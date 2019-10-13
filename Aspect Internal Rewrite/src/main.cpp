@@ -130,7 +130,7 @@ unsigned long __stdcall main(LPVOID)
 								}
 								vec2 screenPos1;
 								vec2 screenPos2;
-								vec3x vpos1;
+								vec3 vpos1;
 								vpos1 = Head->get_primitive()->get_body()->get_position();
 								if (g_settings.aim.head)
 								{
@@ -219,8 +219,8 @@ unsigned long __stdcall main(LPVOID)
 						if (INSTANCE_CHECK(local_head_body))
 							continue;
 
-						vec3x head_loc = head_body->get_position();
-						vec3x local_loc = local_head_body->get_position();
+						vec3 head_loc = head_body->get_position();
+						vec3 local_loc = local_head_body->get_position();
 
 						float dist = g_sdk.distance_to(local_loc, head_loc);
 						if (dist <= g_settings.exploits.telekill.distance)
