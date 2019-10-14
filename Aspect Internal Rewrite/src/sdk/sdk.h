@@ -57,7 +57,7 @@ public:
 
         workspace = data_model->find_child<RBXService>("Workspace");
         camera = workspace->find_child<RBXInstance>("Camera");
-        printf("camera: 0x%p", camera);
+        printf("camera: 0x%p\n", camera);
 
         uint32_t render_view = *(uint32_t*)(*(uint32_t*)(reinterpret_cast<uintptr_t>(data_model) + 0x74) + 0x1C);
         uint32_t visual_engine = *(uint32_t*)(render_view + 0x8);
