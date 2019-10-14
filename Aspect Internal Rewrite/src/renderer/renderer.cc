@@ -328,8 +328,7 @@ void renderer_t::render()
             /* Don't continue further if we share the same user_id */
             if (child->user_id == local_player->user_id)
                 continue;
-            /* Don't continue further if teamcheck is on and we are on the same team
-       */
+            /* Don't continue further if teamcheck is on and we are on the same team */
             if (g_settings.esp.team_check && child->team_id == local_player->team_id)
                 continue;
 
