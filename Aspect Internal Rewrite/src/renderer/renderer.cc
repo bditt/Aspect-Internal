@@ -298,28 +298,32 @@ void renderer_t::render()
                     ImGui::Checkbox("- ESP Names Enabled", &g_settings.esp.names);
 
                     ImGui::Text("- Enemy Name Color");
-                    ImGui::SameLine();
+					ImGui::SameLine();
+					ImGui::PushID(1);
                     ImGui::ColorEdit4(
                         "Enemy Name Color", &g_settings.esp.color.enemy_name.x,
 						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+					ImGui::PopID();
 					ImGui::Text("- Target Name Color");
 					ImGui::SameLine();
+					ImGui::PushID(2);
 					ImGui::ColorEdit4(
 						"Target Name Color", &g_settings.esp.color.target_name.x,
 						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+					ImGui::PopID();
 				}
 				if (ImGui::CollapsingHeader("ESP Distance")) {
-					ImGui::Checkbox("- ESP Distance Enabled", &g_settings.esp.box);
+					ImGui::Checkbox("- ESP Distance Enabled", &g_settings.esp.distance);
 					ImGui::Text("- Enemy Distance Color");
 					ImGui::SameLine();
-					ImGui::PushID(1);
+					ImGui::PushID(3);
 					ImGui::ColorEdit4(
 						"Enemy Distance Color", &g_settings.esp.color.enemy_distance.x,
 						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
 					ImGui::PopID();
 					ImGui::Text("- Target Distance Color");
 					ImGui::SameLine();
-					ImGui::PushID(2);
+					ImGui::PushID(4);
 					ImGui::ColorEdit4(
 						"Target Distance Color", &g_settings.esp.color.target_distance.x,
 						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
@@ -329,14 +333,14 @@ void renderer_t::render()
                     ImGui::Checkbox("- ESP Boxes Enabled", &g_settings.esp.box);
                     ImGui::Text("- Enemy Box Color");
 					ImGui::SameLine();
-					ImGui::PushID(1);
+					ImGui::PushID(5);
                     ImGui::ColorEdit4(
                         "Enemy Box Color", &g_settings.esp.color.enemy_box.x,
 						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
 					ImGui::PopID();
 					ImGui::Text("- Target Box Color");
 					ImGui::SameLine();
-					ImGui::PushID(2);
+					ImGui::PushID(6);
 					ImGui::ColorEdit4(
 						"Enemy Box Color", &g_settings.esp.color.target_box.x,
 						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
@@ -346,10 +350,12 @@ void renderer_t::render()
                     ImGui::Checkbox("- ESP Tracer Enabled", &g_settings.esp.line);
 
                     ImGui::Text("- Enemy Tracer Color");
-                    ImGui::SameLine();
+					ImGui::SameLine();
+					ImGui::PushID(7);
                     ImGui::ColorEdit4(
                         "Enemy Tracer Color", &g_settings.esp.color.enemy_line.x,
                         ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+					ImGui::PopID();
                 }
                 if (ImGui::CollapsingHeader("ESP Teams")) {
                     ImGui::Checkbox("- ESP Team Check Enabled",
@@ -358,7 +364,7 @@ void renderer_t::render()
                 ImGui::EndTabItem();
             }
             if (ImGui::BeginTabItem("Aimbot")) {
-                ImGui::PushID(3);
+                ImGui::PushID(8);
                 ImGui::Checkbox("Aimbot", &g_settings.aim.enabled);
                 ImGui::Checkbox("- Aim at Head", &g_settings.aim.head);
                 ImGui::Checkbox("- Team Check", &g_settings.aim.team_check);
@@ -371,12 +377,12 @@ void renderer_t::render()
 				ImGui::Hotkey("- Aim Key", &g_settings.aim.key);
                 ImGui::Text("- Smooth ");
                 ImGui::SameLine();
-                ImGui::PushID(4);
+                ImGui::PushID(9);
                 ImGui::SliderInt("", &g_settings.aim.smooth, 2, 100);
                 ImGui::PopID();
                 ImGui::Text("- FOV ");
                 ImGui::SameLine();
-                ImGui::PushID(5);
+                ImGui::PushID(10);
 				ImGui::SliderInt("", &g_settings.aim.fov, 10, 1000);
 				ImGui::PopID();
 
@@ -386,10 +392,10 @@ void renderer_t::render()
                 ImGui::Checkbox("Telekill", &g_settings.exploits.telekill.enabled);
                 ImGui::Text("- Distance");
                 ImGui::SameLine();
-                ImGui::PushID(6);
+                ImGui::PushID(11);
                 ImGui::SliderInt("", &g_settings.exploits.telekill.distance, 1, 250);
 				ImGui::PopID();
-				ImGui::PushID(9);
+				ImGui::PushID(12);
 				ImGui::Text("- Elevator Height");
 				ImGui::SameLine();
 				if (ImGui::SliderInt("", &g_settings.exploits.elevator.height, 0, 50)) {
@@ -415,7 +421,7 @@ void renderer_t::render()
 					ImGui::Checkbox("- Enabled", &g_settings.exploits.telemove.enabled);
 					ImGui::Text("- Amount");
 					ImGui::SameLine();
-					ImGui::PushID(8);
+					ImGui::PushID(13);
 					ImGui::SliderInt("", &g_settings.exploits.telemove.amount, 1, 50);
 					ImGui::PopID();
 
