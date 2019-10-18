@@ -2,6 +2,13 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include "imgui/custom/custom.h"
+
+struct input_t
+{
+	char key_pressed[256] = {};
+} inline g_input;
+
 using present_fn = HRESULT(__stdcall*)(IDXGISwapChain* pSwapChain,
     UINT SyncInterval, UINT Flags);
 
@@ -26,15 +33,15 @@ public:
 
 public:
     union {
-        bool open = true;
+        bool active = true;
     } gui;
-
 public:
     bool initialized = false;
 
     void initialize();
     void terminate();
     void render();
+	void handle_input(UINT msg, WPARAM w_param, LPARAM l_param);
 } inline g_renderer;
 
 #endif // RENDERER_H

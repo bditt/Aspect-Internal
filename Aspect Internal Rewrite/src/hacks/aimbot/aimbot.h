@@ -1,13 +1,14 @@
 #pragma once
 
+struct target_t {
+	std::string target_name;
+	vec2 sc = { 1, 1 };
+	float dist = 99999.f;
+};
+
 class aimbot_t {
 private:
-    struct target_t {
-        std::string target_name;
-        vec2 sc = { 1, 1 };
-        float dist = 99999.f;
-    } aim_target;
-
+	target_t aim_target;
 public:
     inline float distance_cross(vec2 vec)
     {

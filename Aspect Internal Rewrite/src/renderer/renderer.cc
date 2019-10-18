@@ -5,6 +5,8 @@
 #include "../utils/asprintf.h"
 #include "../hacks/aimbot/aimbot.h"
 #include "../security/security.h"
+#include <imgui/custom/custom.h>
+#include "../global.h"
 
 extern struct sdk_t g_sdk;
 extern struct aimbot_t g_aimbot;
@@ -22,7 +24,66 @@ HRESULT WINAPI present(IDXGISwapChain* pSwapChain, UINT SyncInterval,
 
         ImGui_ImplWin32_Init(g_renderer.hWnd);
         ImGui_ImplDX11_Init(g_renderer.p_device, g_renderer.p_context);
-        ImGui_ImplDX11_CreateDeviceObjects();
+		ImGui_ImplDX11_CreateDeviceObjects();
+		ImGui::GetIO().MouseDrawCursor = g_renderer.gui.active;
+
+		ImGuiStyle* style = &ImGui::GetStyle();
+		style->WindowPadding = ImVec2(15, 15);
+		style->WindowRounding = .0f;
+		style->FramePadding = ImVec2(5, 5);
+		style->FrameRounding = .0f;
+		style->ItemSpacing = ImVec2(12, 8);
+		style->ItemInnerSpacing = ImVec2(8, 6);
+		style->IndentSpacing = 25.0f;
+		style->ScrollbarSize = 10.0f;
+		style->ScrollbarRounding = 9.0f;
+		style->GrabMinSize = 5.0f;
+		style->GrabRounding = .0f;
+
+		style->Colors[ImGuiCol_Text] = ImVec4(0.80f, 0.80f, 0.83f, 1.00f);
+		style->Colors[ImGuiCol_TextDisabled] = ImVec4(0.24f, 0.23f, 0.29f, 1.00f);
+		style->Colors[ImGuiCol_WindowBg] = ImVec4(0.06f, 0.05f, 0.07f, 1.00f);
+		style->Colors[ImGuiCol_ChildWindowBg] = ImVec4(0.07f, 0.07f, 0.09f, 1.00f);
+		style->Colors[ImGuiCol_PopupBg] = ImVec4(0.07f, 0.07f, 0.09f, 1.00f);
+		style->Colors[ImGuiCol_Border] = ImVec4(1.00f, 0.54f, 0.01f, 0.71f);
+		style->Colors[ImGuiCol_BorderShadow] = ImVec4(0.92f, 0.91f, 0.88f, 0.00f);
+		style->Colors[ImGuiCol_FrameBg] = ImVec4(0.10f, 0.09f, 0.12f, 1.00f);
+		style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.24f, 0.23f, 0.29f, 1.00f);
+		style->Colors[ImGuiCol_FrameBgActive] = ImVec4(0.56f, 0.56f, 0.58f, 1.00f);
+		style->Colors[ImGuiCol_TitleBg] = ImVec4(0.10f, 0.09f, 0.12f, 1.00f);
+		style->Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(1.00f, 0.98f, 0.95f, 0.75f);
+		style->Colors[ImGuiCol_TitleBgActive] = ImVec4(0.07f, 0.07f, 0.09f, 1.00f);
+		style->Colors[ImGuiCol_MenuBarBg] = ImVec4(0.10f, 0.09f, 0.12f, 1.00f);
+		style->Colors[ImGuiCol_ScrollbarBg] = ImVec4(0.10f, 0.09f, 0.12f, 1.00f);
+		style->Colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.80f, 0.80f, 0.83f, 0.31f);
+		style->Colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.56f, 0.56f, 0.58f, 1.00f);
+		style->Colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.06f, 0.05f, 0.07f, 1.00f);
+		style->Colors[ImGuiCol_CheckMark] = ImVec4(0.80f, 0.80f, 0.83f, 0.31f);
+		style->Colors[ImGuiCol_SliderGrab] = ImVec4(0.80f, 0.80f, 0.83f, 0.31f);
+		style->Colors[ImGuiCol_SliderGrabActive] = ImVec4(0.06f, 0.05f, 0.07f, 1.00f);
+		style->Colors[ImGuiCol_Button] = ImVec4(0.10f, 0.09f, 0.12f, 1.00f);
+		style->Colors[ImGuiCol_ButtonHovered] = ImVec4(0.24f, 0.23f, 0.29f, 1.00f);
+		style->Colors[ImGuiCol_ButtonActive] = ImVec4(0.56f, 0.56f, 0.58f, 1.00f);
+		style->Colors[ImGuiCol_Header] = ImVec4(0.10f, 0.09f, 0.12f, 1.00f);
+		style->Colors[ImGuiCol_HeaderHovered] = ImVec4(0.56f, 0.56f, 0.58f, 1.00f);
+		style->Colors[ImGuiCol_HeaderActive] = ImVec4(0.06f, 0.05f, 0.07f, 1.00f);
+		style->Colors[ImGuiCol_Column] = ImVec4(0.56f, 0.56f, 0.58f, 1.00f);
+		style->Colors[ImGuiCol_ColumnHovered] = ImVec4(0.24f, 0.23f, 0.29f, 1.00f);
+		style->Colors[ImGuiCol_ColumnActive] = ImVec4(0.56f, 0.56f, 0.58f, 1.00f);
+		style->Colors[ImGuiCol_ResizeGrip] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+		style->Colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.56f, 0.56f, 0.58f, 1.00f);
+		style->Colors[ImGuiCol_ResizeGripActive] = ImVec4(0.06f, 0.05f, 0.07f, 1.00f);
+		style->Colors[ImGuiCol_PlotLines] = ImVec4(0.40f, 0.39f, 0.38f, 0.63f);
+		style->Colors[ImGuiCol_PlotLinesHovered] = ImVec4(0.25f, 1.00f, 0.00f, 1.00f);
+		style->Colors[ImGuiCol_PlotHistogram] = ImVec4(0.40f, 0.39f, 0.38f, 0.63f);
+		style->Colors[ImGuiCol_PlotHistogramHovered] = ImVec4(0.25f, 1.00f, 0.00f, 1.00f);
+		style->Colors[ImGuiCol_TextSelectedBg] = ImVec4(0.25f, 1.00f, 0.00f, 0.43f);
+		style->Colors[ImGuiCol_ModalWindowDarkening] = ImVec4(1.00f, 0.98f, 0.95f, 0.73f);	
+		style->Colors[ImGuiCol_Tab] = ImVec4(1.00f, 0.54f, 0.01f, 0.71f);
+		style->Colors[ImGuiCol_TabHovered] = ImVec4(0.96f, 0.73f, 0.09f, 0.90f);
+		style->Colors[ImGuiCol_TabActive] = ImVec4(1.00f, 0.67f, 0.01f, 0.70f);
+		style->Colors[ImGuiCol_TabUnfocused] = ImVec4(0.92f, 0.93f, 0.94f, 0.99f);
+		style->Colors[ImGuiCol_TabUnfocusedActive] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
 
         g_renderer.initialized = true;
     }
@@ -56,10 +117,10 @@ HRESULT WINAPI present(IDXGISwapChain* pSwapChain, UINT SyncInterval,
     return g_renderer.o_present(pSwapChain, SyncInterval, Flags);
 }
 
-LRESULT IMGUI_IMPL_API wndproc(HWND hWnd, UINT msg, WPARAM wParam,
-    LPARAM lParam)
+LRESULT IMGUI_IMPL_API wndproc(HWND hWnd, UINT msg, WPARAM w_param,
+    LPARAM l_param)
 {
-    ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam);
+    ImGui_ImplWin32_WndProcHandler(hWnd, msg, w_param, l_param);
 
     switch (msg) {
     case WM_SIZE:
@@ -73,16 +134,70 @@ LRESULT IMGUI_IMPL_API wndproc(HWND hWnd, UINT msg, WPARAM wParam,
         g_renderer.s_w = rc.right - rc.left;
         g_renderer.s_h = rc.bottom - rc.top;
         break;
-    case WM_KEYDOWN:
-        switch (wParam) {
-        case VK_INSERT:
-            g_renderer.gui.open = !g_renderer.gui.open;
-            break;
-        }
+	case WM_LBUTTONDOWN:
+		g_input.key_pressed[VK_LBUTTON] = true;
+		break;
+	case WM_LBUTTONUP:
+		g_input.key_pressed[VK_LBUTTON] = false;
+		break;
+	case WM_RBUTTONDOWN:
+		g_input.key_pressed[VK_RBUTTON] = true;
+		break;
+	case WM_RBUTTONUP:
+		g_input.key_pressed[VK_RBUTTON] = false;
+		break;
+	case WM_MBUTTONDOWN:
+		g_input.key_pressed[VK_MBUTTON] = true;
+		break;
+	case WM_MBUTTONUP:
+		g_input.key_pressed[VK_MBUTTON] = false;
+		break;
+	case WM_XBUTTONDOWN:
+	{
+		UINT button = GET_XBUTTON_WPARAM(w_param);
+		if (button == XBUTTON1)
+		{
+			g_input.key_pressed[VK_XBUTTON1] = true;
+		}
+		else if (button == XBUTTON2)
+		{
+			g_input.key_pressed[VK_XBUTTON2] = true;
+		}
+		break;
+	}
+	case WM_XBUTTONUP:
+	{
+		UINT button = GET_XBUTTON_WPARAM(w_param);
+		if (button == XBUTTON1)
+		{
+			g_input.key_pressed[VK_XBUTTON1] = false;
+		}
+		else if (button == XBUTTON2)
+		{
+			g_input.key_pressed[VK_XBUTTON2] = false;
+		}
+		break;
+	}
+	case WM_KEYDOWN:
+		g_input.key_pressed[w_param] = true;
+		break;
+	case WM_KEYUP:
+		g_input.key_pressed[w_param] = false;
+		break;
+	default: break;
     }
 
+	g_renderer.handle_input(msg, w_param, l_param);
+
     return CallWindowProc(reinterpret_cast<WNDPROC>(g_renderer.o_wndproc), hWnd,
-        msg, wParam, lParam);
+        msg, w_param, l_param);
+}
+
+void renderer_t::handle_input(UINT msg, WPARAM w_param, LPARAM l_param)
+{
+	if (msg == WM_KEYUP && w_param == g_settings.menu_key)
+		this->gui.active = !this->gui.active,
+		ImGui::GetIO().MouseDrawCursor = this->gui.active;
 }
 
 void renderer_t::initialize()
@@ -132,21 +247,15 @@ void renderer_t::initialize()
     this->s_h = rc.bottom - rc.top;
 }
 
-void renderer_t::terminate()
-{
-    *(present_fn*)(this->vt + 32) = this->o_present;
-    SetWindowLong(hWnd, GWLP_WNDPROC, this->o_wndproc);
-}
-
+bool auth_failed = false;
 void renderer_t::render()
 {
-    ImGui::GetIO().MouseDrawCursor = g_renderer.gui.open;
-    if (!g_security.authenticated) {
-        ImGui::Begin("login", 0, ImVec2(200, 100), 1.f,
-            ImGuiWindowFlags_NoCollapse);
+    if (g_renderer.gui.active && !g_security.authenticated) {
+        if(ImGui::Begin("login", 0, ImVec2(370, 175), 1.f, ImGuiWindowFlags_NoCollapse));
         {
             static char userbuff[64] = "";
             static char passbuff[64] = "";
+
 
             ImGui::PushID(1);
             ImGui::Text("Username: ");
@@ -163,16 +272,24 @@ void renderer_t::render()
             if (ImGui::Button("Login")) {
                 if (!g_security.authenticate(userbuff, passbuff)) {
                     memset(passbuff, 0, 64);
+					auth_failed = true;
                 }
-            }
+			}
+			if (auth_failed)
+			{
+				ImGui::SameLine();
+				ImGui::Text("Wrong password or username.");
+			}
+
+
             ImGui::End();
         }
         return;
     }
 
-    if (g_renderer.gui.open) {
+    if (g_renderer.gui.active) {
         ImGui::Begin(
-            "Aspect", 0, ImVec2(350, 350), 1.f,
+            "Aspect", 0, ImVec2(460, 410), 1.f,
             ImGuiWindowFlags_NoCollapse | ImGuiConfigFlags_NoMouseCursorChange);
         if (ImGui::BeginTabBar("Aspect_tab_bar")) {
             if (ImGui::BeginTabItem("ESP")) {
@@ -184,29 +301,47 @@ void renderer_t::render()
                     ImGui::SameLine();
                     ImGui::ColorEdit4(
                         "Enemy Name Color", &g_settings.esp.color.enemy_name.x,
-                        ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
-                }
-                if (ImGui::CollapsingHeader("ESP Distance")) {
-                    ImGui::Checkbox("- ESP Distance Enabled", &g_settings.esp.distance);
-                    ImGui::Text("- ESP Distance Amount");
-                    ImGui::SameLine();
-                    ImGui::SliderInt("", &g_settings.esp.max_distance, 1, 1000);
-
-                    ImGui::Text("- Enemy Distance Color");
-                    ImGui::SameLine();
-                    ImGui::ColorEdit4(
-                        "Enemy Distance Color", &g_settings.esp.color.enemy_box.x,
-                        ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
-                }
+						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+					ImGui::Text("- Target Name Color");
+					ImGui::SameLine();
+					ImGui::ColorEdit4(
+						"Target Name Color", &g_settings.esp.color.target_name.x,
+						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+				}
+				if (ImGui::CollapsingHeader("ESP Distance")) {
+					ImGui::Checkbox("- ESP Distance Enabled", &g_settings.esp.box);
+					ImGui::Text("- Enemy Distance Color");
+					ImGui::SameLine();
+					ImGui::PushID(1);
+					ImGui::ColorEdit4(
+						"Enemy Distance Color", &g_settings.esp.color.enemy_distance.x,
+						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+					ImGui::PopID();
+					ImGui::Text("- Target Distance Color");
+					ImGui::SameLine();
+					ImGui::PushID(2);
+					ImGui::ColorEdit4(
+						"Target Distance Color", &g_settings.esp.color.target_distance.x,
+						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+					ImGui::PopID();
+				}
                 if (ImGui::CollapsingHeader("ESP Boxes")) {
                     ImGui::Checkbox("- ESP Boxes Enabled", &g_settings.esp.box);
-
                     ImGui::Text("- Enemy Box Color");
-                    ImGui::SameLine();
+					ImGui::SameLine();
+					ImGui::PushID(1);
                     ImGui::ColorEdit4(
                         "Enemy Box Color", &g_settings.esp.color.enemy_box.x,
-                        ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
-                }
+						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+					ImGui::PopID();
+					ImGui::Text("- Target Box Color");
+					ImGui::SameLine();
+					ImGui::PushID(2);
+					ImGui::ColorEdit4(
+						"Enemy Box Color", &g_settings.esp.color.target_box.x,
+						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+					ImGui::PopID();
+				}
                 if (ImGui::CollapsingHeader("ESP Tracers")) {
                     ImGui::Checkbox("- ESP Tracer Enabled", &g_settings.esp.line);
 
@@ -214,25 +349,6 @@ void renderer_t::render()
                     ImGui::SameLine();
                     ImGui::ColorEdit4(
                         "Enemy Tracer Color", &g_settings.esp.color.enemy_line.x,
-                        ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
-                }
-                if (ImGui::CollapsingHeader("ESP Health")) {
-                    ImGui::Checkbox("- ESP Health Enabled", &g_settings.esp.health);
-
-                    ImGui::Text("- Enemy Health Color");
-                    ImGui::SameLine();
-                    ImGui::ColorEdit4(
-                        "Enemy Health Color", &g_settings.esp.color.health.x,
-                        ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
-                }
-                if (ImGui::CollapsingHeader("ESP Health Bar")) {
-                    ImGui::Checkbox("- ESP Health Bar Enabled",
-                        &g_settings.esp.health_bar);
-
-                    ImGui::Text("- Enemy Health Bar Color");
-                    ImGui::SameLine();
-                    ImGui::ColorEdit4(
-                        "Enemy Health Bar Color", &g_settings.esp.color.health_bar.x,
                         ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
                 }
                 if (ImGui::CollapsingHeader("ESP Teams")) {
@@ -251,18 +367,20 @@ void renderer_t::render()
                 ImGui::ColorEdit4(
                     "FOV Color", &g_settings.aim.color.fov.x,
                     ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
-                ImGui::PopID();
+				ImGui::PopID();
+				ImGui::Hotkey("- Aim Key", &g_settings.aim.key);
                 ImGui::Text("- Smooth ");
                 ImGui::SameLine();
                 ImGui::PushID(4);
                 ImGui::SliderInt("", &g_settings.aim.smooth, 2, 100);
                 ImGui::PopID();
-                ImGui::Text("- Fov ");
+                ImGui::Text("- FOV ");
                 ImGui::SameLine();
                 ImGui::PushID(5);
-                ImGui::SliderInt("", &g_settings.aim.fov, 10, 1000);
+				ImGui::SliderInt("", &g_settings.aim.fov, 10, 1000);
+				ImGui::PopID();
+
                 ImGui::EndTabItem();
-                ImGui::PopID();
             }
             if (ImGui::BeginTabItem("Exploits")) {
                 ImGui::Checkbox("Telekill", &g_settings.exploits.telekill.enabled);
@@ -270,38 +388,55 @@ void renderer_t::render()
                 ImGui::SameLine();
                 ImGui::PushID(6);
                 ImGui::SliderInt("", &g_settings.exploits.telekill.distance, 1, 250);
-                ImGui::PopID();
-                ImGui::Checkbox("TeleMover", &g_settings.exploits.telemove.enabled);
-                ImGui::Text("- Amount");
-                ImGui::SameLine();
-                ImGui::PushID(8);
-                ImGui::SliderInt("", &g_settings.exploits.telemove.amount, 1, 50);
-                ImGui::PopID();
-                ImGui::PushID(9);
-                ImGui::Text("- Elevator Height");
-                ImGui::SameLine();
-                if (ImGui::SliderInt("", &g_settings.exploits.elevator.height, 0, 50)) {
-                    []() {
-                        auto local_player = g_sdk.players->get_local_player();
-                        if (INSTANCE_CHECK(local_player))
-                            return;
+				ImGui::PopID();
+				ImGui::PushID(9);
+				ImGui::Text("- Elevator Height");
+				ImGui::SameLine();
+				if (ImGui::SliderInt("", &g_settings.exploits.elevator.height, 0, 50)) {
+					[]() {
+						auto local_player = g_sdk.players->get_local_player();
+						if (INSTANCE_CHECK(local_player))
+							return;
 
-                        auto local_character = local_player->character;
-                        if (INSTANCE_CHECK(local_character))
-                            return;
+						auto local_character = local_player->character;
+						if (INSTANCE_CHECK(local_character))
+							return;
 
-                        auto local_humanoid = local_character->find_child<RBXInstance>("Humanoid");
-                        if (INSTANCE_CHECK(local_humanoid))
-                            return;
+						auto local_humanoid = local_character->find_child<RBXInstance>("Humanoid");
+						if (INSTANCE_CHECK(local_humanoid))
+							return;
 
-                        uintptr_t LH = reinterpret_cast<uintptr_t>(local_humanoid);
-                        g_sdk.sethipheight(LH, g_settings.exploits.elevator.height);
-                    }();
-                }
-                ImGui::PopID();
+						uintptr_t LH = reinterpret_cast<uintptr_t>(local_humanoid);
+						g_sdk.sethipheight(LH, g_settings.exploits.elevator.height);
+					}();
+				}
+				ImGui::PopID();
+				if (ImGui::CollapsingHeader("TeleMover")) {
+					ImGui::Checkbox("- Enabled", &g_settings.exploits.telemove.enabled);
+					ImGui::Text("- Amount");
+					ImGui::SameLine();
+					ImGui::PushID(8);
+					ImGui::SliderInt("", &g_settings.exploits.telemove.amount, 1, 50);
+					ImGui::PopID();
+
+					ImGui::Hotkey("- Forwards ", &g_settings.exploits.telemove.front);
+					ImGui::Hotkey("- Left     ", &g_settings.exploits.telemove.left);
+					ImGui::Hotkey("- Backwards", &g_settings.exploits.telemove.back);
+					ImGui::Hotkey("- Right    ", &g_settings.exploits.telemove.right);
+
+					ImGui::Spacing();
+
+					ImGui::Hotkey("- Up       ", &g_settings.exploits.telemove.up);
+					ImGui::Hotkey("- Down     ", &g_settings.exploits.telemove.down);
+				}
+               
                 ImGui::EndTabItem();
-            }
-            ImGui::EndTabBar();
+            } 
+			if (ImGui::BeginTabItem("Misc")) {
+				ImGui::Hotkey("- Menu Key", &g_settings.menu_key);
+				ImGui::EndTabItem();
+			}
+			ImGui::EndTabBar();
         }
         ImGui::End();
     }
@@ -416,16 +551,24 @@ void renderer_t::render()
                 int offset = -45;
                 if (g_settings.esp.names) {
                     offset += 15;
+
+					ImColor color = ImColor(child->name == global.target.target_name
+						? g_settings.esp.color.target_name : g_settings.esp.color.enemy_name);
+
                     list->AddText(ImVec2(screen_leg.x - 50, screen_leg.y + offset),
-                        ImColor(g_settings.esp.color.enemy_name),
+                        ImColor(color),
                         child->name.c_str(), 0);
                 }
                 if (g_settings.esp.distance) {
                     offset += 15;
                     char* buff;
-                    asprintf(&buff, "Distance: %d", distance);
+					asprintf(&buff, "Distance: %d", distance);
+
+					ImColor color = ImColor(child->name == global.target.target_name
+						? g_settings.esp.color.target_distance : g_settings.esp.color.enemy_distance);
+
                     list->AddText(ImVec2(screen_leg.x - 50, screen_leg.y + offset),
-                        ImColor(g_settings.esp.color.enemy_box), buff, 0);
+                        ImColor(color), buff, 0);
                 }
                 if (g_settings.esp.box) {
                     RECT pos;
@@ -434,9 +577,12 @@ void renderer_t::render()
                     pos.bottom = screen_leg.y;
                     pos.right = screen_torso.x + (screen_head.y - screen_torso.y) / 2.1f;
 
+					ImColor color = ImColor(child->name == global.target.target_name 
+						? g_settings.esp.color.target_box : g_settings.esp.color.enemy_box);
+
                     list->AddRect(ImVec2(pos.left, pos.top),
                         ImVec2(pos.right, pos.bottom),
-                        ImColor(g_settings.esp.color.enemy_box));
+                        ImColor(color));
                 }
                 if (g_settings.esp.line) {
                     list->AddLine(ImVec2(this->s_h, this->s_w / 2),
@@ -446,6 +592,12 @@ void renderer_t::render()
             }
         }
     }
+}
+
+void renderer_t::terminate()
+{
+	*(present_fn*)(this->vt + 32) = this->o_present;
+	SetWindowLong(hWnd, GWLP_WNDPROC, this->o_wndproc);
 }
 
 bool renderer_t::w2s(vec3 origin, vec2& screen)
