@@ -49,16 +49,6 @@ public:
         printf("script_context: 0x%p\n		->name: ", script_context);
         std::cout << script_context->name << std::endl;
 
-        RBXService* replicated = data_model->find_child_class<RBXService>("ReplicatedStorage");
-        printf("replicated: 0x%p\n", replicated);
-
-        RBXService* uis = data_model->find_child_class<RBXService>("UserInputService");
-        printf("uis: 0x%p\n", uis);
-
-        workspace = data_model->find_child<RBXService>("Workspace");
-        camera = workspace->find_child<RBXInstance>("Camera");
-        printf("camera: 0x%p\n", camera);
-
         uint32_t render_view = *(uint32_t*)(*(uint32_t*)(reinterpret_cast<uintptr_t>(data_model) + 0x74) + 0x1C);
         uint32_t visual_engine = *(uint32_t*)(render_view + 0x8);
 
