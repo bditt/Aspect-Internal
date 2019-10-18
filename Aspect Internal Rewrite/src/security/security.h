@@ -35,7 +35,7 @@ private:
     }
 
 public:
-    char* version = "2.0.1";
+    char* version = "2.1.0";
     bool authenticated = false;
 
 public:
