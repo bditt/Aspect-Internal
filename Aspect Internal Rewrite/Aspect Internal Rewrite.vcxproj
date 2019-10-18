@@ -133,27 +133,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="libs\imgui\custom\custom.cc" />
     <ClCompile Include="libs\imgui\imgui.cpp" />
-    <ClCompile Include="libs\imgui\imgui_demo.cpp" />
     <ClCompile Include="libs\imgui\imgui_draw.cpp" />
-    <ClCompile Include="libs\imgui\imgui_impl_dx11.cpp" />
-    <ClCompile Include="libs\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="libs\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="libs\imgui\impl\imgui_impl_dx11.cpp" />
+    <ClCompile Include="libs\imgui\impl\imgui_impl_dx9.cpp" />
+    <ClCompile Include="libs\imgui\impl\imgui_impl_win32.cpp" />
     <ClCompile Include="src\hacks\aimbot\aimbot.cc" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Memory.cpp" />
     <ClCompile Include="src\renderer\renderer.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="libs\imgui\custom\custom.h" />
     <ClInclude Include="libs\imgui\imconfig.h" />
     <ClInclude Include="libs\imgui\imgui.h" />
-    <ClInclude Include="libs\imgui\imgui_impl_dx11.h" />
-    <ClInclude Include="libs\imgui\imgui_impl_win32.h" />
     <ClInclude Include="libs\imgui\imgui_internal.h" />
+    <ClInclude Include="libs\imgui\impl\imgui_impl_dx11.h" />
+    <ClInclude Include="libs\imgui\impl\imgui_impl_dx9.h" />
+    <ClInclude Include="libs\imgui\impl\imgui_impl_win32.h" />
     <ClInclude Include="libs\imgui\imstb_rectpack.h" />
     <ClInclude Include="libs\imgui\imstb_textedit.h" />
     <ClInclude Include="libs\imgui\imstb_truetype.h" />
     <ClInclude Include="src\commons.h" />
+    <ClInclude Include="src\global.h" />
     <ClInclude Include="src\hacks\aimbot\aimbot.h" />
     <ClInclude Include="src\Memory.h" />
     <ClInclude Include="src\renderer\renderer.h" />

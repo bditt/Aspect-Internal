@@ -56,24 +56,23 @@ void ConsoleHacks()
 }
 
 void Console(const char* title)
-{ // void console haxs
+{
     AllocConsole();
     SetConsoleTitleA(title);
     freopen("CONOUT$", "w", stdout);
     freopen("CONIN$", "r", stdin);
-    HWND ConsoleHandle = GetConsoleWindow(); // gets the console window
-    ::SetWindowPos(
+    HWND ConsoleHandle = GetConsoleWindow();
+    SetWindowPos(
         ConsoleHandle, HWND_NOTOPMOST, 0, 0, 0, 0,
-        SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW); // make program topmost (above roblox)
-        // topmost function: Look at
-        // http://www.cplusplus.com/forum/windows/125528/
-    ::ShowWindow(ConsoleHandle, SW_NORMAL); // show window::SetParent
+        SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+    ShowWindow(ConsoleHandle, SW_NORMAL);
 }
 
 sdk_t g_sdk;
 aimbot_t g_aimbot;
 settings_t g_settings;
 security_t g_security;
+
 
 unsigned long __stdcall main(LPVOID)
 {
@@ -102,59 +101,13 @@ unsigned long __stdcall main(LPVOID)
     g_sdk.initialize();
     g_renderer.initialize();
 
-    /* Old aimbot to be replaced */
     std::thread aim([]() {
-        while (1) {
-            if (!g_security.authenticated)
-                continue;
-            if (!g_settings.aim.enabled)
-                continue;
-
-            if (!(GetAsyncKeyState(VK_RBUTTON) & 0x8000))
-                continue;
-
-            {
-                std::string ClosestPlayerName;
-                float closest = 1000000.0f;
-                float closestx = 1;
-                float closesty = 1;
-                for (auto Player : *g_sdk.players->children) {
-                    if (Player->user_id != g_sdk.players->get_local_player()->user_id) {
-                        if (g_sdk.players->get_local_player()->team_id != Player->team_id || !g_settings.aim.team_check) {
-                            RBXCharacter* Character = Player->character;
-                            if (!Character || reinterpret_cast<uintptr_t>(Character) == 0xF || Character == NULL) {
-                                continue;
-                            }
-                            RBXInstance* Head = Character->find_child<RBXInstance>("Head");
-                            if (!Head || reinterpret_cast<uintptr_t>(Head) == 0xF || Head == NULL) {
-                                std::cout << "Failed to find Head!" << std::endl;
-                                continue;
-                            }
-                            vec2 screenPos1;
-                            vec2 screenPos2;
-                            vec3 vpos1;
-                            vpos1 = Head->get_primitive()->get_body()->get_position();
-                            if (g_settings.aim.head) {
-                                vpos1.y = vpos1.y + 1.5f;
-                            }
-                            if (g_renderer.w2s(vpos1, screenPos1)) {
-                                float distance = g_aimbot.distance_cross(screenPos1);
-                                if (distance < closest && distance <= g_settings.aim.fov) {
-                                    closest = distance;
-                                    closestx = screenPos1.x;
-                                    closesty = screenPos1.y;
-                                }
-                            }
-                        }
-                    }
-                }
-                if (closestx != 1 && closesty != 1) {
-                    g_aimbot.aim_at(vec2 { closestx, closesty });
-                }
-            }
+		while (1) {
+			g_aimbot.update();
             Sleep(25);
         }
     });
+
     /* To be replaced aswell... i just want to get this out asap */
     std::thread exploits([]() {
         while (1) {
@@ -250,25 +203,22 @@ unsigned long __stdcall main(LPVOID)
                 auto local_head_body = local_head_primitive->get_body();
                 if (INSTANCE_CHECK(local_head_body))
                     return;
+				
+				if (g_input.key_pressed[g_settings.exploits.telemove.right])
+					local_head_body->set_pos_x(local_head_body->get_pos_x() - g_settings.exploits.telemove.amount);
+				if (g_input.key_pressed[g_settings.exploits.telemove.left]) 
+					local_head_body->set_pos_x(local_head_body->get_pos_x() + g_settings.exploits.telemove.amount);
 
-                if (GetAsyncKeyState(VK_NUMPAD4) & 0x8000) {
-                    local_head_body->set_pos_x(local_head_body->get_pos_x() + g_settings.exploits.telemove.amount);
-                }
-                if (GetAsyncKeyState(VK_NUMPAD5) & 0x8000) {
-                    local_head_body->set_pos_z(local_head_body->get_pos_z() - g_settings.exploits.telemove.amount);
-                }
-                if (GetAsyncKeyState(VK_NUMPAD6) & 0x8000) {
-                    local_head_body->set_pos_x(local_head_body->get_pos_x() - g_settings.exploits.telemove.amount);
-                }
-                if (GetAsyncKeyState(VK_NUMPAD8) & 0x8000) {
+				if (g_input.key_pressed[g_settings.exploits.telemove.back])
+					local_head_body->set_pos_z(local_head_body->get_pos_z() - g_settings.exploits.telemove.amount);
+				if (g_input.key_pressed[g_settings.exploits.telemove.front])
                     local_head_body->set_pos_z(local_head_body->get_pos_z() + g_settings.exploits.telemove.amount);
-                }
-                if (GetAsyncKeyState(VK_NUMPAD7) & 0x8000) {
+
+				if (g_input.key_pressed[g_settings.exploits.telemove.down])
                     local_head_body->set_pos_y(local_head_body->get_pos_y() - g_settings.exploits.telemove.amount);
-                }
-                if (GetAsyncKeyState(VK_NUMPAD9) & 0x8000) {
+				if (g_input.key_pressed[g_settings.exploits.telemove.up])
                     local_head_body->set_pos_y(local_head_body->get_pos_y() + g_settings.exploits.telemove.amount);
-                }
+                
                 Sleep(50);
             }();
         }
