@@ -293,7 +293,8 @@ void renderer_t::render()
             ImGuiWindowFlags_NoCollapse | ImGuiConfigFlags_NoMouseCursorChange);
         if (ImGui::BeginTabBar("Aspect_tab_bar")) {
             if (ImGui::BeginTabItem("ESP")) {
-                ImGui::Checkbox("- ESP Enabled", &g_settings.esp.enabled);
+				ImGui::Checkbox("- ESP Enabled", &g_settings.esp.enabled);
+				ImGui::Checkbox("- Rainbow Enabled", &g_settings.esp.rainbow);
                 if (ImGui::CollapsingHeader("ESP Names")) {
                     ImGui::Checkbox("- ESP Names Enabled", &g_settings.esp.names);
 
@@ -342,7 +343,7 @@ void renderer_t::render()
 					ImGui::SameLine();
 					ImGui::PushID(6);
 					ImGui::ColorEdit4(
-						"Enemy Box Color", &g_settings.esp.color.target_box.x,
+						"Target Box Color", &g_settings.esp.color.target_box.x,
 						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
 					ImGui::PopID();
 				}
@@ -356,6 +357,14 @@ void renderer_t::render()
                         "Enemy Tracer Color", &g_settings.esp.color.enemy_line.x,
                         ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
 					ImGui::PopID();
+
+					ImGui::Text("- Target Tracer Color");
+					ImGui::SameLine();
+					ImGui::PushID(8);
+					ImGui::ColorEdit4(
+						"Target Tracer Color", &g_settings.esp.color.target_line.x,
+						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+					ImGui::PopID();
                 }
                 if (ImGui::CollapsingHeader("ESP Teams")) {
                     ImGui::Checkbox("- ESP Team Check Enabled",
@@ -364,7 +373,7 @@ void renderer_t::render()
                 ImGui::EndTabItem();
             }
             if (ImGui::BeginTabItem("Aimbot")) {
-                ImGui::PushID(8);
+                ImGui::PushID(9);
                 ImGui::Checkbox("Aimbot", &g_settings.aim.enabled);
                 ImGui::Checkbox("- Aim at Head", &g_settings.aim.head);
                 ImGui::Checkbox("- Team Check", &g_settings.aim.team_check);
@@ -377,12 +386,12 @@ void renderer_t::render()
 				ImGui::Hotkey("- Aim Key", &g_settings.aim.key);
                 ImGui::Text("- Smooth ");
                 ImGui::SameLine();
-                ImGui::PushID(9);
+                ImGui::PushID(10);
                 ImGui::SliderInt("", &g_settings.aim.smooth, 2, 100);
                 ImGui::PopID();
                 ImGui::Text("- FOV ");
                 ImGui::SameLine();
-                ImGui::PushID(10);
+                ImGui::PushID(11);
 				ImGui::SliderInt("", &g_settings.aim.fov, 10, 1000);
 				ImGui::PopID();
 
@@ -392,10 +401,10 @@ void renderer_t::render()
                 ImGui::Checkbox("Telekill", &g_settings.exploits.telekill.enabled);
                 ImGui::Text("- Distance");
                 ImGui::SameLine();
-                ImGui::PushID(11);
+                ImGui::PushID(12);
                 ImGui::SliderInt("", &g_settings.exploits.telekill.distance, 1, 250);
 				ImGui::PopID();
-				ImGui::PushID(12);
+				ImGui::PushID(13);
 				ImGui::Text("- Elevator Height");
 				ImGui::SameLine();
 				if (ImGui::SliderInt("", &g_settings.exploits.elevator.height, 0, 50)) {
@@ -421,7 +430,7 @@ void renderer_t::render()
 					ImGui::Checkbox("- Enabled", &g_settings.exploits.telemove.enabled);
 					ImGui::Text("- Amount");
 					ImGui::SameLine();
-					ImGui::PushID(13);
+					ImGui::PushID(14);
 					ImGui::SliderInt("", &g_settings.exploits.telemove.amount, 1, 50);
 					ImGui::PopID();
 
@@ -446,6 +455,21 @@ void renderer_t::render()
         }
         ImGui::End();
     }
+
+	if (g_settings.esp.rainbow)
+	{
+		static float rainbow;
+		rainbow += 0.005f;
+		if (rainbow > 1.f)
+			rainbow = 0.f;
+
+		ImGui::GetStyle().Colors[ImGuiCol_Border] = ImColor::HSV(rainbow, 1.f, 1.f);
+		g_settings.esp.color.enemy_box = ImColor::HSV(rainbow, 1.f, 1.f);
+		g_settings.esp.color.enemy_distance = ImColor::HSV(rainbow, 1.f, 1.f);
+		g_settings.esp.color.enemy_line = ImColor::HSV(rainbow, 1.f, 1.f);
+		g_settings.esp.color.enemy_name = ImColor::HSV(rainbow, 1.f, 1.f);
+		g_settings.aim.color.fov = ImColor::HSV(rainbow, 1.f, 1.f);
+	}
 
     ImDrawList* list = ImGui::GetOverlayDrawList();
 

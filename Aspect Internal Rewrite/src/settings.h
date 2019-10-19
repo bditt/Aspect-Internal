@@ -4,7 +4,7 @@
 
 struct settings_t {
     struct {
-        bool enabled = true;
+		bool enabled = true;
         bool names = true;
         bool distance = true;
         bool box = true;
@@ -13,10 +13,13 @@ struct settings_t {
 
         int max_distance = 1000;
 
+		bool rainbow = false;
+
 		struct {
 			ImVec4 target_box = ImVec4(1.0f, 1.0f, 0.4f, 1.0f);
 			ImVec4 target_name = ImVec4(1.0f, 1.0f, 0.4f, 1.0f);
 			ImVec4 target_distance = ImVec4(1.0f, 1.0f, 0.4f, 1.0f);
+			ImVec4 target_line = ImVec4(1.00f, 0.54f, 0.01f, 0.71f);
 
 			ImVec4 enemy_distance = ImVec4(1.00f, 0.54f, 0.01f, 0.71f);
             ImVec4 enemy_name = ImVec4(1.00f, 0.54f, 0.01f, 0.71f);
