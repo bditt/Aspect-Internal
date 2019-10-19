@@ -41,10 +41,6 @@ public:
         printf("players: 0x%p\n		->name: ", players);
         std::cout << players->name << std::endl;
 
-        script_context = data_model->find_child_class<RBXService>("ScriptContext");
-        printf("script_context: 0x%p\n		->name: ", script_context);
-        std::cout << script_context->name << std::endl;
-
         uint32_t render_view = *(uint32_t*)(*(uint32_t*)(reinterpret_cast<uintptr_t>(data_model) + 0x74) + 0x1C);
         uint32_t visual_engine = *(uint32_t*)(render_view + 0x8);
 
