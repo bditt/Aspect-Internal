@@ -18,10 +18,6 @@ private:
 public:
     RBXDataModel* data_model;
     RBXPlayers* players;
-    RBXService* workspace;
-    RBXService* script_context;
-
-    RBXInstance* camera;
 
     ViewMatrix_t* view_matrix;
 
