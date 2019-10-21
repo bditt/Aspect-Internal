@@ -36,8 +36,11 @@ struct settings_t {
         bool team_check = true;
         bool draw_fov = true;
 
-        int fov = 100;
+		int fov = 100;
+		int distance = 1000;
         int smooth = 3;
+
+		float x_off = 0;
 
         struct {
 			ImVec4 fov = ImVec4(1.00f, 0.54f, 0.01f, 0.71f);
