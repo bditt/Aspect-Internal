@@ -247,7 +247,6 @@ void renderer_t::initialize()
     this->s_h = rc.bottom - rc.top;
 }
 
-bool auth_failed = false;
 void renderer_t::render()
 {
     if (g_renderer.gui.active && !g_security.authenticated) {
@@ -255,7 +254,7 @@ void renderer_t::render()
         {
             static char userbuff[64] = "";
             static char passbuff[64] = "";
-
+			static bool auth = false;
 
             ImGui::PushID(1);
             ImGui::Text("Username: ");
@@ -272,10 +271,10 @@ void renderer_t::render()
             if (ImGui::Button("Login")) {
                 if (!g_security.authenticate(userbuff, passbuff)) {
                     memset(passbuff, 0, 64);
-					auth_failed = true;
+					auth = true;
                 }
 			}
-			if (auth_failed)
+			if (auth)
 			{
 				ImGui::SameLine();
 				ImGui::Text("Wrong password or username.");
@@ -294,7 +293,7 @@ void renderer_t::render()
         if (ImGui::BeginTabBar("Aspect_tab_bar")) {
             if (ImGui::BeginTabItem("ESP")) {
 				ImGui::Checkbox("- ESP Enabled", &g_settings.esp.enabled);
-				ImGui::Checkbox("- Rainbow Enabled", &g_settings.esp.rainbow);
+				ImGui::SliderInt("- ESP Max distance", &g_settings.esp.max_distance, 0, 1000);
                 if (ImGui::CollapsingHeader("ESP Names")) {
                     ImGui::Checkbox("- ESP Names Enabled", &g_settings.esp.names);
 
@@ -372,9 +371,9 @@ void renderer_t::render()
                 }
                 ImGui::EndTabItem();
             }
-            if (ImGui::BeginTabItem("Aimbot")) {
-                ImGui::PushID(9);
-                ImGui::Checkbox("Aimbot", &g_settings.aim.enabled);
+			if (ImGui::BeginTabItem("Aimbot")) {
+				ImGui::PushID(9);
+				ImGui::Checkbox("Aimbot", &g_settings.aim.enabled);
                 ImGui::Checkbox("- Aim at Head", &g_settings.aim.head);
                 ImGui::Checkbox("- Team Check", &g_settings.aim.team_check);
                 ImGui::Checkbox("- Draw FOV", &g_settings.aim.draw_fov);
@@ -389,10 +388,15 @@ void renderer_t::render()
                 ImGui::PushID(10);
                 ImGui::SliderInt("", &g_settings.aim.smooth, 2, 100);
                 ImGui::PopID();
-                ImGui::Text("- FOV ");
-                ImGui::SameLine();
+				ImGui::Text("- FOV ");
+				ImGui::SameLine();
                 ImGui::PushID(11);
 				ImGui::SliderInt("", &g_settings.aim.fov, 10, 1000);
+				ImGui::PopID();
+				ImGui::Text("- Max Distance ");
+				ImGui::SameLine();
+				ImGui::PushID(12);
+				ImGui::SliderInt("", &g_settings.aim.distance, 0, 1000);
 				ImGui::PopID();
 
                 ImGui::EndTabItem();
@@ -401,10 +405,10 @@ void renderer_t::render()
                 ImGui::Checkbox("Telekill", &g_settings.exploits.telekill.enabled);
                 ImGui::Text("- Distance");
                 ImGui::SameLine();
-                ImGui::PushID(12);
+                ImGui::PushID(13);
                 ImGui::SliderInt("", &g_settings.exploits.telekill.distance, 1, 250);
 				ImGui::PopID();
-				ImGui::PushID(13);
+				ImGui::PushID(14);
 				ImGui::Text("- Elevator Height");
 				ImGui::SameLine();
 				if (ImGui::SliderInt("", &g_settings.exploits.elevator.height, 0, 50)) {
@@ -430,7 +434,7 @@ void renderer_t::render()
 					ImGui::Checkbox("- Enabled", &g_settings.exploits.telemove.enabled);
 					ImGui::Text("- Amount");
 					ImGui::SameLine();
-					ImGui::PushID(14);
+					ImGui::PushID(15);
 					ImGui::SliderInt("", &g_settings.exploits.telemove.amount, 1, 50);
 					ImGui::PopID();
 
@@ -449,6 +453,7 @@ void renderer_t::render()
             } 
 			if (ImGui::BeginTabItem("Misc")) {
 				ImGui::Hotkey("- Menu Key", &g_settings.menu_key);
+				ImGui::Checkbox("- Rainbow", &g_settings.esp.rainbow);
 				ImGui::EndTabItem();
 			}
 			ImGui::EndTabBar();
@@ -476,7 +481,8 @@ void renderer_t::render()
     if (g_settings.aim.draw_fov) {
         const ImU32 col32 = ImColor(g_settings.aim.color.fov);
         list->AddCircle(ImVec2(s_w / 2, s_h / 2), g_settings.aim.fov, col32, 32);
-    }
+	}
+	list->AddCircleFilled(ImVec2((s_w / 2) + g_settings.aim.x_off, s_h / 2), 5.f, ImColor(g_settings.aim.color.fov));
 
     if (g_settings.esp.enabled) {
         for (auto child : *g_sdk.players->children) {
