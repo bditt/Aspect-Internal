@@ -281,7 +281,6 @@ void Renderer::render()
 				ImGui::Text("Wrong password or username.");
 			}
 
-
             ImGui::End();
         }
         return;
