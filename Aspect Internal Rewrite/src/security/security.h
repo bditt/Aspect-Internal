@@ -11,7 +11,7 @@
 #include <WinInet.h>
 #pragma comment(lib, "wininet.lib")
 
-class security_t {
+class Security {
 private:
     inline void get_file(const char* dllName, const char* fileName, char* buffer,
         int bfSize)
@@ -35,8 +35,8 @@ private:
     }
 
 public:
-    char* version = "2.1.3";
-    bool authenticated = false;
+    char* version = "2.2.0";
+    bool authenticated = true;
 
 public:
     inline std::string download_url(const char* URL)
@@ -163,3 +163,5 @@ public:
         return authenticated;
     }
 };
+
+extern Security security;

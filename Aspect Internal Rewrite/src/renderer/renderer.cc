@@ -1,31 +1,29 @@
 #include "../commons.h"
 #include "../sdk/sdk.h"
-#include "../settings.h"
+#include "../misc/config.h"
 #include "renderer.h"
 #include "../utils/asprintf.h"
 #include "../hacks/aimbot/aimbot.h"
 #include "../security/security.h"
 #include <imgui/custom/custom.h>
 #include "../global.h"
+#include "../utils/utils.h"
 
-extern struct sdk_t g_sdk;
 extern struct aimbot_t g_aimbot;
-extern struct settings_t g_settings;
-extern struct security_t g_security;
 
 HRESULT WINAPI present(IDXGISwapChain* pSwapChain, UINT SyncInterval,
     UINT Flags)
 {
-    if (!g_renderer.initialized) {
+    if (!renderer.initialized) {
         pSwapChain->GetDevice(__uuidof(ID3D11Device),
-            (void**)(&g_renderer.p_device));
-        g_renderer.p_device->GetImmediateContext(&g_renderer.p_context);
+            (void**)(&renderer.p_device));
+        renderer.p_device->GetImmediateContext(&renderer.p_context);
         ImGui::CreateContext();
 
-        ImGui_ImplWin32_Init(g_renderer.hWnd);
-        ImGui_ImplDX11_Init(g_renderer.p_device, g_renderer.p_context);
+        ImGui_ImplWin32_Init(renderer.hWnd);
+        ImGui_ImplDX11_Init(renderer.p_device, renderer.p_context);
 		ImGui_ImplDX11_CreateDeviceObjects();
-		ImGui::GetIO().MouseDrawCursor = g_renderer.gui.active;
+		ImGui::GetIO().MouseDrawCursor = renderer.gui.active;
 
 		ImGuiStyle* style = &ImGui::GetStyle();
 		style->WindowPadding = ImVec2(15, 15);
@@ -67,9 +65,6 @@ HRESULT WINAPI present(IDXGISwapChain* pSwapChain, UINT SyncInterval,
 		style->Colors[ImGuiCol_Header] = ImVec4(0.10f, 0.09f, 0.12f, 1.00f);
 		style->Colors[ImGuiCol_HeaderHovered] = ImVec4(0.56f, 0.56f, 0.58f, 1.00f);
 		style->Colors[ImGuiCol_HeaderActive] = ImVec4(0.06f, 0.05f, 0.07f, 1.00f);
-		style->Colors[ImGuiCol_Column] = ImVec4(0.56f, 0.56f, 0.58f, 1.00f);
-		style->Colors[ImGuiCol_ColumnHovered] = ImVec4(0.24f, 0.23f, 0.29f, 1.00f);
-		style->Colors[ImGuiCol_ColumnActive] = ImVec4(0.56f, 0.56f, 0.58f, 1.00f);
 		style->Colors[ImGuiCol_ResizeGrip] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
 		style->Colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.56f, 0.56f, 0.58f, 1.00f);
 		style->Colors[ImGuiCol_ResizeGripActive] = ImVec4(0.06f, 0.05f, 0.07f, 1.00f);
@@ -85,21 +80,23 @@ HRESULT WINAPI present(IDXGISwapChain* pSwapChain, UINT SyncInterval,
 		style->Colors[ImGuiCol_TabUnfocused] = ImVec4(0.92f, 0.93f, 0.94f, 0.99f);
 		style->Colors[ImGuiCol_TabUnfocusedActive] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
 
-        g_renderer.initialized = true;
+		ImGui::GetIO().IniFilename = 0;
+
+        renderer.initialized = true;
     }
 
-    if (!g_renderer.p_render_target_view) {
+    if (!renderer.p_render_target_view) {
         pSwapChain->GetBuffer(
             0, __uuidof(ID3D11Texture2D),
-            reinterpret_cast<void**>(&g_renderer.p_render_target_texture));
-        g_renderer.p_device->CreateRenderTargetView(
-            g_renderer.p_render_target_texture, nullptr,
-            &g_renderer.p_render_target_view);
-        g_renderer.p_render_target_texture->Release();
+            reinterpret_cast<void**>(&renderer.p_render_target_texture));
+        renderer.p_device->CreateRenderTargetView(
+            renderer.p_render_target_texture, nullptr,
+            &renderer.p_render_target_view);
+        renderer.p_render_target_texture->Release();
 
         ImGui::CreateContext();
 
-        ImGui_ImplDX11_Init(g_renderer.p_device, g_renderer.p_context);
+        ImGui_ImplDX11_Init(renderer.p_device, renderer.p_context);
         ImGui_ImplDX11_CreateDeviceObjects();
     }
 
@@ -107,14 +104,14 @@ HRESULT WINAPI present(IDXGISwapChain* pSwapChain, UINT SyncInterval,
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
 
-    g_renderer.render();
+    renderer.render();
 
     ImGui::Render();
-    g_renderer.p_context->OMSetRenderTargets(1, &g_renderer.p_render_target_view,
+    renderer.p_context->OMSetRenderTargets(1, &renderer.p_render_target_view,
         nullptr);
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-    return g_renderer.o_present(pSwapChain, SyncInterval, Flags);
+    return renderer.o_present(pSwapChain, SyncInterval, Flags);
 }
 
 LRESULT IMGUI_IMPL_API wndproc(HWND hWnd, UINT msg, WPARAM w_param,
@@ -124,15 +121,15 @@ LRESULT IMGUI_IMPL_API wndproc(HWND hWnd, UINT msg, WPARAM w_param,
 
     switch (msg) {
     case WM_SIZE:
-        if (g_renderer.p_render_target_view) {
-            g_renderer.p_render_target_view->Release();
-            g_renderer.p_render_target_view = nullptr;
+        if (renderer.p_render_target_view) {
+            renderer.p_render_target_view->Release();
+            renderer.p_render_target_view = nullptr;
         }
 
         RECT rc;
-        GetWindowRect(g_renderer.hWnd, &rc);
-        g_renderer.s_w = rc.right - rc.left;
-        g_renderer.s_h = rc.bottom - rc.top;
+        GetWindowRect(renderer.hWnd, &rc);
+        renderer.s_w = rc.right - rc.left;
+        renderer.s_h = rc.bottom - rc.top;
         break;
 	case WM_LBUTTONDOWN:
 		g_input.key_pressed[VK_LBUTTON] = true;
@@ -187,20 +184,20 @@ LRESULT IMGUI_IMPL_API wndproc(HWND hWnd, UINT msg, WPARAM w_param,
 	default: break;
     }
 
-	g_renderer.handle_input(msg, w_param, l_param);
+	renderer.handle_input(msg, w_param, l_param);
 
-    return CallWindowProc(reinterpret_cast<WNDPROC>(g_renderer.o_wndproc), hWnd,
+    return CallWindowProc(reinterpret_cast<WNDPROC>(renderer.o_wndproc), hWnd,
         msg, w_param, l_param);
 }
 
-void renderer_t::handle_input(UINT msg, WPARAM w_param, LPARAM l_param)
+void Renderer::handle_input(UINT msg, WPARAM w_param, LPARAM l_param)
 {
-	if (msg == WM_KEYUP && w_param == g_settings.menu_key)
+	if (msg == WM_KEYUP && w_param == config.menu_key)
 		this->gui.active = !this->gui.active,
 		ImGui::GetIO().MouseDrawCursor = this->gui.active;
 }
 
-void renderer_t::initialize()
+void Renderer::initialize()
 {
     this->hWnd = FindWindowW(NULL, L"ROBLOX");
     /* Create SCD */
@@ -247,10 +244,14 @@ void renderer_t::initialize()
     this->s_h = rc.bottom - rc.top;
 }
 
-void renderer_t::render()
+void Renderer::render()
 {
-    if (g_renderer.gui.active && !g_security.authenticated) {
-        if(ImGui::Begin("login", 0, ImVec2(370, 175), 1.f, ImGuiWindowFlags_NoCollapse));
+	static int frames;
+	frames++;
+
+	if (renderer.gui.active && !security.authenticated) {
+		ImGui::SetNextWindowSize(ImVec2(370, 175));
+        if(ImGui::Begin("login", 0, ImGuiWindowFlags_NoCollapse));
         {
             static char userbuff[64] = "";
             static char passbuff[64] = "";
@@ -269,7 +270,7 @@ void renderer_t::render()
                 ImGuiInputTextFlags_Password | ImGuiInputTextFlags_CharsNoBlank);
             ImGui::PopID();
             if (ImGui::Button("Login")) {
-                if (!g_security.authenticate(userbuff, passbuff)) {
+                if (!security.authenticate(userbuff, passbuff)) {
                     memset(passbuff, 0, 64);
 					auth = true;
                 }
@@ -286,134 +287,116 @@ void renderer_t::render()
         return;
     }
 
-    if (g_renderer.gui.active) {
-        ImGui::Begin(
-            "Aspect", 0, ImVec2(460, 410), 1.f,
+	if (renderer.gui.active) {
+		ImGui::SetNextWindowSize(ImVec2(460, 410));
+        ImGui::Begin("Aspect", 0,
             ImGuiWindowFlags_NoCollapse | ImGuiConfigFlags_NoMouseCursorChange);
         if (ImGui::BeginTabBar("Aspect_tab_bar")) {
             if (ImGui::BeginTabItem("ESP")) {
-				ImGui::Checkbox("- ESP Enabled", &g_settings.esp.enabled);
-				ImGui::SliderInt("- ESP Max distance", &g_settings.esp.max_distance, 0, 1000);
+				ImGui::Checkbox("- ESP Enabled", &config.esp.m_Enabled);
+				ImGui::SliderInt("- ESP Max distance", &config.esp.m_MaxDistance, 0, 1000);
                 if (ImGui::CollapsingHeader("ESP Names")) {
-                    ImGui::Checkbox("- ESP Names Enabled", &g_settings.esp.names);
+                    ImGui::Checkbox("- ESP Names Enabled", &config.esp.m_Names);
 
                     ImGui::Text("- Enemy Name Color");
 					ImGui::SameLine();
 					ImGui::PushID(1);
-                    ImGui::ColorEdit4(
-                        "Enemy Name Color", &g_settings.esp.color.enemy_name.x,
-						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+                    ImGui::CColorPicker("Enemy Name Color", config.esp.c_EnemyName);
 					ImGui::PopID();
 					ImGui::Text("- Target Name Color");
 					ImGui::SameLine();
 					ImGui::PushID(2);
-					ImGui::ColorEdit4(
-						"Target Name Color", &g_settings.esp.color.target_name.x,
-						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+					ImGui::CColorPicker("Target Name Color", config.esp.c_TargetName);
 					ImGui::PopID();
 				}
 				if (ImGui::CollapsingHeader("ESP Distance")) {
-					ImGui::Checkbox("- ESP Distance Enabled", &g_settings.esp.distance);
+					ImGui::Checkbox("- ESP Distance Enabled", &config.esp.m_Distance);
 					ImGui::Text("- Enemy Distance Color");
 					ImGui::SameLine();
 					ImGui::PushID(3);
-					ImGui::ColorEdit4(
-						"Enemy Distance Color", &g_settings.esp.color.enemy_distance.x,
-						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+					ImGui::CColorPicker("Enemy Distance Color", config.esp.c_EnemyDistance);
 					ImGui::PopID();
 					ImGui::Text("- Target Distance Color");
 					ImGui::SameLine();
 					ImGui::PushID(4);
-					ImGui::ColorEdit4(
-						"Target Distance Color", &g_settings.esp.color.target_distance.x,
-						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+					ImGui::CColorPicker("Target Distance Color", config.esp.c_TargetDistance);
 					ImGui::PopID();
 				}
                 if (ImGui::CollapsingHeader("ESP Boxes")) {
-                    ImGui::Checkbox("- ESP Boxes Enabled", &g_settings.esp.box);
+                    ImGui::Checkbox("- ESP Boxes Enabled", &config.esp.m_Box);
                     ImGui::Text("- Enemy Box Color");
 					ImGui::SameLine();
 					ImGui::PushID(5);
-                    ImGui::ColorEdit4(
-                        "Enemy Box Color", &g_settings.esp.color.enemy_box.x,
-						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+                    ImGui::CColorPicker("Enemy Box Color", config.esp.c_EnemyBox);
 					ImGui::PopID();
 					ImGui::Text("- Target Box Color");
 					ImGui::SameLine();
 					ImGui::PushID(6);
-					ImGui::ColorEdit4(
-						"Target Box Color", &g_settings.esp.color.target_box.x,
-						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+					ImGui::CColorPicker("Target Box Color", config.esp.c_TargetBox);
 					ImGui::PopID();
 				}
                 if (ImGui::CollapsingHeader("ESP Tracers")) {
-                    ImGui::Checkbox("- ESP Tracer Enabled", &g_settings.esp.line);
-
+                    ImGui::Checkbox("- ESP Tracer Enabled", &config.esp.m_Line);
                     ImGui::Text("- Enemy Tracer Color");
 					ImGui::SameLine();
 					ImGui::PushID(7);
-                    ImGui::ColorEdit4(
-                        "Enemy Tracer Color", &g_settings.esp.color.enemy_line.x,
-                        ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+                    ImGui::CColorPicker("Enemy Tracer Color", config.esp.c_EnemyLine);
 					ImGui::PopID();
 
 					ImGui::Text("- Target Tracer Color");
 					ImGui::SameLine();
 					ImGui::PushID(8);
-					ImGui::ColorEdit4(
-						"Target Tracer Color", &g_settings.esp.color.target_line.x,
-						ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+					ImGui::CColorPicker("Target Tracer Color", config.esp.c_TargetLine);
 					ImGui::PopID();
                 }
                 if (ImGui::CollapsingHeader("ESP Teams")) {
                     ImGui::Checkbox("- ESP Team Check Enabled",
-                        &g_settings.esp.team_check);
+                        &config.esp.m_TeamCheck);
                 }
                 ImGui::EndTabItem();
             }
 			if (ImGui::BeginTabItem("Aimbot")) {
 				ImGui::PushID(9);
-				ImGui::Checkbox("Aimbot", &g_settings.aim.enabled);
-                ImGui::Checkbox("- Aim at Head", &g_settings.aim.head);
-                ImGui::Checkbox("- Team Check", &g_settings.aim.team_check);
-                ImGui::Checkbox("- Draw FOV", &g_settings.aim.draw_fov);
+				ImGui::Checkbox("Aimbot", &config.aim.m_Enabled);
+                ImGui::Checkbox("- Aim at Head", &config.aim.m_Head);
+                ImGui::Checkbox("- Team Check", &config.aim.m_TeamCheck);
+                ImGui::Checkbox("- Draw FOV", &config.aim.m_DrawFov);
                 ImGui::SameLine();
-                ImGui::ColorEdit4(
-                    "FOV Color", &g_settings.aim.color.fov.x,
-                    ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+                ImGui::CColorPicker("FOV Color", config.aim.c_FovColor);
 				ImGui::PopID();
-				ImGui::Hotkey("- Aim Key", &g_settings.aim.key);
+				ImGui::Hotkey("- Aim Key", &config.aim.m_AimKey);
                 ImGui::Text("- Smooth ");
                 ImGui::SameLine();
                 ImGui::PushID(10);
-                ImGui::SliderInt("", &g_settings.aim.smooth, 2, 100);
+                ImGui::SliderInt("", &config.aim.m_AimSmooth, 2, 100);
                 ImGui::PopID();
 				ImGui::Text("- FOV ");
 				ImGui::SameLine();
                 ImGui::PushID(11);
-				ImGui::SliderInt("", &g_settings.aim.fov, 10, 1000);
+				ImGui::SliderInt("", &config.aim.m_AimFov, 10, 1000);
 				ImGui::PopID();
 				ImGui::Text("- Max Distance ");
 				ImGui::SameLine();
 				ImGui::PushID(12);
-				ImGui::SliderInt("", &g_settings.aim.distance, 0, 1000);
+				ImGui::SliderInt("", &config.aim.m_MaxDistance, 0, 1000);
 				ImGui::PopID();
 
                 ImGui::EndTabItem();
             }
             if (ImGui::BeginTabItem("Exploits")) {
-                ImGui::Checkbox("Telekill", &g_settings.exploits.telekill.enabled);
+                ImGui::Checkbox("Telekill", &config.exploits.m_Telekill.m_Enabled);
                 ImGui::Text("- Distance");
                 ImGui::SameLine();
                 ImGui::PushID(13);
-                ImGui::SliderInt("", &g_settings.exploits.telekill.distance, 1, 250);
+                ImGui::SliderInt("", &config.exploits.m_Telekill.m_Distance, 1, 250);
 				ImGui::PopID();
+				ImGui::Hotkey("- Telekill Key ", &config.exploits.m_Telekill.m_key);
 				ImGui::PushID(14);
 				ImGui::Text("- Elevator Height");
 				ImGui::SameLine();
-				if (ImGui::SliderInt("", &g_settings.exploits.elevator.height, 0, 50)) {
+				if (ImGui::SliderInt("", &config.exploits.m_Elevator.m_Height, 0, 50)) {
 					[]() {
-						auto local_player = g_sdk.players->get_local_player();
+						auto local_player = sdk.players->get_local_player();
 						if (INSTANCE_CHECK(local_player))
 							return;
 
@@ -426,73 +409,125 @@ void renderer_t::render()
 							return;
 
 						uintptr_t LH = reinterpret_cast<uintptr_t>(local_humanoid);
-						g_sdk.sethipheight(LH, g_settings.exploits.elevator.height);
+						sdk.sethipheight(LH, config.exploits.m_Elevator.m_Height);
 					}();
 				}
 				ImGui::PopID();
 				if (ImGui::CollapsingHeader("TeleMover")) {
-					ImGui::Checkbox("- Enabled", &g_settings.exploits.telemove.enabled);
+					ImGui::Checkbox("- Enabled", &config.exploits.m_Telemove.m_Enabled);
 					ImGui::Text("- Amount");
 					ImGui::SameLine();
 					ImGui::PushID(15);
-					ImGui::SliderInt("", &g_settings.exploits.telemove.amount, 1, 50);
+					ImGui::SliderInt("", &config.exploits.m_Telemove.m_Amount, 1, 50);
 					ImGui::PopID();
 
-					ImGui::Hotkey("- Forwards ", &g_settings.exploits.telemove.front);
-					ImGui::Hotkey("- Left     ", &g_settings.exploits.telemove.left);
-					ImGui::Hotkey("- Backwards", &g_settings.exploits.telemove.back);
-					ImGui::Hotkey("- Right    ", &g_settings.exploits.telemove.right);
+					ImGui::Hotkey("- Forwards ", &config.exploits.m_Telemove.m_Front);
+					ImGui::Hotkey("- Left     ", &config.exploits.m_Telemove.m_Left);
+					ImGui::Hotkey("- Backwards", &config.exploits.m_Telemove.m_Back);
+					ImGui::Hotkey("- Right    ", &config.exploits.m_Telemove.m_Right);
 
 					ImGui::Spacing();
 
-					ImGui::Hotkey("- Up       ", &g_settings.exploits.telemove.up);
-					ImGui::Hotkey("- Down     ", &g_settings.exploits.telemove.down);
+					ImGui::Hotkey("- Up       ", &config.exploits.m_Telemove.m_Up);
+					ImGui::Hotkey("- Down     ", &config.exploits.m_Telemove.m_Down);
 				}
                
                 ImGui::EndTabItem();
             } 
 			if (ImGui::BeginTabItem("Misc")) {
-				ImGui::Hotkey("- Menu Key", &g_settings.menu_key);
-				ImGui::Checkbox("- Rainbow", &g_settings.esp.rainbow);
+				ImGui::Hotkey("- Menu Key", &config.menu_key);
 				ImGui::EndTabItem();
 			}
 			ImGui::EndTabBar();
         }
-        ImGui::End();
-    }
+		ImGui::End();
 
-	if (g_settings.esp.rainbow)
-	{
-		static float rainbow;
-		rainbow += 0.005f;
-		if (rainbow > 1.f)
-			rainbow = 0.f;
+		/* Config window */
+		ImGui::SetNextWindowSize(ImVec2(339, 208));
+		if (ImGui::Begin("Configs", 0))
+		{
+			ImGui::Columns(2, nullptr, false);
+			ImGui::SetColumnOffset(1, 170.0f);
 
-		ImGui::GetStyle().Colors[ImGuiCol_Border] = ImColor::HSV(rainbow, 1.f, 1.f);
-		g_settings.esp.color.enemy_box = ImColor::HSV(rainbow, 1.f, 1.f);
-		g_settings.esp.color.enemy_distance = ImColor::HSV(rainbow, 1.f, 1.f);
-		g_settings.esp.color.enemy_line = ImColor::HSV(rainbow, 1.f, 1.f);
-		g_settings.esp.color.enemy_name = ImColor::HSV(rainbow, 1.f, 1.f);
-		g_settings.aim.color.fov = ImColor::HSV(rainbow, 1.f, 1.f);
+			ImGui::PushItemWidth(160.0f);
+
+			auto& configs = config.get_configs();
+			static int idx = -1;
+			static char buffer[16];
+			static char name[16];
+
+			if (static_cast<size_t>(idx) >= configs.size())
+				idx = -1;
+
+			if (ImGui::ListBox("", &idx, configs))
+				strcpy(name, configs[idx].c_str());
+
+			ImGui::NextColumn();
+			ImGui::PushItemWidth(100.0f);
+
+			if (ImGui::Button("Create config", { 105.0f, 25.0f }))
+				ImGui::OpenPopup("Create Config");
+
+			if (ImGui::BeginPopupModal("Create Config"))
+			{
+				ImGui::Text("Name");
+				ImGui::SameLine();
+				ImGui::InputText("", buffer, IM_ARRAYSIZE(buffer), 
+					ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CharsNoBlank);
+				if (ImGui::Selectable("Confirm", 
+					static_cast<bool>(0), 0, ImVec2(50, 15)))
+				{
+					config.add(buffer);
+					memset(buffer, 0, sizeof buffer);
+				}
+				ImGui::SameLine(); 
+				ImGui::Dummy(ImVec2(5.0f, .0f));
+				ImGui::SameLine();
+				ImGui::Selectable("Cancel", static_cast<bool>(0), 0, ImVec2(50, 15));
+				ImGui::EndPopup();
+			}
+
+			if (ImGui::Button("Reset config", { 105.0f, 25.0f }))
+				config.reset();
+
+			ImGui::Spacing();
+
+			if (idx != -1) {
+				ImGui::Text(name);
+				if (ImGui::Button("Load", { 50.f, 25.0f }))
+					config.load(idx);
+				ImGui::SameLine();
+				if (ImGui::Button("Save", { 50.f, 25.0f }))
+					config.save(idx);
+				if (ImGui::Button("Delete", { 50.f, 25.0f }))
+					config.remove(idx);
+			}
+			ImGui::Columns(1);
+		}
+		ImGui::End();
 	}
 
     ImDrawList* list = ImGui::GetOverlayDrawList();
 
-    if (g_settings.aim.draw_fov) {
-        const ImU32 col32 = ImColor(g_settings.aim.color.fov);
-        list->AddCircle(ImVec2(s_w / 2, s_h / 2), g_settings.aim.fov, col32, 32);
-	}
-	list->AddCircleFilled(ImVec2((s_w / 2) + g_settings.aim.x_off, s_h / 2), 5.f, ImColor(g_settings.aim.color.fov));
+    if (config.aim.m_DrawFov) {
+        Color color = config.aim.c_FovColor;
+		if (color.m_Rainbow)
+			color.m_Color = *(vec3*)rainbow_color(frames, color.m_Speed);
 
-    if (g_settings.esp.enabled) {
-        for (auto child : *g_sdk.players->children) {
+		list->AddCircle(ImVec2(s_w / 2, s_h / 2), 
+			config.aim.m_AimFov, ImColor(color.m_Color.data), 32);
+	}
+
+
+    if (config.esp.m_Enabled) {
+        for (auto child : *sdk.players->children) {
             if (!child)
                 continue;
             if (INSTANCE_CHECK(child->character))
                 continue;
 
             /* Local */
-            auto local_player = g_sdk.players->get_local_player();
+            auto local_player = sdk.players->get_local_player();
             if (INSTANCE_CHECK(local_player))
                 continue;
 
@@ -500,7 +535,7 @@ void renderer_t::render()
             if (child->user_id == local_player->user_id)
                 continue;
             /* Don't continue further if teamcheck is on and we are on the same team */
-            if (g_settings.esp.team_check && child->team_id == local_player->team_id)
+            if (config.esp.m_TeamCheck && child->team_id == local_player->team_id)
                 continue;
 
             auto local_character = local_player->character;
@@ -568,7 +603,7 @@ void renderer_t::render()
 
             vec3 local_head_vec = local_head_body->get_position();
 
-            int distance = g_sdk.distance_to<vec3>(local_head_vec, head_vec);
+            int distance = sdk.distance_to<vec3>(local_head_vec, head_vec);
 
             vec2 screen_leg;
             leg_vec.y -= 3.0f;
@@ -583,65 +618,78 @@ void renderer_t::render()
             if (!this->w2s(leg_vec, screen_leg))
                 continue;
 
-            if (distance <= g_settings.esp.max_distance) {
+            if (distance <= config.esp.m_MaxDistance) {
                 int offset = -45;
-                if (g_settings.esp.names) {
+                if (config.esp.m_Names) {
                     offset += 15;
 
-					ImColor color = ImColor(child->name == global.target.target_name
-						? g_settings.esp.color.target_name : g_settings.esp.color.enemy_name);
+					Color color = Color(child->name == global.target.target_name
+						? config.esp.c_TargetName : config.esp.c_EnemyName);
+
+					if (color.m_Rainbow)
+						color.m_Color = *(vec3*)rainbow_color(frames, color.m_Speed);
 
                     list->AddText(ImVec2(screen_leg.x - 50, screen_leg.y + offset),
-                        ImColor(color),
+                        ImColor(color.m_Color.data),
                         child->name.c_str(), 0);
                 }
-                if (g_settings.esp.distance) {
+                if (config.esp.m_Distance) {
                     offset += 15;
                     char* buff;
 					asprintf(&buff, "Distance: %d", distance);
 
-					ImColor color = ImColor(child->name == global.target.target_name
-						? g_settings.esp.color.target_distance : g_settings.esp.color.enemy_distance);
+					Color color = Color(child->name == global.target.target_name
+						? config.esp.c_TargetDistance : config.esp.c_EnemyDistance);
+
+					if (color.m_Rainbow)
+						color.m_Color = *(vec3*)rainbow_color(frames, color.m_Speed);
 
                     list->AddText(ImVec2(screen_leg.x - 50, screen_leg.y + offset),
-                        ImColor(color), buff, 0);
+                        ImColor(color.m_Color.data), buff, 0);
                 }
-                if (g_settings.esp.box) {
+                if (config.esp.m_Box) {
                     RECT pos;
                     pos.left = screen_torso.x - (screen_head.y - screen_torso.y) / 2.1f;
                     pos.top = screen_head.y;
                     pos.bottom = screen_leg.y;
                     pos.right = screen_torso.x + (screen_head.y - screen_torso.y) / 2.1f;
 
-					ImColor color = ImColor(child->name == global.target.target_name 
-						? g_settings.esp.color.target_box : g_settings.esp.color.enemy_box);
+					Color color = Color(child->name == global.target.target_name
+						? config.esp.c_TargetBox : config.esp.c_EnemyBox);
+
+					if (color.m_Rainbow)
+						color.m_Color = *(vec3*)rainbow_color(frames, color.m_Speed);
 
                     list->AddRect(ImVec2(pos.left, pos.top),
-                        ImVec2(pos.right, pos.bottom),
-                        ImColor(color));
+                        ImVec2(pos.right, pos.bottom), ImColor(color.m_Color.data));
                 }
-                if (g_settings.esp.line) {
-                    list->AddLine(ImVec2(this->s_h, this->s_w / 2),
-                        ImVec2(screen_leg.x, screen_leg.y),
-                        ImColor(g_settings.esp.color.enemy_line));
+				if (config.esp.m_Line) {
+					Color color = Color(child->name == global.target.target_name
+						? config.esp.c_TargetLine : config.esp.c_EnemyLine);
+
+					if (color.m_Rainbow)
+						color.m_Color = *(vec3*)rainbow_color(frames, color.m_Speed);
+
+					list->AddLine(ImVec2(this->s_h, this->s_w / 2),
+						ImVec2(screen_leg.x, screen_leg.y), ImColor(color.m_Color.data));
                 }
             }
         }
     }
 }
 
-void renderer_t::terminate()
+void Renderer::terminate()
 {
 	*(present_fn*)(this->vt + 32) = this->o_present;
 	SetWindowLong(hWnd, GWLP_WNDPROC, this->o_wndproc);
 }
 
-bool renderer_t::w2s(vec3 origin, vec2& screen)
+bool Renderer::w2s(vec3 origin, vec2& screen)
 {
-    return this->w2s(origin, screen, *g_sdk.view_matrix);
+    return this->w2s(origin, screen, *sdk.view_matrix);
 }
 
-bool renderer_t::w2s(vec3 origin, vec2& screen, ViewMatrix_t matrix)
+bool Renderer::w2s(vec3 origin, vec2& screen, ViewMatrix_t matrix)
 {
     vec4 coords;
     coords.data[0] = origin.x * matrix.matrix[0] + origin.y * matrix.matrix[1] + origin.z * matrix.matrix[2] + matrix.matrix[3];

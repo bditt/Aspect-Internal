@@ -12,7 +12,7 @@ struct input_t
 using present_fn = HRESULT(__stdcall*)(IDXGISwapChain* pSwapChain,
     UINT SyncInterval, UINT Flags);
 
-class renderer_t {
+class Renderer {
 public:
     bool w2s(vec3 origin, vec2& screen);
     bool w2s(vec3 origin, vec2& screen, ViewMatrix_t matrix);
@@ -42,6 +42,8 @@ public:
     void terminate();
     void render();
 	void handle_input(UINT msg, WPARAM w_param, LPARAM l_param);
-} inline g_renderer;
+};
+
+extern Renderer renderer;
 
 #endif // RENDERER_H

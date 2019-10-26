@@ -11,7 +11,7 @@ typedef __int16(__thiscall* humanoid_sethipheight)(uintptr_t Humanoid,
     float value);
 typedef void*(__cdecl* get_datamodel)(void* dm);
 
-struct sdk_t {
+struct SDK {
 private:
     get_datamodel get_dm;
 
@@ -54,4 +54,6 @@ public:
         return sqrt(((from.x - to.x) * (from.x - to.x)) + ((from.y - to.y) * (from.y - to.y)) + ((from.z - to.z) * (from.z - to.z)));
     }
 };
+
+extern SDK sdk;
 #endif // SDK_H

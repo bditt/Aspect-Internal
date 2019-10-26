@@ -6,7 +6,7 @@ struct target_t {
 	float dist = 99999.f;
 };
 
-class aimbot_t {
+class Aimbot {
 private:
 	target_t aim_target;
 public:
@@ -28,3 +28,5 @@ public:
 
     void update();
 };
+
+extern Aimbot aimbot;

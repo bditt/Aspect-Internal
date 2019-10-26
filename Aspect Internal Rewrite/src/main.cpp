@@ -1,9 +1,10 @@
 #include "commons.h"
 #include "sdk/sdk.h"
-#include "settings.h"
 #include "renderer/renderer.h"
 #include "hacks/aimbot/aimbot.h"
 #include "security/security.h"
+#include "sdk/vec.h"
+#include "misc/config.h"
 
 #include <DbgHelp.h>
 #pragma comment(lib, "dbghelp.lib")
@@ -68,11 +69,11 @@ void Console(const char* title)
     ShowWindow(ConsoleHandle, SW_NORMAL);
 }
 
-sdk_t g_sdk;
-aimbot_t g_aimbot;
-settings_t g_settings;
-security_t g_security;
-
+SDK sdk;
+Aimbot g_aimbot;
+Security security;
+Renderer renderer;
+Config config{ "Aspect" };
 
 unsigned long __stdcall main(LPVOID)
 {
@@ -88,17 +89,21 @@ unsigned long __stdcall main(LPVOID)
     *(BYTE*)(&FreeConsole) = 0xC3;
     Console("Aspect Internal");
 
-    std::cout << g_security.download_url(
+    std::cout << security.download_url(
         "http://aspectnetwork.net/aspect/internal/changelog.php")
               << "\n"
               << std::endl;
+
+	if (!security.check_version())
+		MessageBox(nullptr, 
+			"Aspect has been updated, please download latest update", "Update", 0);
 
     /* Discord */
     InitDiscord();
     starttime = time(0);
     UpdatePresence();
-
-    g_sdk.initialize();
+	
+	sdk.initialize();
     g_renderer.initialize();
 
     std::thread aim([]() {
@@ -111,17 +116,17 @@ unsigned long __stdcall main(LPVOID)
     /* To be replaced aswell... i just want to get this out asap */
     std::thread exploits([]() {
         while (1) {
-            if (!g_security.authenticated)
+            if (!security.authenticated)
                 continue;
 
             /* Telekill */
             []() {
                 if (!(GetAsyncKeyState(0x42) & 0x8000))
                     return;
-                if (!g_settings.exploits.telekill.enabled)
+                if (!config.exploits.m_Telekill.m_Enabled)
                     return;
 
-                for (auto child : *g_sdk.players->children) {
+                for (auto child : *sdk.players->children) {
                     if (!child)
                         continue;
                     if (INSTANCE_CHECK(child->character))
@@ -140,7 +145,7 @@ unsigned long __stdcall main(LPVOID)
                         continue;
 
                     /* Local */
-                    auto local_player = g_sdk.players->get_local_player();
+                    auto local_player = sdk.players->get_local_player();
                     if (INSTANCE_CHECK(local_player))
                         continue;
 
@@ -169,8 +174,8 @@ unsigned long __stdcall main(LPVOID)
                     vec3 head_loc = head_body->get_position();
                     vec3 local_loc = local_head_body->get_position();
 
-                    float dist = g_sdk.distance_to(local_loc, head_loc);
-                    if (dist <= g_settings.exploits.telekill.distance) {
+                    float dist = sdk.distance_to(local_loc, head_loc);
+                    if (dist <= config.exploits.m_Telekill.m_Distance) {
                         local_head_body->set_pos_x(head_body->get_pos_x());
                         local_head_body->set_pos_y(head_body->get_pos_y());
                         local_head_body->set_pos_z(head_body->get_pos_z());
@@ -180,11 +185,11 @@ unsigned long __stdcall main(LPVOID)
 
             /* Telemover */
             []() {
-                if (!g_settings.exploits.telemove.enabled)
+                if (!config.exploits.m_Telemove.m_Enabled)
                     return;
 
                 /* Local */
-                auto local_player = g_sdk.players->get_local_player();
+                auto local_player = sdk.players->get_local_player();
                 if (INSTANCE_CHECK(local_player))
                     return;
 
@@ -204,20 +209,21 @@ unsigned long __stdcall main(LPVOID)
                 if (INSTANCE_CHECK(local_head_body))
                     return;
 				
-				if (g_input.key_pressed[g_settings.exploits.telemove.right])
-					local_head_body->set_pos_x(local_head_body->get_pos_x() - g_settings.exploits.telemove.amount);
-				if (g_input.key_pressed[g_settings.exploits.telemove.left]) 
-					local_head_body->set_pos_x(local_head_body->get_pos_x() + g_settings.exploits.telemove.amount);
+				auto amount = config.exploits.m_Telemove.m_Amount;
+				if (g_input.key_pressed[config.exploits.m_Telemove.m_Right])
+					local_head_body->set_pos_x(local_head_body->get_pos_x() - amount);
+				if (g_input.key_pressed[config.exploits.m_Telemove.m_Left])
+					local_head_body->set_pos_x(local_head_body->get_pos_x() + amount);
 
-				if (g_input.key_pressed[g_settings.exploits.telemove.back])
-					local_head_body->set_pos_z(local_head_body->get_pos_z() - g_settings.exploits.telemove.amount);
-				if (g_input.key_pressed[g_settings.exploits.telemove.front])
-                    local_head_body->set_pos_z(local_head_body->get_pos_z() + g_settings.exploits.telemove.amount);
+				if (g_input.key_pressed[config.exploits.m_Telemove.m_Back])
+					local_head_body->set_pos_z(local_head_body->get_pos_z() - amount);
+				if (g_input.key_pressed[config.exploits.m_Telemove.m_Front])
+                    local_head_body->set_pos_z(local_head_body->get_pos_z() + amount);
 
-				if (g_input.key_pressed[g_settings.exploits.telemove.down])
-                    local_head_body->set_pos_y(local_head_body->get_pos_y() - g_settings.exploits.telemove.amount);
-				if (g_input.key_pressed[g_settings.exploits.telemove.up])
-                    local_head_body->set_pos_y(local_head_body->get_pos_y() + g_settings.exploits.telemove.amount);
+				if (g_input.key_pressed[config.exploits.m_Telemove.m_Down])
+                    local_head_body->set_pos_y(local_head_body->get_pos_y() - amount);
+				if (g_input.key_pressed[config.exploits.m_Telemove.m_Up])
+                    local_head_body->set_pos_y(local_head_body->get_pos_y() + amount);
                 
                 Sleep(50);
             }();

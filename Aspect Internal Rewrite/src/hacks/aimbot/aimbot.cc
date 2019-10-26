@@ -2,32 +2,28 @@
 #include "../../commons.h"
 #include "../../sdk/sdk.h"
 #include "../../renderer/renderer.h"
-#include "../../settings.h"
+#include "../../misc/config.h"
 #include "../../security/security.h"
 #include "../../global.h"
 #include "aimbot.h"
 
-extern struct sdk_t g_sdk;
-extern struct settings_t g_settings;
-extern struct security_t g_security;
-
-void aimbot_t::update()
+void Aimbot::update()
 {
-	if (!g_security.authenticated)
+	if (!security.authenticated)
 		return;
-	if (!g_settings.aim.enabled)
+	if (!config.aim.m_Enabled)
 		return;
 
-	if (g_settings.aim.key > 0 && g_input.key_pressed[g_settings.aim.key])
+	if (config.aim.m_AimKey > 0 && g_input.key_pressed[config.aim.m_AimKey])
 	{
 		target_t target;
 
-		for (auto child : *g_sdk.players->children)
+		for (auto child : *sdk.players->children)
 		{
-			auto local_player = g_sdk.players->get_local_player();
+			auto local_player = sdk.players->get_local_player();
 			if (child->user_id == local_player->user_id)
 				continue;
-			if (child->team_id == local_player->team_id && g_settings.aim.team_check)
+			if (child->team_id == local_player->team_id && config.aim.m_TeamCheck)
 				continue;
 
 			auto local_character = local_player->character;
@@ -49,16 +45,19 @@ void aimbot_t::update()
 			vec2 sc;
 			vec3 target_pos = head->get_primitive()->get_body()->get_position();
 			vec3 local_pos = local_head->get_primitive()->get_body()->get_position();
-			if (g_settings.aim.head)
+			if (config.aim.m_Head)
 				target_pos.y += 1.5f;
 
-			float pdistance = g_sdk.distance_to<vec3>(local_pos, target_pos);
+			float pdistance = sdk.distance_to<vec3>(local_pos, target_pos);
 
 			if (g_renderer.w2s(target_pos, sc))
 			{
 				float distance = this->distance_cross(sc);
-				if (distance < target.dist && distance <= g_settings.aim.fov && pdistance <= g_settings.aim.distance)
+				if (distance < target.dist && distance <= config.aim.m_AimFov 
+					&& pdistance <= config.aim.m_MaxDistance)
+				{
 					target = target_t { character->name, sc, distance };
+				}
 			}
 		}
 		if (target.sc.x != 1 && target.sc.y != 1)
@@ -71,7 +70,7 @@ void aimbot_t::update()
 	}
 }
 
-void aimbot_t::aim_at(vec2 pos)
+void Aimbot::aim_at(vec2 pos)
 {
     vec2 center { g_renderer.s_w / 2, g_renderer.s_h / 2 };
     vec2 target { 0, 0 };
@@ -107,8 +106,8 @@ void aimbot_t::aim_at(vec2 pos)
         }
     }
 
-    target.x /= g_settings.aim.smooth;
-    target.y /= g_settings.aim.smooth;
+    target.x /= config.aim.m_AimSmooth;
+    target.y /= config.aim.m_AimSmooth;
 
     if (abs(target.x) < 1) {
         if (target.x > 0) {
@@ -131,7 +130,7 @@ void aimbot_t::aim_at(vec2 pos)
     input.type = INPUT_MOUSE;
     input.mi.mouseData = 0;
     input.mi.time = 0;
-    input.mi.dx = target.x + g_settings.aim.x_off;
+	input.mi.dx = target.x;
     input.mi.dy = target.y;
     input.mi.dwFlags = MOUSEEVENTF_MOVE;
     SendInput(1, &input, sizeof(input));
