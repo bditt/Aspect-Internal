@@ -121,7 +121,7 @@ unsigned long __stdcall main(LPVOID)
 
             /* Telekill */
             []() {
-                if (!(GetAsyncKeyState(0x42) & 0x8000))
+                if (Input.key_pressed[config.exploits.m_Telekill.m_key])
                     return;
                 if (!config.exploits.m_Telekill.m_Enabled)
                     return;
@@ -210,19 +210,19 @@ unsigned long __stdcall main(LPVOID)
                     return;
 				
 				auto amount = config.exploits.m_Telemove.m_Amount;
-				if (g_input.key_pressed[config.exploits.m_Telemove.m_Right])
+				if (Input.key_pressed[config.exploits.m_Telemove.m_Right])
 					local_head_body->set_pos_x(local_head_body->get_pos_x() - amount);
-				if (g_input.key_pressed[config.exploits.m_Telemove.m_Left])
+				if (Input.key_pressed[config.exploits.m_Telemove.m_Left])
 					local_head_body->set_pos_x(local_head_body->get_pos_x() + amount);
 
-				if (g_input.key_pressed[config.exploits.m_Telemove.m_Back])
+				if (Input.key_pressed[config.exploits.m_Telemove.m_Back])
 					local_head_body->set_pos_z(local_head_body->get_pos_z() - amount);
-				if (g_input.key_pressed[config.exploits.m_Telemove.m_Front])
+				if (Input.key_pressed[config.exploits.m_Telemove.m_Front])
                     local_head_body->set_pos_z(local_head_body->get_pos_z() + amount);
 
-				if (g_input.key_pressed[config.exploits.m_Telemove.m_Down])
+				if (Input.key_pressed[config.exploits.m_Telemove.m_Down])
                     local_head_body->set_pos_y(local_head_body->get_pos_y() - amount);
-				if (g_input.key_pressed[config.exploits.m_Telemove.m_Up])
+				if (Input.key_pressed[config.exploits.m_Telemove.m_Up])
                     local_head_body->set_pos_y(local_head_body->get_pos_y() + amount);
                 
                 Sleep(50);
