@@ -2,6 +2,28 @@
 
 #include <windows.h>
 
+void ImGui::CColorPicker(const char* name, Color& c)
+{
+	bool openPopup = ImGui::ColorButton("##btn", ImColor{ c.m_Color.data }, ImGuiColorEditFlags_NoTooltip);
+
+	if (openPopup)
+		ImGui::OpenPopup("##ccpop");
+
+	if (ImGui::BeginPopup("##ccpop")) {
+		ImGui::ColorPicker3("##picker", c.m_Color.data, 
+			ImGuiColorEditFlags_RGB | ImGuiColorEditFlags_NoSidePreview);
+		ImGui::SameLine();
+
+		if (ImGui::BeginChild("##child", { 100.0f, 0.0f })) {
+			ImGui::Checkbox("Rainbow", &c.m_Rainbow);
+			ImGui::SetNextItemWidth(50.0f);
+			ImGui::InputFloat("Speed", &c.m_Speed, 0.0f, 0.0f, "%.1f");
+			ImGui::EndChild();
+		}
+		ImGui::EndPopup();
+	}
+}
+
 const char* const KeyNames[] = {
 	"Unknown",
 	"VK_LBUTTON",
@@ -191,8 +213,9 @@ bool ImGui::Hotkey(const char* label, int* k, const ImVec2& size_arg)
 	if (!ImGui::ItemAdd(total_bb, id))
 		return false;
 
-	const bool focus_requested = ImGui::FocusableItemRegister(window, g.ActiveId == id, false);
-	const bool focus_requested_by_code = focus_requested && (window->FocusIdxAllCounter == window->FocusIdxAllRequestCurrent);
+	const bool focus_requested = ImGui::FocusableItemRegister(window, g.ActiveId == id);
+
+	const bool focus_requested_by_code = focus_requested && (window->DC.FocusCounterAll == g.FocusRequestCurrCounterAll);
 	const bool focus_requested_by_tab = focus_requested && !focus_requested_by_code;
 
 	const bool hovered = ImGui::ItemHoverable(frame_bb, id);
@@ -290,4 +313,19 @@ bool ImGui::Hotkey(const char* label, int* k, const ImVec2& size_arg)
 		ImGui::RenderText(ImVec2(total_bb.Min.x, frame_bb.Min.y + style.FramePadding.y), label);
 
 	return value_changed;
+}
+
+static auto vector_getter = [](void* vec, int idx, const char** out_text)
+{
+	auto& vector = *static_cast<std::vector<std::string>*>(vec);
+	if (idx < 0 || idx >= static_cast<int>(vector.size())) { return false; }
+	*out_text = vector.at(idx).c_str();
+	return true;
+};
+
+bool ImGui::ListBox(const char* label, int* currIndex, std::vector<std::string>& values)
+{
+	if (values.empty()) { return false; }
+	return ListBox(label, currIndex, vector_getter,
+		static_cast<void*>(&values), values.size(), 5);
 }
