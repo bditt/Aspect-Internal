@@ -246,7 +246,7 @@ void Renderer::initialize()
 
 void Renderer::render()
 {
-	static int frames;
+	static unsigned short frames;
 	frames++;
 
 	if (renderer.gui.active && !security.authenticated) {
@@ -260,7 +260,9 @@ void Renderer::render()
             ImGui::PushID(1);
             ImGui::Text("Username: ");
             ImGui::SameLine();
-            ImGui::InputText("", userbuff, 64, ImGuiInputTextFlags_CharsNoBlank);
+            ImGui::InputText(
+				"", userbuff, 64,
+				ImGuiInputTextFlags_CharsNoBlank);
             ImGui::PopID();
             ImGui::PushID(2);
             ImGui::Text("Password: ");
