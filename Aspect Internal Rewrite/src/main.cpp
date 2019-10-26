@@ -104,7 +104,7 @@ unsigned long __stdcall main(LPVOID)
     UpdatePresence();
 	
 	sdk.initialize();
-    g_renderer.initialize();
+    renderer.initialize();
 
     std::thread aim([]() {
 		while (1) {

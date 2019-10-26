@@ -50,7 +50,7 @@ void Aimbot::update()
 
 			float pdistance = sdk.distance_to<vec3>(local_pos, target_pos);
 
-			if (g_renderer.w2s(target_pos, sc))
+			if (renderer.w2s(target_pos, sc))
 			{
 				float distance = this->distance_cross(sc);
 				if (distance < target.dist && distance <= config.aim.m_AimFov 
@@ -72,7 +72,7 @@ void Aimbot::update()
 
 void Aimbot::aim_at(vec2 pos)
 {
-    vec2 center { g_renderer.s_w / 2, g_renderer.s_h / 2 };
+    vec2 center { renderer.s_w / 2, renderer.s_h / 2 };
     vec2 target { 0, 0 };
     if (pos.x != 0) {
         if (pos.x > center.x) {
