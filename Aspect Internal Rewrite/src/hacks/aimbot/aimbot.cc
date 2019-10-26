@@ -14,7 +14,7 @@ void Aimbot::update()
 	if (!config.aim.m_Enabled)
 		return;
 
-	if (config.aim.m_AimKey > 0 && g_input.key_pressed[config.aim.m_AimKey])
+	if (config.aim.m_AimKey > 0 && Input.key_pressed[config.aim.m_AimKey])
 	{
 		target_t target;
 

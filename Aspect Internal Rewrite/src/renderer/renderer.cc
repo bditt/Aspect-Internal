@@ -132,33 +132,33 @@ LRESULT IMGUI_IMPL_API wndproc(HWND hWnd, UINT msg, WPARAM w_param,
         renderer.s_h = rc.bottom - rc.top;
         break;
 	case WM_LBUTTONDOWN:
-		g_input.key_pressed[VK_LBUTTON] = true;
+		Input.key_pressed[VK_LBUTTON] = true;
 		break;
 	case WM_LBUTTONUP:
-		g_input.key_pressed[VK_LBUTTON] = false;
+		Input.key_pressed[VK_LBUTTON] = false;
 		break;
 	case WM_RBUTTONDOWN:
-		g_input.key_pressed[VK_RBUTTON] = true;
+		Input.key_pressed[VK_RBUTTON] = true;
 		break;
 	case WM_RBUTTONUP:
-		g_input.key_pressed[VK_RBUTTON] = false;
+		Input.key_pressed[VK_RBUTTON] = false;
 		break;
 	case WM_MBUTTONDOWN:
-		g_input.key_pressed[VK_MBUTTON] = true;
+		Input.key_pressed[VK_MBUTTON] = true;
 		break;
 	case WM_MBUTTONUP:
-		g_input.key_pressed[VK_MBUTTON] = false;
+		Input.key_pressed[VK_MBUTTON] = false;
 		break;
 	case WM_XBUTTONDOWN:
 	{
 		UINT button = GET_XBUTTON_WPARAM(w_param);
 		if (button == XBUTTON1)
 		{
-			g_input.key_pressed[VK_XBUTTON1] = true;
+			Input.key_pressed[VK_XBUTTON1] = true;
 		}
 		else if (button == XBUTTON2)
 		{
-			g_input.key_pressed[VK_XBUTTON2] = true;
+			Input.key_pressed[VK_XBUTTON2] = true;
 		}
 		break;
 	}
@@ -167,19 +167,19 @@ LRESULT IMGUI_IMPL_API wndproc(HWND hWnd, UINT msg, WPARAM w_param,
 		UINT button = GET_XBUTTON_WPARAM(w_param);
 		if (button == XBUTTON1)
 		{
-			g_input.key_pressed[VK_XBUTTON1] = false;
+			Input.key_pressed[VK_XBUTTON1] = false;
 		}
 		else if (button == XBUTTON2)
 		{
-			g_input.key_pressed[VK_XBUTTON2] = false;
+			Input.key_pressed[VK_XBUTTON2] = false;
 		}
 		break;
 	}
 	case WM_KEYDOWN:
-		g_input.key_pressed[w_param] = true;
+		Input.key_pressed[w_param] = true;
 		break;
 	case WM_KEYUP:
-		g_input.key_pressed[w_param] = false;
+		Input.key_pressed[w_param] = false;
 		break;
 	default: break;
     }

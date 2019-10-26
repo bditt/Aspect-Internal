@@ -7,7 +7,7 @@
 struct input_t
 {
 	char key_pressed[256] = {};
-} inline g_input;
+} inline Input;
 
 using present_fn = HRESULT(__stdcall*)(IDXGISwapChain* pSwapChain,
     UINT SyncInterval, UINT Flags);
