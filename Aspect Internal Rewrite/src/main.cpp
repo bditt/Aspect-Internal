@@ -121,7 +121,7 @@ unsigned long __stdcall main(LPVOID)
 
             /* Telekill */
             []() {
-                if (Input.key_pressed[config.exploits.m_Telekill.m_key])
+                if (!Input.key_pressed[config.exploits.m_Telekill.m_key])
                     return;
                 if (!config.exploits.m_Telekill.m_Enabled)
                     return;
