@@ -8,8 +8,59 @@
 #include <imgui/custom/custom.h>
 #include "../global.h"
 #include "../utils/utils.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "../sdk/stb_image.h"
+
+bool LoadTextureFromFile(const char* filename, ID3D11ShaderResourceView** out_srv, int* out_width, int* out_height)
+{
+	// Load from disk into a raw RGBA buffer
+	int image_width = 0;
+	int image_height = 0;
+	unsigned char* image_data = stbi_load(filename, &image_width, &image_height, NULL, 4);
+	if (image_data == NULL)
+		return false;
+
+	// Create texture
+	D3D11_TEXTURE2D_DESC desc;
+	ZeroMemory(&desc, sizeof(desc));
+	desc.Width = image_width;
+	desc.Height = image_height;
+	desc.MipLevels = 1;
+	desc.ArraySize = 1;
+	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	desc.SampleDesc.Count = 1;
+	desc.Usage = D3D11_USAGE_DEFAULT;
+	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	desc.CPUAccessFlags = 0;
+
+	ID3D11Texture2D* pTexture = NULL;
+	D3D11_SUBRESOURCE_DATA subResource;
+	subResource.pSysMem = image_data;
+	subResource.SysMemPitch = desc.Width * 4;
+	subResource.SysMemSlicePitch = 0;
+	renderer.p_device->CreateTexture2D(&desc, &subResource, &pTexture);
+
+	// Create texture view
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+	ZeroMemory(&srvDesc, sizeof(srvDesc));
+	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	srvDesc.Texture2D.MipLevels = desc.MipLevels;
+	srvDesc.Texture2D.MostDetailedMip = 0;
+	renderer.p_device->CreateShaderResourceView(pTexture, &srvDesc, out_srv);
+	pTexture->Release();
+
+	*out_width = image_width;
+	*out_height = image_height;
+	stbi_image_free(image_data);
+
+	return true;
+}
 
 extern struct aimbot_t g_aimbot;
+int my_image_width = 0;
+int my_image_height = 0;
+ID3D11ShaderResourceView* my_texture = NULL;
 
 HRESULT WINAPI present(IDXGISwapChain* pSwapChain, UINT SyncInterval,
     UINT Flags)
@@ -81,7 +132,6 @@ HRESULT WINAPI present(IDXGISwapChain* pSwapChain, UINT SyncInterval,
 		style->Colors[ImGuiCol_TabUnfocusedActive] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
 
 		ImGui::GetIO().IniFilename = 0;
-
         renderer.initialized = true;
     }
 
@@ -381,6 +431,16 @@ void Renderer::render()
 				ImGui::PushID(12);
 				ImGui::SliderInt("", &config.aim.m_MaxDistance, 0, 1000);
 				ImGui::PopID();
+				ImGui::Text("- Aimbot Method ");
+				ImGui::SameLine();
+				ImGui::PushID(16);
+				ImGui::SliderInt("", &config.aim.m_AimMethod, 1, 2);
+				ImGui::PopID();
+				ImGui::Text("- Deadzone ");
+				ImGui::SameLine();
+				ImGui::PushID(17);
+				ImGui::SliderInt("", &config.aim.m_DeadZone, 0, 25);
+				ImGui::PopID();
 
                 ImGui::EndTabItem();
             }
@@ -648,6 +708,74 @@ void Renderer::render()
                     list->AddText(ImVec2(screen_leg.x - 50, screen_leg.y + offset),
                         ImColor(color.m_Color.data), buff, 0);
                 }
+				if (config.esp.m_ShowScreenCords) {
+					vec2 pos{ screen_head.x, screen_head.y };
+					vec2 center{ renderer.s_w / 2, renderer.s_h / 2 };
+					vec2 target{ 0, 0 };
+					if (pos.x != 0) {
+						if (pos.x > center.x) {
+							target.x = -(center.x - pos.x);
+							target.x /= 1;
+							if (target.x + center.x > center.x * 2)
+								target.x = 0;
+						}
+
+						if (pos.x < center.x) {
+							target.x = pos.x - center.x;
+							target.x /= 1;
+							if (target.x + center.x < 0)
+								target.x = 0;
+						}
+					}
+
+					if (pos.y != 0) {
+						if (pos.y > center.y) {
+							target.y = -(center.y - pos.y);
+							target.y /= 1;
+							if (target.y + center.y > center.y * 2)
+								target.y = 0;
+						}
+
+						if (pos.y < center.y) {
+							target.y = pos.y - center.y;
+							target.y /= 1;
+							if (target.y + center.y < 0)
+								target.y = 0;
+						}
+					}
+
+					target.x /= config.aim.m_AimSmooth;
+					target.y /= config.aim.m_AimSmooth;
+
+					if (abs(target.x) < 1) {
+						if (target.x > 0) {
+							target.x = 1;
+						}
+						if (target.x < 0) {
+							target.x = -1;
+						}
+					}
+					if (abs(target.y) < 1) {
+						if (target.y > 0) {
+							target.y = 1;
+						}
+						if (target.y < 0) {
+							target.y = -1;
+						}
+					}
+					offset += 15;
+					char* buff;
+					asprintf(&buff, "X: %f, Y: %f", screen_head.x, screen_head.y);
+
+					Color color = Color(child->name == global.target.target_name
+						? config.esp.c_TargetDistance : config.esp.c_EnemyDistance);
+
+					if (color.m_Rainbow)
+						color.m_Color = *(vec3*)rainbow_color(frames, color.m_Speed);
+
+					list->AddText(ImVec2(screen_leg.x - 50, screen_leg.y + offset),
+						ImColor(color.m_Color.data), buff, 0);
+				}
                 if (config.esp.m_Box) {
                     RECT pos;
                     pos.left = screen_torso.x - (screen_head.y - screen_torso.y) / 2.1f;
@@ -674,6 +802,10 @@ void Renderer::render()
 					list->AddLine(ImVec2(this->s_h, this->s_w / 2),
 						ImVec2(screen_leg.x, screen_leg.y), ImColor(color.m_Color.data));
                 }
+				if (config.esp.m_HentaiESP)
+				{
+					//list->AddImage((void*)my_texture, ImVec2(my_image_width, my_image_height), ImVec2(my_image_width, my_image_height));
+				}
             }
         }
     }

@@ -24,6 +24,8 @@ public:
         float ret = sqrt(pow(ydist, 2) + pow(xdist, 2));
         return ret;
     }
+	void aim_at_exact(vec2 pos);
+
     void aim_at(vec2 pos);
 
     void update();

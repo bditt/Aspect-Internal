@@ -66,6 +66,8 @@ public:
 		bool m_Box = true;
 		bool m_Line = true;
 		bool m_TeamCheck = true;
+		bool m_HentaiESP = false;
+		bool m_ShowScreenCords = true;
 
 		int m_MaxDistance = 1000;
 
@@ -92,6 +94,8 @@ public:
 		int m_AimFov = 100;
 		int m_AimSmooth = 3;
 		int m_MaxDistance = 1000;
+		int m_AimMethod = 1;
+		int m_DeadZone = 5;
 
 		Color c_FovColor{ vec3{ 1.f, .54f, .01f } };
 	} aim;

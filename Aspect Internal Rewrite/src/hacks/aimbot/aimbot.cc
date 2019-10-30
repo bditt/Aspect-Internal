@@ -54,16 +54,28 @@ void Aimbot::update()
 			{
 				float distance = this->distance_cross(sc);
 				if (distance < target.dist && distance <= config.aim.m_AimFov 
-					&& pdistance <= config.aim.m_MaxDistance)
+					&& pdistance <= config.aim.m_MaxDistance
+					&& distance > config.aim.m_DeadZone)
 				{
 					target = target_t { character->name, sc, distance };
 				}
 			}
 		}
 		if (target.sc.x != 1 && target.sc.y != 1)
-			this->aim_at(
-				vec2{ target.sc.x, target.sc.y } ),
-			global.target = target;
+		{
+			if (config.aim.m_AimMethod == 1)
+			{
+				this->aim_at(
+					vec2{ target.sc.x, target.sc.y }),
+					global.target = target;
+			}
+			if (config.aim.m_AimMethod == 2)
+			{
+				this->aim_at_exact(
+					vec2{ target.sc.x, target.sc.y }),
+					global.target = target;
+			}
+		}
 	}
 	else {
 		global.target = target_t();
@@ -127,11 +139,32 @@ void Aimbot::aim_at(vec2 pos)
     }
 
     INPUT input;
-    input.type = INPUT_MOUSE;
+	input.type = INPUT_MOUSE;
     input.mi.mouseData = 0;
     input.mi.time = 0;
 	input.mi.dx = target.x;
     input.mi.dy = target.y;
     input.mi.dwFlags = MOUSEEVENTF_MOVE;
     SendInput(1, &input, sizeof(input));
+}
+
+void Aimbot::aim_at_exact(vec2 pos)
+{
+	SetCursorPos(pos.x, pos.y);
+	INPUT input;
+	input.type = INPUT_MOUSE;
+	input.mi.mouseData = 0;
+	input.mi.time = 0;
+	input.mi.dx = 1;
+	input.mi.dy = 1;
+	input.mi.dwFlags = MOUSEEVENTF_MOVE;
+	SendInput(1, &input, sizeof(input));
+	INPUT input2;
+	input2.type = INPUT_MOUSE;
+	input2.mi.mouseData = 0;
+	input2.mi.time = 0;
+	input2.mi.dx = -1;
+	input2.mi.dy = -1;
+	input2.mi.dwFlags = MOUSEEVENTF_MOVE;
+	SendInput(1, &input2, sizeof(input2));
 }
