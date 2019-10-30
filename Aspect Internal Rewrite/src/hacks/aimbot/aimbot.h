@@ -4,6 +4,7 @@ struct target_t {
 	std::string target_name;
 	vec2 sc = { 1, 1 };
 	float dist = 99999.f;
+	RBXBody* body;
 };
 
 class Aimbot {
@@ -24,9 +25,10 @@ public:
         float ret = sqrt(pow(ydist, 2) + pow(xdist, 2));
         return ret;
     }
-	void aim_at_exact(vec2 pos);
+	void get_screen(vec2);
 
-    void aim_at(vec2 pos);
+	void aim_at_exact(vec2);
+    void aim_at(vec2);
 
     void update();
 };
