@@ -67,7 +67,8 @@ public:
 		bool m_Line = true;
 		bool m_TeamCheck = true;
 		bool m_HentaiESP = false;
-		bool m_ShowScreenCords = true;
+		bool m_ShowScreenCords = false;
+		bool m_ShowInventory = false;
 
 		int m_MaxDistance = 1000;
 

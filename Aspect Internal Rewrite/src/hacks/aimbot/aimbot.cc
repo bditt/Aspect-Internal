@@ -116,16 +116,25 @@ void Aimbot::update()
 					&& pdistance <= config.aim.m_MaxDistance
 					&& distance > config.aim.m_DeadZone)
 				{
-					std::cout << "2" << std::endl;
+					//std::cout << "2" << std::endl;
 					target = target_t { character->name, sc, distance };
 				}
 			}
 		}
 		if (target.sc.x != 1 && target.sc.y != 1)
 		{
-			this->aim_at(
-				smooth(target.sc)),
-			global.target = target;
+			if (config.aim.m_AimMethod == 1)
+			{
+				this->aim_at(
+					smooth(target.sc)),
+					global.target = target;
+			}
+			if (config.aim.m_AimMethod == 2)
+			{
+				this->aim_at(
+					vec2{ target.sc.x, target.sc.y }),
+					global.target = target;
+			}
 		}
 	}
 	else {
@@ -162,9 +171,4 @@ void Aimbot::aim_at(vec2 target)
 		input[1].mi.dwFlags = 0x0001;
 		SendInput(1, input, sizeof(input[0]));
 	}
-}
-
-void Aimbot::aim_at_exact(vec2 pos)
-{
-	
 }

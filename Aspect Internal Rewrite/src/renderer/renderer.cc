@@ -708,6 +708,26 @@ void Renderer::render()
                     list->AddText(ImVec2(screen_leg.x - 50, screen_leg.y + offset),
                         ImColor(color.m_Color.data), buff, 0);
                 }
+				if (config.esp.m_ShowInventory)
+				{
+					Color color = Color(child->name == global.target.target_name
+						? config.esp.c_TargetName : config.esp.c_EnemyName);
+
+					if (color.m_Rainbow)
+						color.m_Color = *(vec3*)rainbow_color(frames, color.m_Speed);
+
+					for (auto x : *child->character->children)
+					{
+						std::string xname = x->name;
+						if (xname != "Head" && xname != "Torso" && xname != "Left Arm" && xname != "Right Arm" && xname != "Left Leg" && xname != "Right Leg" && xname != "HumanoidRootPart" && xname != "Set")
+						{
+							offset += 15;
+							list->AddText(ImVec2(screen_leg.x - 50, screen_leg.y + offset),
+								ImColor(color.m_Color.data),
+								xname.c_str(), 0);
+						}
+					}//
+				}
 				if (config.esp.m_ShowScreenCords) {
 					vec2 pos{ screen_head.x, screen_head.y };
 					vec2 center{ renderer.s_w / 2, renderer.s_h / 2 };

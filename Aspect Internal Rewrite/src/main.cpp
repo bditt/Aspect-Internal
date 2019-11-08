@@ -17,6 +17,7 @@ void InitDiscord()
     memset(&handlers, 0, sizeof(handlers));
     Discord_Initialize("612035845532418073", &handlers, 1, "76561198816001423");
 }
+
 void UpdatePresence()
 {
     char buffer[256];
@@ -125,62 +126,64 @@ unsigned long __stdcall main(LPVOID)
                     return;
                 if (!config.exploits.m_Telekill.m_Enabled)
                     return;
+				if (Input.key_pressed[config.exploits.m_Telekill.m_key])
+				{
+					for (auto child : *sdk.players->children) {
+						if (!child)
+							continue;
+						if (INSTANCE_CHECK(child->character))
+							continue;
 
-                for (auto child : *sdk.players->children) {
-                    if (!child)
-                        continue;
-                    if (INSTANCE_CHECK(child->character))
-                        continue;
+						auto child_head = child->character->find_child<RBXInstance>("Head");
+						if (INSTANCE_CHECK(child_head))
+							continue;
 
-                    auto child_head = child->character->find_child<RBXInstance>("Head");
-                    if (INSTANCE_CHECK(child_head))
-                        continue;
+						auto head_primitive = child_head->get_primitive();
+						if (INSTANCE_CHECK(head_primitive))
+							continue;
 
-                    auto head_primitive = child_head->get_primitive();
-                    if (INSTANCE_CHECK(head_primitive))
-                        continue;
+						auto head_body = head_primitive->get_body();
+						if (INSTANCE_CHECK(head_body))
+							continue;
 
-                    auto head_body = head_primitive->get_body();
-                    if (INSTANCE_CHECK(head_body))
-                        continue;
+						/* Local */
+						auto local_player = sdk.players->get_local_player();
+						if (INSTANCE_CHECK(local_player))
+							continue;
 
-                    /* Local */
-                    auto local_player = sdk.players->get_local_player();
-                    if (INSTANCE_CHECK(local_player))
-                        continue;
+						if (child->team_id == local_player->team_id)
+							continue;
 
-                    if (child->team_id == local_player->team_id)
-                        continue;
+						if (child->user_id == local_player->user_id)
+							continue;
 
-                    if (child->user_id == local_player->user_id)
-                        continue;
+						auto local_character = local_player->character;
+						if (INSTANCE_CHECK(local_character))
+							continue;
 
-                    auto local_character = local_player->character;
-                    if (INSTANCE_CHECK(local_character))
-                        continue;
+						auto local_head = local_character->find_child<RBXInstance>("Head");
+						if (INSTANCE_CHECK(local_head))
+							continue;
 
-                    auto local_head = local_character->find_child<RBXInstance>("Head");
-                    if (INSTANCE_CHECK(local_head))
-                        continue;
+						auto local_head_primitive = local_head->get_primitive();
+						if (INSTANCE_CHECK(local_head_primitive))
+							continue;
 
-                    auto local_head_primitive = local_head->get_primitive();
-                    if (INSTANCE_CHECK(local_head_primitive))
-                        continue;
+						auto local_head_body = local_head_primitive->get_body();
+						if (INSTANCE_CHECK(local_head_body))
+							continue;
 
-                    auto local_head_body = local_head_primitive->get_body();
-                    if (INSTANCE_CHECK(local_head_body))
-                        continue;
+						vec3 head_loc = head_body->get_position();
+						vec3 local_loc = local_head_body->get_position();
 
-                    vec3 head_loc = head_body->get_position();
-                    vec3 local_loc = local_head_body->get_position();
-
-                    float dist = sdk.distance_to(local_loc, head_loc);
-                    if (dist <= config.exploits.m_Telekill.m_Distance) {
-                        local_head_body->set_pos_x(head_body->get_pos_x());
-                        local_head_body->set_pos_y(head_body->get_pos_y());
-                        local_head_body->set_pos_z(head_body->get_pos_z());
-                    }
-                }
+						float dist = sdk.distance_to(local_loc, head_loc);
+						if (dist <= config.exploits.m_Telekill.m_Distance) {
+							local_head_body->set_pos_x(head_body->get_pos_x());
+							local_head_body->set_pos_y(head_body->get_pos_y());
+							local_head_body->set_pos_z(head_body->get_pos_z());
+						}
+					}
+				}
             }();
 
             /* Telemover */
