@@ -96,7 +96,10 @@ public:
 		int m_AimSmooth = 3;
 		int m_MaxDistance = 1000;
 		int m_AimMethod = 1;
-		int m_DeadZone = 5;
+		int m_DeadZone = 2;
+		
+		float m_YOffset = 0.0f;
+		float m_XOffset = 0.0f;
 
 		Color c_FovColor{ vec3{ 1.f, .54f, .01f } };
 	} aim;
@@ -105,6 +108,7 @@ public:
 	{
         struct {
             bool m_Enabled = true;
+			bool m_TeamCheck = true;
 
             int m_Distance = 25;
 			int m_key = 66;

@@ -19,7 +19,7 @@ public:
 
     vec3* get_position_ptr()
     {
-        return (vec3*)(reinterpret_cast<uintptr_t>(this) + 0xd4);
+        return (vec3*)(reinterpret_cast<uintptr_t>(this) + 0xD4);
     }
 
     void set_pos_x(float x)
@@ -83,7 +83,7 @@ public:
     /* 0xc */
     class RBXClassDescriptor* class_descriptor; // 0x4
     /* 0x10 */
-    char pad_0010[0x1c];
+    char pad_0010[0x18];
     /* 0x2c */
     char* name; // 0x4
     /* 0x30 */
@@ -170,7 +170,7 @@ public:
     /* 0xc */
     class RBXClassDescriptor* class_descriptor;
     /* 0x10 */
-    char pad_0010[0x1c];
+    char pad_0010[0x18];
     /* 0x2c */
     char* name;
     /* 0x30 */
@@ -209,17 +209,17 @@ public:
 
 class RBXDataModel {
 public:
-    /* 0x */
+    /* 0x0 */
     char pad_0000[0xc];
     /* 0xc */
     class RBXClassDescriptor* class_descriptor;
     /* 0x10 */
-    char pad_0010[0x1c];
-    /* 0x2c */
+    char pad_0010[0x18];
+    /* 0x28 */
     std::string& name;
-    /* 0x30 */
+    /* 0x2C */
     std::shared_ptr<std::vector<std::shared_ptr<RBXService>>> children;
-    /* 0x34 */
+    /* 0x30 */
 public:
     template <class T>
     T* find_child(std::string name)
@@ -258,7 +258,7 @@ public:
     /* 0xc */
     class RBXClassDescriptor* class_descriptor;
     /* 0x10 */
-    char pad_0010[0x1c];
+    char pad_0010[0x18];
     /* 0x2c*/
     std::string& name;
     /* 0x30 */
@@ -302,20 +302,20 @@ public:
     /* 0xc */
     class RBXClassDescriptor* class_descriptor;
     /* 0x10 */
-    char pad_0010[0x1c];
-    /* 0x2c */
+    char pad_0010[0x18];
+    /* 0x28 */
     std::string& name;
-    /* 0x30 */
+    /* 0x2C */
     char pad_0030[0x8];
-    /* 0x38 */
+    /* 0x34 */
     class RBXPlayers* parent;
-    /* 0x3c */
+    /* 0x38 */
     char pad_003C[0x20];
-    /* 0x5c */
+    /* 0x58 */
     class RBXCharacter* character;
-    /* 0x60 */
-    char pad_0060[0x2c];
-    /* 0x8c */
+    /* 0x5C */
+    char pad_0060[0x30];
+    /* 0x88 */
     int32_t team_id;
     /* 0x90*/
     char pad_0090[0xd0];
@@ -335,7 +335,7 @@ public:
     /* 0xc */
     class RBXClassDescriptor* class_descriptor;
     /* 0x10 */
-    char pad_0010[0x1c];
+    char pad_0010[0x18];
     /* 0x2c */
     std::string& name;
     /* 0x30 */
@@ -354,7 +354,7 @@ public:
 
     RBXPlayer* get_local_player()
     {
-        return *(RBXPlayer**)(reinterpret_cast<uintptr_t>(this) + 0xCC);
+        return *(RBXPlayer**)(reinterpret_cast<uintptr_t>(this) + 0xC8);
     }
 
     RBXPlayer* get_player(std::string name)
@@ -404,7 +404,7 @@ public:
     /* 0xc */
     class RBXClassDescriptor* class_descriptor;
     /* 0x10 */
-    char pad_0010[0x1c];
+    char pad_0010[0x18];
     /* 0x2c */
     std::string& name;
     /* 0x30 */

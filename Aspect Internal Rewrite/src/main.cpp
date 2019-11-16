@@ -78,28 +78,32 @@ Config config{ "Aspect" };
 
 unsigned long __stdcall main(LPVOID)
 {
+	/* Console */
+	DWORD dummy;
+	VirtualProtect((PVOID)&FreeConsole, 1, PAGE_EXECUTE_READWRITE, &dummy);
+	*(BYTE*)(&FreeConsole) = 0xC3;
+	Console("Aspect Internal");
     /* Disable crash reports */
+	std::cout << "Enabling Anti Ban!" << std::endl;
     using RtlSetUnhandledExceptionFilterFn = std::decay_t<decltype(SetUnhandledExceptionFilter)>;
     reinterpret_cast<RtlSetUnhandledExceptionFilterFn>(GetProcAddress(
         GetModuleHandle("ntdll.dll"), "RtlSetUnhandledExceptionFilter"))(
         ExceptionFilter);
-
-    /* Console */
-    DWORD dummy;
-    VirtualProtect((PVOID)&FreeConsole, 1, PAGE_EXECUTE_READWRITE, &dummy);
-    *(BYTE*)(&FreeConsole) = 0xC3;
-    Console("Aspect Internal");
-
+	Sleep(3000);
+	std::cout << "Getting Changelog!" << std::endl;
     std::cout << security.download_url(
         "http://aspectnetwork.net/aspect/internal/changelog.php")
               << "\n"
               << std::endl;
-
+	Sleep(3000);
+	std::cout << "Checking Version!" << std::endl;
 	if (!security.check_version())
 		MessageBox(nullptr, 
 			"Aspect has been updated, please download latest update", "Update", 0);
 
     /* Discord */
+	Sleep(3000);
+	std::cout << "Enabling Discord Hook!" << std::endl;
     InitDiscord();
     starttime = time(0);
     UpdatePresence();
@@ -151,7 +155,7 @@ unsigned long __stdcall main(LPVOID)
 						if (INSTANCE_CHECK(local_player))
 							continue;
 
-						if (child->team_id == local_player->team_id)
+						if (config.exploits.m_Telekill.m_TeamCheck && child->team_id == local_player->team_id)
 							continue;
 
 						if (child->user_id == local_player->user_id)

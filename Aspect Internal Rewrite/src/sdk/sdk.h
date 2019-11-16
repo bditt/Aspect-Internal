@@ -36,12 +36,18 @@ public:
         data_model = (RBXDataModel*)(*(uintptr_t*)get_dm(dm) + 0x44);
         printf("data_model: 0x%p\n		->name: ", data_model);
         std::cout << data_model->name << std::endl;
-
+		//Sleep(1000000);
         players = data_model->find_child_class<RBXPlayers>("Players");
         printf("players: 0x%p\n		->name: ", players);
         std::cout << players->name << std::endl;
-
-        uint32_t render_view = *(uint32_t*)(*(uint32_t*)(reinterpret_cast<uintptr_t>(data_model) + 0x74) + 0x1C);
+		printf("LocalPlayer: 0x%p\n		->name: ", players->get_local_player());
+		std::cout << players->get_local_player()->name << std::endl;
+		//auto Head = players->get_local_player()->character->find_child<RBXInstance>("Head");
+		//printf("Head: 0x%p\n		->name: ", Head);
+		//std::cout << Head->name << std::endl;
+		//std::cout << "LocalPlayer ID: " << players->get_local_player()->user_id << std::endl;
+		//Sleep(1000000);
+        uint32_t render_view = *(uint32_t*)(*(uint32_t*)(reinterpret_cast<uintptr_t>(data_model) + 0x70) + 0x1C);
         uint32_t visual_engine = *(uint32_t*)(render_view + 0x8);
 
         view_matrix = (ViewMatrix_t*)(visual_engine + 0xa0);

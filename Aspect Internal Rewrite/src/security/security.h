@@ -35,8 +35,8 @@ private:
     }
 
 public:
-    char* version = "2.2.1";
-    bool authenticated = false;
+    char* version = "2.3.1";
+    bool authenticated = true;
 
 public:
     inline std::string download_url(const char* URL)
@@ -119,6 +119,9 @@ public:
                    "http://aspectnetwork.net/aspect/internal/version.php")
             == version;
     }
+
+	inline std::string GenerateResponse();
+
     inline bool authenticate(char* username, char* password)
     {
         std::string key = random_string(32);

@@ -106,7 +106,9 @@ void Aimbot::update()
 			vec3 local_pos = local_head->get_primitive()->get_body()->get_position();
 			if (config.aim.m_Head)
 				target_pos.y += 1.5f;
-
+			
+			target_pos.y += config.aim.m_YOffset;
+			target_pos.x += config.aim.m_XOffset;
 			float pdistance = sdk.distance_to<vec3>(local_pos, target_pos);
 
 			if (renderer.w2s(target_pos, sc))

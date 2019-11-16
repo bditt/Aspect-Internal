@@ -338,7 +338,7 @@ void Renderer::render()
         return;
     }
 
-	if (renderer.gui.active) {
+	if (renderer.gui.active && security.authenticated) {
 		ImGui::SetNextWindowSize(ImVec2(460, 410));
         ImGui::Begin("Aspect", 0,
             ImGuiWindowFlags_NoCollapse | ImGuiConfigFlags_NoMouseCursorChange);
@@ -441,6 +441,16 @@ void Renderer::render()
 				ImGui::PushID(17);
 				ImGui::SliderInt("", &config.aim.m_DeadZone, 0, 25);
 				ImGui::PopID();
+				ImGui::Text("- Y Offset ");
+				ImGui::SameLine();
+				ImGui::PushID(18);
+				ImGui::SliderFloat("", &config.aim.m_YOffset, -2, 2);
+				ImGui::PopID();
+				ImGui::Text("- X Offset ");
+				ImGui::SameLine();
+				ImGui::PushID(19);
+				ImGui::SliderFloat("", &config.aim.m_XOffset, -2, 2);
+				ImGui::PopID();
 
                 ImGui::EndTabItem();
             }
@@ -451,6 +461,7 @@ void Renderer::render()
                 ImGui::PushID(13);
                 ImGui::SliderInt("", &config.exploits.m_Telekill.m_Distance, 1, 250);
 				ImGui::PopID();
+				ImGui::Checkbox("- Telekill Team Check", &config.exploits.m_Telekill.m_TeamCheck);
 				ImGui::Hotkey("- Telekill Key ", &config.exploits.m_Telekill.m_key);
 				ImGui::PushID(14);
 				ImGui::Text("- Elevator Height");
@@ -570,7 +581,7 @@ void Renderer::render()
 
     ImDrawList* list = ImGui::GetOverlayDrawList();
 
-    if (config.aim.m_DrawFov) {
+    if (config.aim.m_DrawFov && security.authenticated) {
         Color color = config.aim.c_FovColor;
 		if (color.m_Rainbow)
 			color.m_Color = *(vec3*)rainbow_color(frames, color.m_Speed);
@@ -582,88 +593,101 @@ void Renderer::render()
 
     if (config.esp.m_Enabled) {
         for (auto child : *sdk.players->children) {
-            if (!child)
-                continue;
-            if (INSTANCE_CHECK(child->character))
-                continue;
+			if (!child)
+			{
+				//std::cout << "!child" << std::endl;
+				continue;
+			}
+			if (INSTANCE_CHECK(child->character))
+			{
+				//std::cout << "IC Character" << std::endl;
+				continue;
+			}
 
+			//std::cout << "ICheck 1" << std::endl;
             /* Local */
             auto local_player = sdk.players->get_local_player();
             if (INSTANCE_CHECK(local_player))
                 continue;
 
+			//std::cout << "ICheck 2" << std::endl;
             /* Don't continue further if we share the same user_id */
             if (child->user_id == local_player->user_id)
                 continue;
+			//std::cout << "ICheck 3" << std::endl;
             /* Don't continue further if teamcheck is on and we are on the same team */
             if (config.esp.m_TeamCheck && child->team_id == local_player->team_id)
                 continue;
-
+			//std::cout << "ICheck 4" << std::endl;
             auto local_character = local_player->character;
             if (INSTANCE_CHECK(local_character))
                 continue;
-
+			//std::cout << "ICheck 5" << std::endl;
             auto local_head = local_character->find_child<RBXInstance>("Head");
             if (INSTANCE_CHECK(local_head))
                 continue;
-
+			//std::cout << "ICheck 6" << std::endl;
             auto local_head_primitive = local_head->get_primitive();
             if (INSTANCE_CHECK(local_head_primitive))
                 continue;
-
+			//std::cout << "ICheck 7" << std::endl;
             auto local_head_body = local_head_primitive->get_body();
             if (INSTANCE_CHECK(local_head_body))
                 continue;
-
+			//std::cout << "ICheck 8" << std::endl;
             /* Head */
             auto child_head = child->character->find_child<RBXInstance>("Head");
             if (INSTANCE_CHECK(child_head))
                 continue;
-
+			//std::cout << "ICheck 9" << std::endl;
             auto head_primitive = child_head->get_primitive();
             if (INSTANCE_CHECK(head_primitive))
                 continue;
-
+			//std::cout << "ICheck 10" << std::endl;
             auto head_body = head_primitive->get_body();
             if (INSTANCE_CHECK(head_body))
                 continue;
-
+			//std::cout << "ICheck 11" << std::endl;
             /* Leg */
             auto child_leg = child->character->find_child<RBXInstance>("Left Leg");
+			//std::cout << "ICheck 12" << std::endl;
             if (INSTANCE_CHECK(child_leg))
                 child_leg = child->character->find_child<RBXInstance>("LeftLowerLeg");
             if (INSTANCE_CHECK(child_leg))
                 continue;
-
+			//std::cout << "ICheck 13" << std::endl;
             auto leg_primitive = child_leg->get_primitive();
             if (INSTANCE_CHECK(leg_primitive))
                 continue;
-
+			//std::cout << "ICheck 14" << std::endl;
             auto leg_body = leg_primitive->get_body();
             if (INSTANCE_CHECK(leg_body))
                 continue;
 
             /* torso */
+			//std::cout << "ICheck 15" << std::endl;
             auto child_torso = child->character->find_child<RBXInstance>("Torso");
             if (INSTANCE_CHECK(child_torso))
                 child_torso = child->character->find_child<RBXInstance>("UpperTorso");
             if (INSTANCE_CHECK(child_torso))
                 continue;
-
+			//std::cout << "ICheck 16" << std::endl;
             auto torso_primitive = child_torso->get_primitive();
             if (INSTANCE_CHECK(torso_primitive))
                 continue;
-
+			//std::cout << "ICheck 17" << std::endl;
             auto torso_body = torso_primitive->get_body();
             if (INSTANCE_CHECK(torso_body))
                 continue;
 
+			//std::cout << "Getting Positions!" << std::endl;
             vec3 head_vec = head_body->get_position();
             vec3 torso_vec = torso_body->get_position();
             vec3 leg_vec = leg_body->get_position();
 
             vec3 local_head_vec = local_head_body->get_position();
 
+			//std::cout << "Storing Distance" << std::endl;
             int distance = sdk.distance_to<vec3>(local_head_vec, head_vec);
 
             vec2 screen_leg;
@@ -671,14 +695,14 @@ void Renderer::render()
             vec2 screen_head;
             head_vec.y += 4.f;
             vec2 screen_torso;
-
+			//std::cout << "W2S" << std::endl;
             if (!this->w2s(head_vec, screen_head))
                 continue;
             if (!this->w2s(torso_vec, screen_torso))
                 continue;
             if (!this->w2s(leg_vec, screen_leg))
                 continue;
-
+			//std::cout << "Checking Distance!" << std::endl;
             if (distance <= config.esp.m_MaxDistance) {
                 int offset = -45;
                 if (config.esp.m_Names) {
