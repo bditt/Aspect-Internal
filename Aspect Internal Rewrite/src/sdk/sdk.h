@@ -9,6 +9,7 @@
 
 typedef __int16(__thiscall* humanoid_sethipheight)(uintptr_t Humanoid,
     float value);
+typedef int (__thiscall* humanoid_changestate)(uintptr_t Humanoid, int state);
 typedef void*(__cdecl* get_datamodel)(void* dm);
 
 struct SDK {
@@ -23,6 +24,7 @@ public:
 
 public:
     humanoid_sethipheight sethipheight;
+	humanoid_changestate changestate;
 
 public:
     inline void initialize()
@@ -32,6 +34,7 @@ public:
             "04");
         get_dm = (get_datamodel)Memory::Scan(
             "8D 45 E0 C7 45 ? ? ? ? ? 50 E8 ? ? ? ? 83 7D E0 00", CALL_REL_32, 11);
+		//changestate = (humanoid_changestate)Memory::unprotect(Memory::Scan("55 8B EC 64 A1 ? ? ? ? 6A FF 68 ? ? ? ? 50 64 89 25 ? ? ? ? 83 EC 08 56 6A 00 8B F1 E9 ? ? ? ? 8B 6C 25 00"));
         unsigned char dm[8];
         data_model = (RBXDataModel*)(*(uintptr_t*)get_dm(dm) + 0x44);
         printf("data_model: 0x%p\n		->name: ", data_model);
@@ -42,8 +45,8 @@ public:
         std::cout << players->name << std::endl;
 		printf("LocalPlayer: 0x%p\n		->name: ", players->get_local_player());
 		std::cout << players->get_local_player()->name << std::endl;
-		//auto Head = players->get_local_player()->character->find_child<RBXInstance>("Head");
-		//printf("Head: 0x%p\n		->name: ", Head);
+		auto Humanoid = players->get_local_player()->character->find_child<RBXInstance>("Humanoid");
+		printf("Humanoid: 0x%p\n		->name: ", Humanoid);
 		//std::cout << Head->name << std::endl;
 		//std::cout << "LocalPlayer ID: " << players->get_local_player()->user_id << std::endl;
 		//Sleep(1000000);

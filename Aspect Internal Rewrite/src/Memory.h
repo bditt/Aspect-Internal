@@ -62,4 +62,5 @@ std::uintptr_t Scan(const std::uintptr_t start, const std::uintptr_t end,
     const int offset = 0);
 std::uintptr_t Scan(const std::string& pattern, const int flags = 0,
     const int offset = 0);
+DWORD unprotect(DWORD addr);
 } // namespace Memory

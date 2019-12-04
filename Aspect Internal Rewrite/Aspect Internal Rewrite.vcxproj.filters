@@ -51,6 +51,9 @@
     <ClCompile Include="src\misc\config.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\hacks\exploits\changestate.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Memory.h">
@@ -120,6 +123,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hacks\exploits\changestate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\retcheck.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

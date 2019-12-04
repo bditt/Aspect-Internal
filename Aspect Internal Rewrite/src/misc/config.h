@@ -107,7 +107,7 @@ public:
     struct exploits_t
 	{
         struct {
-            bool m_Enabled = true;
+            bool m_Enabled = false;
 			bool m_TeamCheck = true;
 
             int m_Distance = 25;
@@ -115,7 +115,7 @@ public:
         } m_Telekill;
 
 		struct {
-			bool m_Enabled = true;
+			bool m_Enabled = false;
 			int m_Amount = 5;
 
 			int m_Left = 100;
@@ -134,6 +134,11 @@ public:
 			int m_Increase = 107;
 			int m_Decrease = 109;
         } m_Elevator;
+
+		struct {
+			bool m_Enabled = false;
+			int State = 8;
+		} m_ChangeState;
     } exploits;
 
 	int menu_key = 45;

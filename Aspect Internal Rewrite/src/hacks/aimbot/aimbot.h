@@ -25,6 +25,18 @@ public:
         float ret = sqrt(pow(ydist, 2) + pow(xdist, 2));
         return ret;
     }
+
+	inline float distance_cursor(vec2 vec)
+	{
+		POINT p;
+		if (GetCursorPos(&p))
+		{
+			float ydist = (vec.y - p.y);
+			float xdist = (vec.x - p.x);
+			float ret = sqrt(pow(ydist, 2) + pow(xdist, 2));
+			return ret;
+		}
+	}
 	void get_screen(vec2);
 
 	void aim_at_exact(vec2);

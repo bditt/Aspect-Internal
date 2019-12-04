@@ -103,4 +103,72 @@ std::uintptr_t Scan(const std::string& pattern, const int flags,
         reinterpret_cast<std::uintptr_t>(mi.lpBaseOfDll) + mi.SizeOfImage,
         pattern, flags, offset);
 }
+
+DWORD unprotect(DWORD addr)
+{
+	BYTE* tAddr = (BYTE*)addr;
+
+	/*  Calcualte the size of the function.
+
+		In theory this will run until it hits the next
+		functions prolog. It assumes all calls are aligned to
+		16 bytes. (grazie katie)
+	*/
+	do
+	{
+		tAddr += 16;
+	} while (!(tAddr[0] == 0x55 && tAddr[1] == 0x8B && tAddr[2] == 0xEC));
+
+	DWORD funcSz = tAddr - (BYTE*)addr;
+
+	/* Allocate memory for the new function */
+	PVOID nFunc = VirtualAlloc(NULL, funcSz, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+	if (nFunc == NULL)
+		return addr;
+
+	/* Copy the function to the newly allocated memory */
+	memcpy(nFunc, (void*)addr, funcSz);
+
+	BYTE* pos = (BYTE*)nFunc;
+	BOOL valid = false;
+	do
+	{
+		if (pos[0] == 0x72 && pos[2] == 0xA1 && pos[7] == 0x8B) {
+			*(BYTE*)pos = 0xEB;
+
+			DWORD cByte = (DWORD)nFunc;
+			do
+			{
+				if (*(BYTE*)cByte == 0xE8)
+				{
+					DWORD oFuncPos = addr + (cByte - (DWORD)nFunc);
+					DWORD oFuncAddr = (oFuncPos + *(DWORD*)(oFuncPos + 1)) + 5;
+
+					if (oFuncAddr % 16 == 0)
+					{
+						DWORD relativeAddr = oFuncAddr - cByte - 5;
+						*(DWORD*)(cByte + 1) = relativeAddr;
+
+						/* Don't check rel32 */
+						cByte += 4;
+					}
+				}
+
+				cByte += 1;
+			} while (cByte - (DWORD)nFunc < funcSz);
+
+			valid = true;
+		}
+		pos += 1;
+	} while ((DWORD)pos < (DWORD)nFunc + funcSz);
+
+	/* This function has no return check, let's not waste memory */
+	if (!valid)
+	{
+		VirtualFree(nFunc, 0, MEM_RELEASE);
+		return addr;
+	}
+
+	return (DWORD)nFunc;
+}
 } // namespace Memory

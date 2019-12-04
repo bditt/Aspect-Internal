@@ -113,7 +113,7 @@ void Aimbot::update()
 
 			if (renderer.w2s(target_pos, sc))
 			{
-				float distance = this->distance_cross(sc);
+				float distance = this->distance_cursor(sc);
 				if (distance < target.dist && distance <= config.aim.m_AimFov 
 					&& pdistance <= config.aim.m_MaxDistance
 					&& distance > config.aim.m_DeadZone)
@@ -160,17 +160,18 @@ void Aimbot::aim_at(vec2 target)
 	else if (config.aim.m_AimMethod == 2)
 	{
 		SetCursorPos(target.x, target.y);
-		INPUT input[2];
-		memset(input, 0, 2 * sizeof(input[0]));
-		input[0].type = 1;
-		input[0].mi.dx = 1;
-		input[0].mi.dy = 1;
-		input[0].mi.dwFlags = 0x0001;
-		
-		input[1].type = 1;
-		input[1].mi.dx = -1;
-		input[1].mi.dy = -1;
-		input[1].mi.dwFlags = 0x0001;
-		SendInput(1, input, sizeof(input[0]));
+		INPUT Input = { 0 };
+		//memset(input, 0, sizeof(input[0]));
+		Input.type = INPUT_MOUSE;
+		Input.mi.dx = 1;
+		Input.mi.dy = 1;
+		Input.mi.dwFlags = MOUSEEVENTF_MOVE;
+		SendInput(1, &Input, sizeof(Input));
+		INPUT Input2 = { 0 };
+		Input2.type = INPUT_MOUSE;
+		Input2.mi.dx = -1;
+		Input2.mi.dy = -1;
+		Input2.mi.dwFlags = MOUSEEVENTF_MOVE;
+		SendInput(1, &Input2, sizeof(Input2));
 	}
 }

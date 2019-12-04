@@ -503,7 +503,9 @@ void Renderer::render()
 					ImGui::Hotkey("- Up       ", &config.exploits.m_Telemove.m_Up);
 					ImGui::Hotkey("- Down     ", &config.exploits.m_Telemove.m_Down);
 				}
-               
+
+				//ImGui::Checkbox("ChangeState", &config.exploits.m_ChangeState.m_Enabled);
+
                 ImGui::EndTabItem();
             } 
 			if (ImGui::BeginTabItem("Misc")) {
@@ -586,8 +588,12 @@ void Renderer::render()
 		if (color.m_Rainbow)
 			color.m_Color = *(vec3*)rainbow_color(frames, color.m_Speed);
 
-		list->AddCircle(ImVec2(s_w / 2, s_h / 2), 
-			config.aim.m_AimFov, ImColor(color.m_Color.data), 32);
+		POINT p;
+		if (GetCursorPos(&p))
+		{
+			list->AddCircle(ImVec2(p.x, p.y),
+				config.aim.m_AimFov, ImColor(color.m_Color.data), 32);
+		}
 	}
 
 

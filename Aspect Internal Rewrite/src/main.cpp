@@ -2,6 +2,7 @@
 #include "sdk/sdk.h"
 #include "renderer/renderer.h"
 #include "hacks/aimbot/aimbot.h"
+#include "hacks/exploits/changestate.h"
 #include "security/security.h"
 #include "sdk/vec.h"
 #include "misc/config.h"
@@ -45,7 +46,8 @@ LONG WINAPI ExceptionFilter(EXCEPTION_POINTERS* excpInfo)
     MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hFile,
         MiniDumpNormal, &eInfo, nullptr, nullptr);
     CloseHandle(hFile);
-
+	std::cout << "Aspect Crashed!" << std::endl;
+	//Sleep(100000);
     MessageBox(nullptr, "Aspect has crashed", "Crash", 0);
     exit(0);
 }
@@ -89,20 +91,20 @@ unsigned long __stdcall main(LPVOID)
     reinterpret_cast<RtlSetUnhandledExceptionFilterFn>(GetProcAddress(
         GetModuleHandle("ntdll.dll"), "RtlSetUnhandledExceptionFilter"))(
         ExceptionFilter);
-	Sleep(3000);
+	//Sleep(3000);
 	std::cout << "Getting Changelog!" << std::endl;
     std::cout << security.download_url(
         "http://aspectnetwork.net/aspect/internal/changelog.php")
               << "\n"
               << std::endl;
-	Sleep(3000);
+	//Sleep(3000);
 	std::cout << "Checking Version!" << std::endl;
 	if (!security.check_version())
 		MessageBox(nullptr, 
 			"Aspect has been updated, please download latest update", "Update", 0);
 
     /* Discord */
-	Sleep(3000);
+	//Sleep(3000);
 	std::cout << "Enabling Discord Hook!" << std::endl;
     InitDiscord();
     starttime = time(0);
@@ -234,6 +236,31 @@ unsigned long __stdcall main(LPVOID)
                 
                 Sleep(50);
             }();
+
+			/*Change State*/
+			[]() {
+				if (!config.exploits.m_ChangeState.m_Enabled)
+					return;
+
+				std::cout << "LP" << std::endl;
+				auto local_player = sdk.players->get_local_player();
+				if (INSTANCE_CHECK(local_player))
+					return;
+
+				std::cout << "LC" << std::endl;
+				auto local_character = local_player->character;
+				if (INSTANCE_CHECK(local_character))
+					return;
+
+				std::cout << "LH" << std::endl;
+				auto local_humanoid = local_character->find_child_class<RBXInstance>("Humanoid");
+				if (INSTANCE_CHECK(local_humanoid))
+					return;
+
+				std::cout << "CS" << std::endl;
+				sdk.changestate(reinterpret_cast<uintptr_t>(local_humanoid), 11);
+				std::cout << "Done" << std::endl;
+			}();
         }
     });
 

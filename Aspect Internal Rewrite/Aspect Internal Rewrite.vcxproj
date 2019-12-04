@@ -142,6 +142,7 @@
     <ClCompile Include="libs\imgui\impl\imgui_impl_dx9.cpp" />
     <ClCompile Include="libs\imgui\impl\imgui_impl_win32.cpp" />
     <ClCompile Include="src\hacks\aimbot\aimbot.cc" />
+    <ClCompile Include="src\hacks\exploits\changestate.cc" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Memory.cpp" />
     <ClCompile Include="src\misc\config.cc" />
@@ -161,8 +162,10 @@
     <ClInclude Include="src\commons.h" />
     <ClInclude Include="src\global.h" />
     <ClInclude Include="src\hacks\aimbot\aimbot.h" />
+    <ClInclude Include="src\hacks\exploits\changestate.h" />
     <ClInclude Include="src\Memory.h" />
     <ClInclude Include="src\renderer\renderer.h" />
+    <ClInclude Include="src\retcheck.h" />
     <ClInclude Include="src\sdk\classes.h" />
     <ClInclude Include="src\sdk\sdk.h" />
     <ClInclude Include="src\sdk\vec.h" />
