@@ -82,7 +82,7 @@ void Aimbot::update()
 			auto local_player = sdk.players->get_local_player();
 			if (child->user_id == local_player->user_id)
 				continue;
-			if (child->team_id == local_player->team_id && config.aim.m_TeamCheck)
+			if (child->team->teamname == local_player->team->teamname && config.aim.m_TeamCheck)
 				continue;
 
 			auto local_character = local_player->character;

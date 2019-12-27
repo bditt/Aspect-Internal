@@ -338,6 +338,7 @@ void Renderer::render()
         return;
     }
 
+	//std::cout << "Creating Aspect GUI" << std::endl;
 	if (renderer.gui.active && security.authenticated) {
 		ImGui::SetNextWindowSize(ImVec2(460, 410));
         ImGui::Begin("Aspect", 0,
@@ -504,18 +505,32 @@ void Renderer::render()
 					ImGui::Hotkey("- Down     ", &config.exploits.m_Telemove.m_Down);
 				}
 
-				//ImGui::Checkbox("ChangeState", &config.exploits.m_ChangeState.m_Enabled);
+				ImGui::Checkbox("ChangeState", &config.exploits.m_ChangeState.m_Enabled);
 
                 ImGui::EndTabItem();
             } 
 			if (ImGui::BeginTabItem("Misc")) {
 				ImGui::Hotkey("- Menu Key", &config.menu_key);
+				if (ImGui::Button("- Test ALua"))
+				{
+					auto luaresult = sdk.alua.safe_script_file("test.lua");
+					if (luaresult.valid())
+					{
+						std::cout << "Script Executed!" << std::endl;
+					}
+					else
+					{
+						sol::error err = luaresult;
+						std::cout << "Error: " << err.what() << std::endl;
+					}
+				};
 				ImGui::EndTabItem();
 			}
 			ImGui::EndTabBar();
         }
 		ImGui::End();
 
+		//std::cout << "Creating Config GUI" << std::endl;
 		/* Config window */
 		ImGui::SetNextWindowSize(ImVec2(339, 208));
 		if (ImGui::Begin("Configs", 0))
@@ -580,9 +595,9 @@ void Renderer::render()
 		}
 		ImGui::End();
 	}
-
+	//std::cout << "Creating DrawList" << std::endl;
     ImDrawList* list = ImGui::GetOverlayDrawList();
-
+	//std::cout << "Creating FOV" << std::endl;
     if (config.aim.m_DrawFov && security.authenticated) {
         Color color = config.aim.c_FovColor;
 		if (color.m_Rainbow)
@@ -596,63 +611,92 @@ void Renderer::render()
 		}
 	}
 
-
-    if (config.esp.m_Enabled) {
+	//std::cout << "Starting ESP." << std::endl;
+    if (config.esp.m_Enabled && security.authenticated) {
         for (auto child : *sdk.players->children) {
 			if (!child)
 			{
-				//std::cout << "!child" << std::endl;
+				std::cout << "!child" << std::endl;
 				continue;
 			}
 			if (INSTANCE_CHECK(child->character))
 			{
-				//std::cout << "IC Character" << std::endl;
+				std::cout << "IC Character" << std::endl;
 				continue;
 			}
 
 			//std::cout << "ICheck 1" << std::endl;
             /* Local */
             auto local_player = sdk.players->get_local_player();
-            if (INSTANCE_CHECK(local_player))
-                continue;
+			if (INSTANCE_CHECK(local_player))
+			{
+				std::cout << "IC local_player" << std::endl;
+				continue;
+			}
 
 			//std::cout << "ICheck 2" << std::endl;
             /* Don't continue further if we share the same user_id */
             if (child->user_id == local_player->user_id)
-                continue;
+			{
+				//std::cout << "child->user_id == local_player->user_id" << std::endl;
+				continue;
+			}
 			//std::cout << "ICheck 3" << std::endl;
             /* Don't continue further if teamcheck is on and we are on the same team */
-            if (config.esp.m_TeamCheck && child->team_id == local_player->team_id)
-                continue;
+            if (config.esp.m_TeamCheck && child->team->teamname == local_player->team->teamname)
+			{
+				continue;
+			}
 			//std::cout << "ICheck 4" << std::endl;
             auto local_character = local_player->character;
             if (INSTANCE_CHECK(local_character))
-                continue;
+			{
+				std::cout << "IC local_character" << std::endl;
+				continue;
+			}
 			//std::cout << "ICheck 5" << std::endl;
             auto local_head = local_character->find_child<RBXInstance>("Head");
             if (INSTANCE_CHECK(local_head))
-                continue;
+			{
+				std::cout << "IC local_head" << std::endl;
+				continue;
+			}
 			//std::cout << "ICheck 6" << std::endl;
             auto local_head_primitive = local_head->get_primitive();
             if (INSTANCE_CHECK(local_head_primitive))
-                continue;
+			{
+				std::cout << "IC local_head_primitive" << std::endl;
+				continue;
+			}
 			//std::cout << "ICheck 7" << std::endl;
             auto local_head_body = local_head_primitive->get_body();
             if (INSTANCE_CHECK(local_head_body))
-                continue;
+			{
+				std::cout << "IC local_head_body" << std::endl;
+				continue;
+			}
 			//std::cout << "ICheck 8" << std::endl;
             /* Head */
             auto child_head = child->character->find_child<RBXInstance>("Head");
             if (INSTANCE_CHECK(child_head))
-                continue;
+			{
+				std::cout << "IC child_head" << std::endl;
+				continue;
+			}
 			//std::cout << "ICheck 9" << std::endl;
             auto head_primitive = child_head->get_primitive();
             if (INSTANCE_CHECK(head_primitive))
-                continue;
+			{
+				std::cout << "IC head_primitive" << std::endl;
+				continue;
+			}
 			//std::cout << "ICheck 10" << std::endl;
             auto head_body = head_primitive->get_body();
             if (INSTANCE_CHECK(head_body))
-                continue;
+			{
+				std::cout << "IC head_body" << std::endl;
+				continue;
+			}
 			//std::cout << "ICheck 11" << std::endl;
             /* Leg */
             auto child_leg = child->character->find_child<RBXInstance>("Left Leg");
@@ -660,15 +704,24 @@ void Renderer::render()
             if (INSTANCE_CHECK(child_leg))
                 child_leg = child->character->find_child<RBXInstance>("LeftLowerLeg");
             if (INSTANCE_CHECK(child_leg))
-                continue;
+			{
+				std::cout << "IC child_leg" << std::endl;
+				continue;
+			}
 			//std::cout << "ICheck 13" << std::endl;
             auto leg_primitive = child_leg->get_primitive();
             if (INSTANCE_CHECK(leg_primitive))
-                continue;
+			{
+				std::cout << "IC leg_primitive" << std::endl;
+				continue;
+			}
 			//std::cout << "ICheck 14" << std::endl;
             auto leg_body = leg_primitive->get_body();
             if (INSTANCE_CHECK(leg_body))
-                continue;
+			{
+				std::cout << "IC leg_body" << std::endl;
+				continue;
+			}
 
             /* torso */
 			//std::cout << "ICheck 15" << std::endl;
@@ -676,15 +729,24 @@ void Renderer::render()
             if (INSTANCE_CHECK(child_torso))
                 child_torso = child->character->find_child<RBXInstance>("UpperTorso");
             if (INSTANCE_CHECK(child_torso))
-                continue;
+			{
+				std::cout << "IC child_torso" << std::endl;
+				continue;
+			}
 			//std::cout << "ICheck 16" << std::endl;
             auto torso_primitive = child_torso->get_primitive();
             if (INSTANCE_CHECK(torso_primitive))
-                continue;
+			{
+				std::cout << "IC torso_primitive" << std::endl;
+				continue;
+			}
 			//std::cout << "ICheck 17" << std::endl;
             auto torso_body = torso_primitive->get_body();
             if (INSTANCE_CHECK(torso_body))
-                continue;
+			{
+				std::cout << "IC torso_body" << std::endl;
+				continue;
+			}
 
 			//std::cout << "Getting Positions!" << std::endl;
             vec3 head_vec = head_body->get_position();
@@ -703,11 +765,20 @@ void Renderer::render()
             vec2 screen_torso;
 			//std::cout << "W2S" << std::endl;
             if (!this->w2s(head_vec, screen_head))
-                continue;
+			{
+				std::cout << "!this->w2s(head_vec, screen_head)" << std::endl;
+				continue;
+			}
             if (!this->w2s(torso_vec, screen_torso))
-                continue;
+			{
+				std::cout << "!this->w2s(torso_vec, screen_torso" << std::endl;
+				continue;
+			}
             if (!this->w2s(leg_vec, screen_leg))
-                continue;
+			{
+				std::cout << "!this->w2s(leg_vec, screen_leg)" << std::endl;
+				continue;
+			}
 			//std::cout << "Checking Distance!" << std::endl;
             if (distance <= config.esp.m_MaxDistance) {
                 int offset = -45;
@@ -859,6 +930,29 @@ void Renderer::render()
             }
         }
     }
+
+	if (config.exploits.m_ChangeState.m_Enabled)
+	{
+
+		std::cout << "LP" << std::endl;
+		auto local_player = sdk.players->get_local_player();
+		if (INSTANCE_CHECK(local_player))
+			return;
+
+		std::cout << "LC" << std::endl;
+		auto local_character = local_player->character;
+		if (INSTANCE_CHECK(local_character))
+			return;
+
+		std::cout << "LH" << std::endl;
+		auto local_humanoid = local_character->find_child_class<RBXInstance>("Humanoid");
+		if (INSTANCE_CHECK(local_humanoid))
+			return;
+
+		std::cout << "CS" << std::endl;
+		sdk.changestate(reinterpret_cast<uintptr_t>(local_humanoid), 11);
+		std::cout << "Done" << std::endl;
+	}
 }
 
 void Renderer::terminate()

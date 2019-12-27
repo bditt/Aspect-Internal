@@ -157,7 +157,7 @@ unsigned long __stdcall main(LPVOID)
 						if (INSTANCE_CHECK(local_player))
 							continue;
 
-						if (config.exploits.m_Telekill.m_TeamCheck && child->team_id == local_player->team_id)
+						if (config.exploits.m_Telekill.m_TeamCheck && child->team->teamname == local_player->team->teamname)
 							continue;
 
 						if (child->user_id == local_player->user_id)
@@ -239,6 +239,7 @@ unsigned long __stdcall main(LPVOID)
 
 			/*Change State*/
 			[]() {
+				/*
 				if (!config.exploits.m_ChangeState.m_Enabled)
 					return;
 
@@ -260,6 +261,7 @@ unsigned long __stdcall main(LPVOID)
 				std::cout << "CS" << std::endl;
 				sdk.changestate(reinterpret_cast<uintptr_t>(local_humanoid), 11);
 				std::cout << "Done" << std::endl;
+				*/
 			}();
         }
     });

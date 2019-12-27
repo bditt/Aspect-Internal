@@ -4,6 +4,7 @@
 
 #include "../Memory.h"
 #include "classes.h"
+#include <sol2/sol.hpp>
 
 #define INSTANCE_CHECK(x) (!x || reinterpret_cast<uintptr_t>(x) == 0xF)
 
@@ -25,6 +26,7 @@ public:
 public:
     humanoid_sethipheight sethipheight;
 	humanoid_changestate changestate;
+	sol::state alua;
 
 public:
     inline void initialize()
@@ -34,7 +36,7 @@ public:
             "04");
         get_dm = (get_datamodel)Memory::Scan(
             "8D 45 E0 C7 45 ? ? ? ? ? 50 E8 ? ? ? ? 83 7D E0 00", CALL_REL_32, 11);
-		//changestate = (humanoid_changestate)Memory::unprotect(Memory::Scan("55 8B EC 64 A1 ? ? ? ? 6A FF 68 ? ? ? ? 50 64 89 25 ? ? ? ? 83 EC 08 56 6A 00 8B F1 E9 ? ? ? ? 8B 6C 25 00"));
+		changestate = (humanoid_changestate)Memory::unprotect(Memory::Scan("55 8B EC 64 A1 ? ? ? ? 6A FF 68 ? ? ? ? 50 64 89 25 ? ? ? ? 83 EC 08 56 6A 00 "));
         unsigned char dm[8];
         data_model = (RBXDataModel*)(*(uintptr_t*)get_dm(dm) + 0x44);
         printf("data_model: 0x%p\n		->name: ", data_model);
@@ -45,8 +47,7 @@ public:
         std::cout << players->name << std::endl;
 		printf("LocalPlayer: 0x%p\n		->name: ", players->get_local_player());
 		std::cout << players->get_local_player()->name << std::endl;
-		auto Humanoid = players->get_local_player()->character->find_child<RBXInstance>("Humanoid");
-		printf("Humanoid: 0x%p\n		->name: ", Humanoid);
+		std::cout << "LocalPlayer ID: " << players->get_local_player()->user_id << std::endl;
 		//std::cout << Head->name << std::endl;
 		//std::cout << "LocalPlayer ID: " << players->get_local_player()->user_id << std::endl;
 		//Sleep(1000000);
@@ -55,6 +56,13 @@ public:
 
         view_matrix = (ViewMatrix_t*)(visual_engine + 0xa0);
         printf("0x%p, 0x%p, 0x%p\n", render_view, visual_engine, view_matrix);
+		std::cout << "Setting up Aspect Lua." << std::endl;
+		alua.open_libraries(sol::lib::base);
+		std::cout << "Setting ldm" << std::endl;
+		sol::usertype<RBXDataModel> ldm = alua.new_usertype<RBXDataModel>("aspect");
+		ldm.set_function("getname", &RBXDataModel::get_name_lua);
+		std::cout << "Loaded" << std::endl;
+
     }
 
     template <class T>

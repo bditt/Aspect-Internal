@@ -209,10 +209,13 @@ public:
 
 class RBXDataModel {
 public:
-    /* 0x0 */
-    char pad_0000[0xc];
-    /* 0xc */
-    class RBXClassDescriptor* class_descriptor;
+	char pad_0000[0x4];
+	/* 0x4 */
+	class RBXDataModel* self;
+	/* 0x8 */
+	char pad_0008[0x4];
+	/* 0xc */
+	class RBXClassDescriptor* class_descriptor;
     /* 0x10 */
     char pad_0010[0x18];
     /* 0x28 */
@@ -245,6 +248,17 @@ public:
         }
         return 0;
     }
+
+	std::string get_name()
+	{
+		return this->name;
+	}
+
+	std::string get_name_lua()
+	{
+
+		return *(std::string*)(reinterpret_cast<uintptr_t>(this) + 0x28);
+	}
 };
 
 class RBXCharacter {
@@ -291,6 +305,17 @@ public:
     }
 };
 
+class RBXTeam
+{
+public:
+	char pad_0000[4]; //0x0000
+	class RBXTeam* self; //0x0004
+	char pad_0008[4]; //0x0008
+	class RBXClassDescriptor* class_descriptor; //0x000C
+	char pad_0010[24]; //0x0010
+	std::string& teamname; //0x0028
+};
+
 class RBXPlayer {
 public:
     /* 0x */
@@ -314,12 +339,12 @@ public:
     /* 0x58 */
     class RBXCharacter* character;
     /* 0x5C */
-    char pad_0060[0x30];
+    char pad_0060[0x2C];
     /* 0x88 */
-    int32_t team_id;
-    /* 0x90*/
-    char pad_0090[0xd0];
-    /* 0x160 */
+	class RBXTeam* team; //0x000C
+    /* 0x9C*/
+    char pad_0090[0x54];
+    /* 0xE0 */
     int32_t user_id;
 
 public:
