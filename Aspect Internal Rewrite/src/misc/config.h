@@ -60,7 +60,7 @@ public:
 
 	struct esp_t
 	{
-		bool m_Enabled = true;
+		bool m_Enabled = false;
 		bool m_Names = true;
 		bool m_Distance = true;
 		bool m_Box = true;

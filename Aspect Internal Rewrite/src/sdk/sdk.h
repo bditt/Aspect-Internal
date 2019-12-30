@@ -58,11 +58,34 @@ public:
         printf("0x%p, 0x%p, 0x%p\n", render_view, visual_engine, view_matrix);
 		std::cout << "Setting up Aspect Lua." << std::endl;
 		alua.open_libraries(sol::lib::base);
-		std::cout << "Setting ldm" << std::endl;
-		sol::usertype<RBXDataModel> ldm = alua.new_usertype<RBXDataModel>("aspect");
-		ldm.set_function("getname", &RBXDataModel::get_name_lua);
-		std::cout << "Loaded" << std::endl;
 
+		auto class_descriptor = alua.new_usertype<RBXClassDescriptor>("RBXClassDescriptor");
+		class_descriptor["class_name"] = sol::readonly_property(&RBXClassDescriptor::class_name);
+
+		auto instance = alua.new_usertype<RBXInstance>("RBXInstance");
+		instance["self"] = sol::readonly_property(&RBXInstance::self);
+		instance["class_descriptor"] = sol::readonly_property(&RBXInstance::class_descriptor);
+		instance["name"] = sol::readonly_property(&RBXInstance::name);
+		instance["children"] = sol::readonly_property(&RBXInstance::children);
+		//instance["find_child"] = sol::readonly_property(&RBXInstance::find_child<RBXInstance*>);
+		//instance["find_child_class"] = sol::readonly_property(&RBXInstance::find_child_class<RBXInstance*>);
+		
+		auto datamodel = alua.new_usertype<RBXDataModel>("RBXDataModel");
+		datamodel["self"] = sol::readonly_property(&RBXDataModel::self);
+		datamodel["class_descriptor"] = sol::readonly_property(&RBXDataModel::class_descriptor);
+		datamodel["name"] = sol::readonly_property(&RBXDataModel::name);
+		datamodel["children"] = sol::readonly_property(&RBXDataModel::children);
+		//datamodel["find_child"] = sol::readonly_property(&RBXDataModel::find_child<RBXInstance*>);
+		//datamodel["find_child_class"] = sol::readonly_property(&RBXDataModel::find_child_class<RBXInstance*>);
+
+		auto container = alua.new_usertype<alua_container>("aspect");
+		container["dm"] = sol::readonly_property(&alua_container::dm);
+
+		alua_container con;
+		con.dm = data_model;
+		alua["aspect"] = con;
+
+		alua.safe_script("print(\"from lua > \".. aspect.dm.name)");
     }
 
     template <class T>

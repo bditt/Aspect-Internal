@@ -611,151 +611,85 @@ void Renderer::render()
 		}
 	}
 
-	//std::cout << "Starting ESP." << std::endl;
     if (config.esp.m_Enabled && security.authenticated) {
         for (auto child : *sdk.players->children) {
 			if (!child)
-			{
-				std::cout << "!child" << std::endl;
 				continue;
-			}
 			if (INSTANCE_CHECK(child->character))
-			{
-				std::cout << "IC Character" << std::endl;
 				continue;
-			}
 
-			//std::cout << "ICheck 1" << std::endl;
             /* Local */
             auto local_player = sdk.players->get_local_player();
 			if (INSTANCE_CHECK(local_player))
-			{
-				std::cout << "IC local_player" << std::endl;
 				continue;
-			}
-
-			//std::cout << "ICheck 2" << std::endl;
             /* Don't continue further if we share the same user_id */
             if (child->user_id == local_player->user_id)
-			{
-				//std::cout << "child->user_id == local_player->user_id" << std::endl;
 				continue;
-			}
-			//std::cout << "ICheck 3" << std::endl;
             /* Don't continue further if teamcheck is on and we are on the same team */
             if (config.esp.m_TeamCheck && child->team->teamname == local_player->team->teamname)
-			{
 				continue;
-			}
-			//std::cout << "ICheck 4" << std::endl;
+
             auto local_character = local_player->character;
             if (INSTANCE_CHECK(local_character))
-			{
-				std::cout << "IC local_character" << std::endl;
 				continue;
-			}
-			//std::cout << "ICheck 5" << std::endl;
             auto local_head = local_character->find_child<RBXInstance>("Head");
             if (INSTANCE_CHECK(local_head))
-			{
-				std::cout << "IC local_head" << std::endl;
 				continue;
-			}
-			//std::cout << "ICheck 6" << std::endl;
             auto local_head_primitive = local_head->get_primitive();
             if (INSTANCE_CHECK(local_head_primitive))
-			{
-				std::cout << "IC local_head_primitive" << std::endl;
 				continue;
-			}
-			//std::cout << "ICheck 7" << std::endl;
+
             auto local_head_body = local_head_primitive->get_body();
             if (INSTANCE_CHECK(local_head_body))
-			{
-				std::cout << "IC local_head_body" << std::endl;
 				continue;
-			}
-			//std::cout << "ICheck 8" << std::endl;
+			
             /* Head */
             auto child_head = child->character->find_child<RBXInstance>("Head");
             if (INSTANCE_CHECK(child_head))
-			{
-				std::cout << "IC child_head" << std::endl;
 				continue;
-			}
-			//std::cout << "ICheck 9" << std::endl;
+
             auto head_primitive = child_head->get_primitive();
             if (INSTANCE_CHECK(head_primitive))
-			{
-				std::cout << "IC head_primitive" << std::endl;
 				continue;
-			}
-			//std::cout << "ICheck 10" << std::endl;
+
             auto head_body = head_primitive->get_body();
             if (INSTANCE_CHECK(head_body))
-			{
-				std::cout << "IC head_body" << std::endl;
 				continue;
-			}
-			//std::cout << "ICheck 11" << std::endl;
+
             /* Leg */
             auto child_leg = child->character->find_child<RBXInstance>("Left Leg");
-			//std::cout << "ICheck 12" << std::endl;
             if (INSTANCE_CHECK(child_leg))
                 child_leg = child->character->find_child<RBXInstance>("LeftLowerLeg");
             if (INSTANCE_CHECK(child_leg))
-			{
-				std::cout << "IC child_leg" << std::endl;
 				continue;
-			}
-			//std::cout << "ICheck 13" << std::endl;
+
             auto leg_primitive = child_leg->get_primitive();
             if (INSTANCE_CHECK(leg_primitive))
-			{
-				std::cout << "IC leg_primitive" << std::endl;
 				continue;
-			}
-			//std::cout << "ICheck 14" << std::endl;
             auto leg_body = leg_primitive->get_body();
             if (INSTANCE_CHECK(leg_body))
-			{
-				std::cout << "IC leg_body" << std::endl;
 				continue;
-			}
 
             /* torso */
-			//std::cout << "ICheck 15" << std::endl;
             auto child_torso = child->character->find_child<RBXInstance>("Torso");
             if (INSTANCE_CHECK(child_torso))
                 child_torso = child->character->find_child<RBXInstance>("UpperTorso");
             if (INSTANCE_CHECK(child_torso))
-			{
-				std::cout << "IC child_torso" << std::endl;
 				continue;
-			}
-			//std::cout << "ICheck 16" << std::endl;
+
             auto torso_primitive = child_torso->get_primitive();
             if (INSTANCE_CHECK(torso_primitive))
-			{
-				std::cout << "IC torso_primitive" << std::endl;
 				continue;
-			}
-			//std::cout << "ICheck 17" << std::endl;
+
             auto torso_body = torso_primitive->get_body();
             if (INSTANCE_CHECK(torso_body))
-			{
-				std::cout << "IC torso_body" << std::endl;
 				continue;
-			}
 
-			//std::cout << "Getting Positions!" << std::endl;
             vec3 head_vec = head_body->get_position();
             vec3 torso_vec = torso_body->get_position();
             vec3 leg_vec = leg_body->get_position();
-
             vec3 local_head_vec = local_head_body->get_position();
 
-			//std::cout << "Storing Distance" << std::endl;
             int distance = sdk.distance_to<vec3>(local_head_vec, head_vec);
 
             vec2 screen_leg;
@@ -763,23 +697,14 @@ void Renderer::render()
             vec2 screen_head;
             head_vec.y += 4.f;
             vec2 screen_torso;
-			//std::cout << "W2S" << std::endl;
+
             if (!this->w2s(head_vec, screen_head))
-			{
-				std::cout << "!this->w2s(head_vec, screen_head)" << std::endl;
 				continue;
-			}
             if (!this->w2s(torso_vec, screen_torso))
-			{
-				std::cout << "!this->w2s(torso_vec, screen_torso" << std::endl;
 				continue;
-			}
             if (!this->w2s(leg_vec, screen_leg))
-			{
-				std::cout << "!this->w2s(leg_vec, screen_leg)" << std::endl;
 				continue;
-			}
-			//std::cout << "Checking Distance!" << std::endl;
+
             if (distance <= config.esp.m_MaxDistance) {
                 int offset = -45;
                 if (config.esp.m_Names) {
@@ -809,26 +734,6 @@ void Renderer::render()
                     list->AddText(ImVec2(screen_leg.x - 50, screen_leg.y + offset),
                         ImColor(color.m_Color.data), buff, 0);
                 }
-				if (config.esp.m_ShowInventory)
-				{
-					Color color = Color(child->name == global.target.target_name
-						? config.esp.c_TargetName : config.esp.c_EnemyName);
-
-					if (color.m_Rainbow)
-						color.m_Color = *(vec3*)rainbow_color(frames, color.m_Speed);
-
-					for (auto x : *child->character->children)
-					{
-						std::string xname = x->name;
-						if (xname != "Head" && xname != "Torso" && xname != "Left Arm" && xname != "Right Arm" && xname != "Left Leg" && xname != "Right Leg" && xname != "HumanoidRootPart" && xname != "Set")
-						{
-							offset += 15;
-							list->AddText(ImVec2(screen_leg.x - 50, screen_leg.y + offset),
-								ImColor(color.m_Color.data),
-								xname.c_str(), 0);
-						}
-					}//
-				}
 				if (config.esp.m_ShowScreenCords) {
 					vec2 pos{ screen_head.x, screen_head.y };
 					vec2 center{ renderer.s_w / 2, renderer.s_h / 2 };
@@ -930,29 +835,6 @@ void Renderer::render()
             }
         }
     }
-
-	if (config.exploits.m_ChangeState.m_Enabled)
-	{
-
-		std::cout << "LP" << std::endl;
-		auto local_player = sdk.players->get_local_player();
-		if (INSTANCE_CHECK(local_player))
-			return;
-
-		std::cout << "LC" << std::endl;
-		auto local_character = local_player->character;
-		if (INSTANCE_CHECK(local_character))
-			return;
-
-		std::cout << "LH" << std::endl;
-		auto local_humanoid = local_character->find_child_class<RBXInstance>("Humanoid");
-		if (INSTANCE_CHECK(local_humanoid))
-			return;
-
-		std::cout << "CS" << std::endl;
-		sdk.changestate(reinterpret_cast<uintptr_t>(local_humanoid), 11);
-		std::cout << "Done" << std::endl;
-	}
 }
 
 void Renderer::terminate()

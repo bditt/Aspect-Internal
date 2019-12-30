@@ -1,6 +1,7 @@
 #pragma once
 #include "vec.h"
 
+
 class RBXBody {
 public:
     /* 0x */
@@ -148,7 +149,7 @@ public:
     /* 0x */
     char pad_0000[0x4];
     /* 0x4 */
-    std::string& class_name;
+    char* class_name;
 };
 
 class RBXServicesPtr {
@@ -219,7 +220,7 @@ public:
     /* 0x10 */
     char pad_0010[0x18];
     /* 0x28 */
-    std::string& name;
+    char* name;
     /* 0x2C */
     std::shared_ptr<std::vector<std::shared_ptr<RBXService>>> children;
     /* 0x30 */
@@ -252,12 +253,6 @@ public:
 	std::string get_name()
 	{
 		return this->name;
-	}
-
-	std::string get_name_lua()
-	{
-
-		return *(std::string*)(reinterpret_cast<uintptr_t>(this) + 0x28);
 	}
 };
 
@@ -446,4 +441,11 @@ public:
     char pad_01D0[0x4];
     /* 0x1d4*/
     uintptr_t jumppower_ptr;
+};
+
+class alua_container
+{
+public:
+	RBXDataModel* dm;
+	ViewMatrix_t* vm;
 };
