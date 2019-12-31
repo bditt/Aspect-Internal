@@ -1,6 +1,6 @@
 #pragma once
 #include "vec.h"
-
+#include <sol2/sol.hpp>
 
 class RBXBody {
 public:
@@ -120,6 +120,24 @@ public:
         return 0;
     }
 
+	auto get_children()
+	{
+		return sol::as_table(*this->children);
+	}
+
+	auto find_child_lua(std::string name)
+	{
+		if (!this->children)
+			return *reinterpret_cast<RBXInstance**>(NULL);
+
+		for (auto child : *this->children) {
+			if (child->name == name) {
+				return *reinterpret_cast<RBXInstance**>(&child);
+			}
+		}
+		return *reinterpret_cast<RBXInstance**>(NULL);
+	}
+
     RBXPrimitive* get_primitive()
     {
         return *(RBXPrimitive**)(reinterpret_cast<uintptr_t>(this) + 0x98);
@@ -222,7 +240,7 @@ public:
     /* 0x28 */
     char* name;
     /* 0x2C */
-    std::shared_ptr<std::vector<std::shared_ptr<RBXService>>> children;
+    std::shared_ptr<std::vector<std::shared_ptr<RBXInstance>>> children;
     /* 0x30 */
 public:
     template <class T>
@@ -249,6 +267,24 @@ public:
         }
         return 0;
     }
+
+	auto get_children()
+	{
+		return sol::as_table(*this->children);
+	}
+
+	auto find_child_lua(std::string name)
+	{
+		if (!this->children)
+			return *reinterpret_cast<RBXInstance**>(NULL);
+
+		for (auto child : *this->children) {
+			if (child->name == name) {
+				return *reinterpret_cast<RBXInstance**>(&child);
+			}
+		}
+		return *reinterpret_cast<RBXInstance**>(NULL);
+	}
 
 	std::string get_name()
 	{

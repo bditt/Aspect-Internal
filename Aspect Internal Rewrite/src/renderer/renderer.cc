@@ -513,7 +513,7 @@ void Renderer::render()
 				ImGui::Hotkey("- Menu Key", &config.menu_key);
 				if (ImGui::Button("- Test ALua"))
 				{
-					auto luaresult = sdk.alua.safe_script_file("test.lua");
+					auto luaresult = sdk.alua.safe_script_file("test.lua", sol::script_pass_on_error);
 					if (luaresult.valid())
 					{
 						std::cout << "Script Executed!" << std::endl;

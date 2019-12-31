@@ -4,7 +4,6 @@
 
 #include "../Memory.h"
 #include "classes.h"
-#include <sol2/sol.hpp>
 
 #define INSTANCE_CHECK(x) (!x || reinterpret_cast<uintptr_t>(x) == 0xF)
 
@@ -12,6 +11,7 @@ typedef __int16(__thiscall* humanoid_sethipheight)(uintptr_t Humanoid,
     float value);
 typedef int (__thiscall* humanoid_changestate)(uintptr_t Humanoid, int state);
 typedef void*(__cdecl* get_datamodel)(void* dm);
+
 
 struct SDK {
 private:
@@ -63,29 +63,31 @@ public:
 		class_descriptor["class_name"] = sol::readonly_property(&RBXClassDescriptor::class_name);
 
 		auto instance = alua.new_usertype<RBXInstance>("RBXInstance");
-		instance["self"] = sol::readonly_property(&RBXInstance::self);
-		instance["class_descriptor"] = sol::readonly_property(&RBXInstance::class_descriptor);
-		instance["name"] = sol::readonly_property(&RBXInstance::name);
-		instance["children"] = sol::readonly_property(&RBXInstance::children);
-		//instance["find_child"] = sol::readonly_property(&RBXInstance::find_child<RBXInstance*>);
+		instance["self"] = &RBXInstance::self;
+		instance["class_descriptor"] = &RBXInstance::class_descriptor;
+		instance["name"] = &RBXInstance::name;
+		instance["children"] = &RBXInstance::children;
+		instance["get_children"] = &RBXInstance::get_children;
+		instance["find_child"] = &RBXInstance::find_child_lua;
 		//instance["find_child_class"] = sol::readonly_property(&RBXInstance::find_child_class<RBXInstance*>);
 		
 		auto datamodel = alua.new_usertype<RBXDataModel>("RBXDataModel");
-		datamodel["self"] = sol::readonly_property(&RBXDataModel::self);
-		datamodel["class_descriptor"] = sol::readonly_property(&RBXDataModel::class_descriptor);
-		datamodel["name"] = sol::readonly_property(&RBXDataModel::name);
-		datamodel["children"] = sol::readonly_property(&RBXDataModel::children);
-		//datamodel["find_child"] = sol::readonly_property(&RBXDataModel::find_child<RBXInstance*>);
+		datamodel["self"] = &RBXDataModel::self;
+		datamodel["class_descriptor"] = &RBXDataModel::class_descriptor;
+		datamodel["name"] = &RBXDataModel::name;
+		datamodel["children"] = &RBXDataModel::children;
+		datamodel["get_children"] = &RBXDataModel::get_children;
+		datamodel["find_child"] = &RBXDataModel::find_child_lua;
 		//datamodel["find_child_class"] = sol::readonly_property(&RBXDataModel::find_child_class<RBXInstance*>);
 
 		auto container = alua.new_usertype<alua_container>("aspect");
-		container["dm"] = sol::readonly_property(&alua_container::dm);
+		container["game"] = sol::readonly_property(&alua_container::dm);
 
 		alua_container con;
 		con.dm = data_model;
 		alua["aspect"] = con;
 
-		alua.safe_script("print(\"from lua > \".. aspect.dm.name)");
+		alua.safe_script("print(\"from lua > \".. aspect.game.name)");
     }
 
     template <class T>
