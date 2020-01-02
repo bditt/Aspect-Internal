@@ -187,6 +187,16 @@ struct ImVec2
 #ifdef IM_VEC2_CLASS_EXTRA
     IM_VEC2_CLASS_EXTRA     // Define additional constructors and implicit cast operators in imconfig.h to convert back and forth between your math types and ImVec2.
 #endif
+
+	/* ALUA */
+	inline auto _index(ImVec2& v, int i)
+	{
+		return (&x)[i];
+	}
+	inline auto _newindex(ImVec2& v, int i)
+	{
+		return (&x)[i];
+	}
 };
 
 // 4D vector (often used to store floating-point colors)

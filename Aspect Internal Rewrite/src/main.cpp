@@ -6,6 +6,7 @@
 #include "security/security.h"
 #include "sdk/vec.h"
 #include "misc/config.h"
+#include "lua/alua.h"
 
 #include <DbgHelp.h>
 #pragma comment(lib, "dbghelp.lib")
@@ -73,6 +74,7 @@ void Console(const char* title)
 }
 
 SDK sdk;
+alua_t alua;
 Aimbot g_aimbot;
 Security security;
 Renderer renderer;
@@ -112,6 +114,8 @@ unsigned long __stdcall main(LPVOID)
 	
 	sdk.initialize();
     renderer.initialize();
+
+	alua.initialize(sdk.data_model);
 
     std::thread aim([]() {
 		while (1) {
@@ -157,7 +161,8 @@ unsigned long __stdcall main(LPVOID)
 						if (INSTANCE_CHECK(local_player))
 							continue;
 
-						if (config.exploits.m_Telekill.m_TeamCheck && child->team->teamname == local_player->team->teamname)
+						if (config.exploits.m_Telekill.m_TeamCheck &&
+							child->team->team_name == local_player->team->team_name)
 							continue;
 
 						if (child->user_id == local_player->user_id)

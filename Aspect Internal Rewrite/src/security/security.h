@@ -36,7 +36,7 @@ private:
 
 public:
     char* version = "2.4.1";
-    bool authenticated = false;
+    bool authenticated = true;
 
 public:
     inline std::string download_url(const char* URL)

@@ -8,6 +8,7 @@
 #include <imgui/custom/custom.h>
 #include "../global.h"
 #include "../utils/utils.h"
+#include "../lua/alua.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "../sdk/stb_image.h"
 
@@ -299,6 +300,11 @@ void Renderer::render()
 	static unsigned short frames;
 	frames++;
 
+	ImDrawList* list = ImGui::GetOverlayDrawList();
+
+	for (auto x : alua.hookmanager->get_hooks("render"))
+		x.func(list);
+
 	if (renderer.gui.active && !security.authenticated) {
 		ImGui::SetNextWindowSize(ImVec2(370, 175));
         if(ImGui::Begin("login", 0, ImGuiWindowFlags_NoCollapse));
@@ -337,8 +343,6 @@ void Renderer::render()
         }
         return;
     }
-
-	//std::cout << "Creating Aspect GUI" << std::endl;
 	if (renderer.gui.active && security.authenticated) {
 		ImGui::SetNextWindowSize(ImVec2(460, 410));
         ImGui::Begin("Aspect", 0,
@@ -513,7 +517,7 @@ void Renderer::render()
 				ImGui::Hotkey("- Menu Key", &config.menu_key);
 				if (ImGui::Button("- Test ALua"))
 				{
-					auto luaresult = sdk.alua.safe_script_file("test.lua", sol::script_pass_on_error);
+					auto luaresult = alua.state.safe_script_file("test.lua", sol::script_pass_on_error);
 					if (luaresult.valid())
 					{
 						std::cout << "Script Executed!" << std::endl;
@@ -595,9 +599,6 @@ void Renderer::render()
 		}
 		ImGui::End();
 	}
-	//std::cout << "Creating DrawList" << std::endl;
-    ImDrawList* list = ImGui::GetOverlayDrawList();
-	//std::cout << "Creating FOV" << std::endl;
     if (config.aim.m_DrawFov && security.authenticated) {
         Color color = config.aim.c_FovColor;
 		if (color.m_Rainbow)
@@ -626,7 +627,7 @@ void Renderer::render()
             if (child->user_id == local_player->user_id)
 				continue;
             /* Don't continue further if teamcheck is on and we are on the same team */
-            if (config.esp.m_TeamCheck && child->team->teamname == local_player->team->teamname)
+            if (config.esp.m_TeamCheck && child->team->team_name == local_player->team->team_name)
 				continue;
 
             auto local_character = local_player->character;

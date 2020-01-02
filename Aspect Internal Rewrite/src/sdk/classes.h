@@ -95,30 +95,27 @@ public:
     class RBXPrimitive* primitive; // 0x4
     /* 0x9c */
 public:
-    template <class T>
-    T* find_child(std::string name)
-    {
-        if (!this->children)
-            return 0;
+	template <class T>
+	T* find_child(const char* name)
+	{
+		if (!this->children)
+			return (T*) nullptr;
+		for (auto c : *this->children)
+			if (c->name == name)
+				return std::reinterpret_pointer_cast<T>(c).get();
+		return (T*) nullptr;
+	}
 
-        for (auto child : *this->children) {
-            if (child->name == name) {
-                return *reinterpret_cast<T**>(&child);
-            }
-        }
-        return 0;
-    }
-
-    template <class T>
-    T* find_child_class(std::string name)
-    {
-        for (auto child : *this->children) {
-            if (child->class_descriptor->class_name == name) {
-                return *reinterpret_cast<T**>(&child);
-            }
-        }
-        return 0;
-    }
+	template <class T = RBXInstance>
+	T* find_class(const char* name)
+	{
+		if (!this->children)
+			return (T*) nullptr;
+		for (auto c : *this->children)
+			if (c->class_descriptor->class_name == name)
+				return std::reinterpret_pointer_cast<T>(c).get();
+		return (T*) nullptr;
+	}
 
 	auto get_children()
 	{
@@ -143,23 +140,11 @@ public:
         return *(RBXPrimitive**)(reinterpret_cast<uintptr_t>(this) + 0x98);
     }
 
-    float get_health()
-    {
-        uint32_t Humanoid = (uint32_t)this;
-        uint32_t PointerBase = *(uint32_t*)(Humanoid + 0x1C8);
-        uint32_t Pointer2 = *(uint32_t*)(PointerBase);
-        uint32_t health_dec = PointerBase ^ Pointer2;
-        return *(float*)&health_dec;
-    }
 
-    float get_max_health()
-    {
-        uint32_t Humanoid = (uint32_t)this;
-        uint32_t PointerBase = *(uint32_t*)(Humanoid + 0x1CC);
-        uint32_t Pointer2 = *(uint32_t*)(PointerBase);
-        uint32_t maxhealth_dec = PointerBase ^ Pointer2;
-        return *(float*)&maxhealth_dec;
-    }
+	RBXInstance* get_local_player()
+	{
+		return *(RBXInstance**)(reinterpret_cast<uintptr_t>(this) + 0xC8);
+	}
 };
 
 class RBXClassDescriptor {
@@ -168,128 +153,6 @@ public:
     char pad_0000[0x4];
     /* 0x4 */
     char* class_name;
-};
-
-class RBXServicesPtr {
-public:
-    /* 0x */
-    int32_t ServicesStart;
-    /* 0x4 */
-    int32_t ServicesEnd;
-};
-
-class RBXService {
-public:
-    /* 0x */
-    char pad_0000[0x4];
-    /* 0x4 */
-    class RBXService* self;
-    /* 0x8 */
-    char pad_0008[0x4];
-    /* 0xc */
-    class RBXClassDescriptor* class_descriptor;
-    /* 0x10 */
-    char pad_0010[0x18];
-    /* 0x2c */
-    char* name;
-    /* 0x30 */
-    std::shared_ptr<std::vector<std::shared_ptr<RBXService>>> children;
-    /* 0x34 */
-    char pad_0034[0x4];
-    /* 0x38 */
-    class RBXDataModel* Parent;
-
-public:
-    template <class T>
-    T* find_child(std::string name)
-    {
-        if (!this->children)
-            return 0;
-
-        for (auto child : *this->children) {
-            if (child->name == name) {
-                return *reinterpret_cast<T**>(&child);
-            }
-        }
-        return 0;
-    }
-
-    template <class T>
-    T* find_child_class(std::string name)
-    {
-        for (auto child : *this->children) {
-            if (child->class_descriptor->class_name == name) {
-                return *reinterpret_cast<T**>(&child);
-            }
-        }
-        return 0;
-    }
-};
-
-class RBXDataModel {
-public:
-	char pad_0000[0x4];
-	/* 0x4 */
-	class RBXDataModel* self;
-	/* 0x8 */
-	char pad_0008[0x4];
-	/* 0xc */
-	class RBXClassDescriptor* class_descriptor;
-    /* 0x10 */
-    char pad_0010[0x18];
-    /* 0x28 */
-    char* name;
-    /* 0x2C */
-    std::shared_ptr<std::vector<std::shared_ptr<RBXInstance>>> children;
-    /* 0x30 */
-public:
-    template <class T>
-    T* find_child(std::string name)
-    {
-        if (!this->children)
-            return 0;
-
-        for (auto child : *this->children) {
-            if (child->name == name) {
-                return *reinterpret_cast<T**>(&child);
-            }
-        }
-        return 0;
-    }
-
-    template <class T>
-    T* find_child_class(std::string name)
-    {
-        for (auto child : *this->children) {
-            if (child->class_descriptor->class_name == name) {
-                return *reinterpret_cast<T**>(&child);
-            }
-        }
-        return 0;
-    }
-
-	auto get_children()
-	{
-		return sol::as_table(*this->children);
-	}
-
-	auto find_child_lua(std::string name)
-	{
-		if (!this->children)
-			return *reinterpret_cast<RBXInstance**>(NULL);
-
-		for (auto child : *this->children) {
-			if (child->name == name) {
-				return *reinterpret_cast<RBXInstance**>(&child);
-			}
-		}
-		return *reinterpret_cast<RBXInstance**>(NULL);
-	}
-
-	std::string get_name()
-	{
-		return this->name;
-	}
 };
 
 class RBXCharacter {
@@ -310,30 +173,27 @@ public:
     std::shared_ptr<std::vector<std::shared_ptr<RBXInstance>>> children;
 
 public:
-    template <class T>
-    T* find_child(std::string name)
-    {
-        if (!this->children)
-            return 0;
+	template <class T>
+	T* find_child(const char* name)
+	{
+		if (!this->children)
+			return (T*) nullptr;
+		for (auto c : *this->children)
+			if (c->name == name)
+				return std::reinterpret_pointer_cast<T>(c).get();
+		return (T*) nullptr;
+	}
 
-        for (auto child : *this->children) {
-            if (child->name == name) {
-                return *reinterpret_cast<T**>(&child);
-            }
-        }
-        return 0;
-    }
-
-    template <class T>
-    T* find_child_class(std::string name)
-    {
-        for (auto child : *this->children) {
-            if (child->class_descriptor->class_name == name) {
-                return *reinterpret_cast<T**>(&child);
-            }
-        }
-        return 0;
-    }
+	template <class T = RBXInstance>
+	T* find_class(const char* name)
+	{
+		if (!this->children)
+			return (T*) nullptr;
+		for (auto c : *this->children)
+			if (c->class_descriptor->class_name == name)
+				return std::reinterpret_pointer_cast<T>(c).get();
+		return (T*) nullptr;
+	}
 };
 
 class RBXTeam
@@ -344,7 +204,7 @@ public:
 	char pad_0008[4]; //0x0008
 	class RBXClassDescriptor* class_descriptor; //0x000C
 	char pad_0010[24]; //0x0010
-	std::string& teamname; //0x0028
+	std::string& team_name; //0x0028
 };
 
 class RBXPlayer {
@@ -377,11 +237,6 @@ public:
     char pad_0090[0x54];
     /* 0xE0 */
     int32_t user_id;
-
-public:
-    std::string get_name() { return this->name; }
-
-    int32_t get_userid() { return this->user_id; }
 };
 
 class RBXPlayers {
@@ -399,11 +254,7 @@ public:
     /* 0x34 */
     char pad_0034[0x4];
     /* 0x38 */
-    class RBXDataModel* parent;
-    /* 0x3c */
-    char pad_003C[90];
-    /* 0xCC */
-    class RBXPlayer* local_player;
+    class RBXInstance* parent;
 
 public:
     std::string get_name() { return this->name; }
@@ -423,30 +274,27 @@ public:
         return 0;
     }
 
-    template <class T>
-    T* find_child(std::string name)
-    {
-        if (!this->children)
-            return 0;
+	template <class T>
+	T* find_child(const char* name)
+	{
+		if (!this->children)
+			return (T*) nullptr;
+		for (auto c : *this->children)
+			if (c->name == name)
+				return std::reinterpret_pointer_cast<T>(c).get();
+		return (T*) nullptr;
+	}
 
-        for (auto child : *this->children) {
-            if (child->name == name) {
-                return *reinterpret_cast<T**>(&child);
-            }
-        }
-        return 0;
-    }
-
-    template <class T>
-    T* find_child_class(std::string name)
-    {
-        for (auto child : *this->children) {
-            if (child->class_descriptor->class_name == name) {
-                return *reinterpret_cast<T**>(&child);
-            }
-        }
-        return 0;
-    }
+	template <class T = RBXInstance>
+	T* find_class(const char* name)
+	{
+		if (!this->children)
+			return (T*) nullptr;
+		for (auto c : *this->children)
+			if (c->class_descriptor->class_name == name)
+				return std::reinterpret_pointer_cast<T>(c).get();
+		return (T*) nullptr;
+	}
 };
 
 class RBXHumanoid {
@@ -482,6 +330,6 @@ public:
 class alua_container
 {
 public:
-	RBXDataModel* dm;
+	RBXInstance* dm;
 	ViewMatrix_t* vm;
 };

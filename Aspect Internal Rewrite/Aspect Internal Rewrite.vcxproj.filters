@@ -54,6 +54,9 @@
     <ClCompile Include="src\hacks\exploits\changestate.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\lua\alua.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Memory.h">
@@ -129,6 +132,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\retcheck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lua\alua.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lua\hook_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
