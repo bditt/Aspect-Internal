@@ -301,9 +301,14 @@ void Renderer::render()
 	frames++;
 
 	ImDrawList* list = ImGui::GetOverlayDrawList();
-
 	for (auto x : alua.hookmanager->get_hooks("render"))
-		x.func(list);
+	{
+		auto result = x.func(list);
+		if (!result.valid()) {
+			sol::error err = result;
+			printf("protected_func: %s\n", err.what());
+		}
+	}
 
 	if (renderer.gui.active && !security.authenticated) {
 		ImGui::SetNextWindowSize(ImVec2(370, 175));

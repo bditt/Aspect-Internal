@@ -19,18 +19,23 @@ void alua_t::initialize(RBXInstance* dm)
 	instance["find_child"] = &RBXInstance::find_child_lua;
 	//instance["find_child_class"] = sol::readonly_property(&RBXInstance::find_child_class<RBXInstance*>);
 
-	auto container = state.new_usertype<alua_container>("aspect");
-	container["game"] = sol::readonly_property(&alua_container::dm);
-
 	auto imvec = state.new_usertype<ImVec2>("ImVec2", sol::constructors<ImVec2(), ImVec2(float, float)>());
 	imvec["x"] = &ImVec2::x;
 	imvec["y"] = &ImVec2::y;
 
 	auto imcolor = state.new_usertype<ImColor>("ImColor", sol::constructors<ImColor(),
 		ImColor(float, float, float, float)>());
+	imcolor["as_u32"] = &ImColor::as_u32;
 
 	auto drawlist = state.new_usertype<ImDrawList>("drawlist");
+	drawlist["circle_filled"] = &ImDrawList::AddCircleFilled;
+	drawlist["rect_filled"] = &ImDrawList::AddRectFilled;
 	drawlist["circle"] = &ImDrawList::AddCircle;
+	drawlist["line"] = &ImDrawList::AddLine;
+	drawlist["rect"] = &ImDrawList::AddRect;
+	drawlist["text"] = [](ImDrawList& draw, const ImVec2& pos, ImU32 col, const char* text) {
+		draw.AddText(pos, col, text, 0);
+	};
 
 	auto aspect = state.create_table();
 	aspect["game"] = dm;
@@ -41,7 +46,10 @@ void alua_t::initialize(RBXInstance* dm)
 	};
 
 	state["aspect"] = aspect;
-
-	state.safe_script("print(\"from lua > \".. aspect.game.name)");
-	state.safe_script("aspect.register_callback(\"render\", \"unique_name\", function(list) print(list.circle) list:circle(ImVec2.new(250,250), 500, ImColor.new(255, 0, 0, 255)) end)");
+	auto result = state.safe_script("aspect.register_callback(\"render\", \"unique_name2\", function(list) list:text(ImVec2.new(250, 250), ImColor.new(255, 255, 0, 255):as_u32(), \"test\") end)");
+	if (!result.valid())
+	{
+		sol::error e = result;
+		printf("lua err: %s", e.what());
+	}
 }

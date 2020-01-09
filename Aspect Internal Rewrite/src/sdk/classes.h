@@ -99,22 +99,22 @@ public:
 	T* find_child(const char* name)
 	{
 		if (!this->children)
-			return (T*) nullptr;
-		for (auto c : *this->children)
-			if (c->name == name)
-				return std::reinterpret_pointer_cast<T>(c).get();
-		return (T*) nullptr;
+			return 0;
+		for (auto child : *this->children)
+			if (child->name == name)
+				return reinterpret_cast<T*>(child.get());
+		return 0;
 	}
 
 	template <class T = RBXInstance>
 	T* find_class(const char* name)
 	{
 		if (!this->children)
-			return (T*) nullptr;
-		for (auto c : *this->children)
-			if (c->class_descriptor->class_name == name)
-				return std::reinterpret_pointer_cast<T>(c).get();
-		return (T*) nullptr;
+			return 0;
+		for (auto child : *this->children)
+			if (child->class_descriptor->class_name == name)
+				return reinterpret_cast<T*>(child.get());
+		return 0;
 	}
 
 	auto get_children()
@@ -122,17 +122,14 @@ public:
 		return sol::as_table(*this->children);
 	}
 
-	auto find_child_lua(std::string name)
+	RBXInstance* find_child_lua(std::string name)
 	{
 		if (!this->children)
-			return *reinterpret_cast<RBXInstance**>(NULL);
-
-		for (auto child : *this->children) {
-			if (child->name == name) {
-				return *reinterpret_cast<RBXInstance**>(&child);
-			}
-		}
-		return *reinterpret_cast<RBXInstance**>(NULL);
+			return 0;
+		for (auto child : *this->children)
+			if (child->name == name)
+				return reinterpret_cast<RBXInstance*>(child.get());
+		return 0;
 	}
 
     RBXPrimitive* get_primitive()
@@ -177,22 +174,22 @@ public:
 	T* find_child(const char* name)
 	{
 		if (!this->children)
-			return (T*) nullptr;
-		for (auto c : *this->children)
-			if (c->name == name)
-				return std::reinterpret_pointer_cast<T>(c).get();
-		return (T*) nullptr;
+			return 0;
+		for (auto child : *this->children)
+			if (child->name == name)
+				return reinterpret_cast<T*>(child.get());
+		return 0;
 	}
 
 	template <class T = RBXInstance>
 	T* find_class(const char* name)
 	{
 		if (!this->children)
-			return (T*) nullptr;
-		for (auto c : *this->children)
-			if (c->class_descriptor->class_name == name)
-				return std::reinterpret_pointer_cast<T>(c).get();
-		return (T*) nullptr;
+			return 0;
+		for (auto child : *this->children)
+			if (child->class_descriptor->class_name == name)
+				return reinterpret_cast<T*>(child.get());
+		return 0;
 	}
 };
 
@@ -278,22 +275,22 @@ public:
 	T* find_child(const char* name)
 	{
 		if (!this->children)
-			return (T*) nullptr;
-		for (auto c : *this->children)
-			if (c->name == name)
-				return std::reinterpret_pointer_cast<T>(c).get();
-		return (T*) nullptr;
+			return 0;
+		for (auto child : *this->children)
+			if (child->name == name)
+				return reinterpret_cast<T*>(child.get());
+		return 0;
 	}
 
 	template <class T = RBXInstance>
 	T* find_class(const char* name)
 	{
 		if (!this->children)
-			return (T*) nullptr;
-		for (auto c : *this->children)
-			if (c->class_descriptor->class_name == name)
-				return std::reinterpret_pointer_cast<T>(c).get();
-		return (T*) nullptr;
+			return 0;
+		for (auto child : *this->children)
+			if (child->class_descriptor->class_name == name)
+				return reinterpret_cast<T*>(child.get());
+		return 0;
 	}
 };
 
@@ -325,11 +322,4 @@ public:
     char pad_01D0[0x4];
     /* 0x1d4*/
     uintptr_t jumppower_ptr;
-};
-
-class alua_container
-{
-public:
-	RBXInstance* dm;
-	ViewMatrix_t* vm;
 };

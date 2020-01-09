@@ -187,16 +187,6 @@ struct ImVec2
 #ifdef IM_VEC2_CLASS_EXTRA
     IM_VEC2_CLASS_EXTRA     // Define additional constructors and implicit cast operators in imconfig.h to convert back and forth between your math types and ImVec2.
 #endif
-
-	/* ALUA */
-	inline auto _index(ImVec2& v, int i)
-	{
-		return (&x)[i];
-	}
-	inline auto _newindex(ImVec2& v, int i)
-	{
-		return (&x)[i];
-	}
 };
 
 // 4D vector (often used to store floating-point colors)
@@ -1773,6 +1763,12 @@ struct ImColor
     // FIXME-OBSOLETE: May need to obsolete/cleanup those helpers.
     inline void    SetHSV(float h, float s, float v, float a = 1.0f){ ImGui::ColorConvertHSVtoRGB(h, s, v, Value.x, Value.y, Value.z); Value.w = a; }
     static ImColor HSV(float h, float s, float v, float a = 1.0f)   { float r,g,b; ImGui::ColorConvertHSVtoRGB(h, s, v, r, g, b); return ImColor(r,g,b,a); }
+
+	// ALUA
+	inline ImU32 as_u32()
+	{
+		return ImGui::ColorConvertFloat4ToU32(Value);
+	}
 };
 
 //-----------------------------------------------------------------------------
