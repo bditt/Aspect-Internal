@@ -446,11 +446,6 @@ void Renderer::render()
 				ImGui::PushID(16);
 				ImGui::SliderInt("", &config.aim.m_AimMethod, 1, 2);
 				ImGui::PopID();
-				ImGui::Text("- Deadzone ");
-				ImGui::SameLine();
-				ImGui::PushID(17);
-				ImGui::SliderInt("", &config.aim.m_DeadZone, 0, 25);
-				ImGui::PopID();
 				ImGui::Text("- Y Offset ");
 				ImGui::SameLine();
 				ImGui::PushID(18);

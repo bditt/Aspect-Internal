@@ -8,12 +8,12 @@ void alua_t::initialize(RBXInstance* dm)
 	state.open_libraries(sol::lib::base);
 
 	auto class_descriptor = state.new_usertype<RBXClassDescriptor>("RBXClassDescriptor");
-	class_descriptor["class_name"] = sol::readonly_property(&RBXClassDescriptor::class_name);
+	class_descriptor["class_name"] = sol::readonly_property(&RBXClassDescriptor::get_class_name);
 
 	auto instance = state.new_usertype<RBXInstance>("RBXInstance");
 	instance["self"] = &RBXInstance::self;
 	instance["class_descriptor"] = &RBXInstance::class_descriptor;
-	instance["name"] = &RBXInstance::name;
+	instance["name"] = sol::readonly_property(&RBXInstance::get_name);
 	instance["children"] = &RBXInstance::children;
 	instance["get_children"] = &RBXInstance::get_children;
 	instance["find_child"] = &RBXInstance::find_child_lua;

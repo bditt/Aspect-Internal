@@ -115,7 +115,7 @@ unsigned long __stdcall main(LPVOID)
 	sdk.initialize();
     renderer.initialize();
 
-	alua.initialize(sdk.data_model);
+	//alua.initialize(sdk.data_model);
 
     std::thread aim([]() {
 		while (1) {

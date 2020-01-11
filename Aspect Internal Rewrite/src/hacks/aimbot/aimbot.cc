@@ -115,8 +115,7 @@ void Aimbot::update()
 			{
 				float distance = this->distance_cursor(sc);
 				if (distance < target.dist && distance <= config.aim.m_AimFov 
-					&& pdistance <= config.aim.m_MaxDistance
-					&& distance > config.aim.m_DeadZone)
+					&& pdistance <= config.aim.m_MaxDistance)
 				{
 					//std::cout << "2" << std::endl;
 					target = target_t { character->name, sc, distance };

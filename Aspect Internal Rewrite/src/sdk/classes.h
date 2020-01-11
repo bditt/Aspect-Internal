@@ -2,6 +2,19 @@
 #include "vec.h"
 #include <sol2/sol.hpp>
 
+class RBXClassDescriptor {
+public:
+	/* 0x */
+	char pad_0000[4];
+	/* 0x4 */
+	std::string& class_name;
+public:
+	std::string get_class_name()
+	{
+		return this->class_name;
+	}
+};
+
 class RBXBody {
 public:
     /* 0x */
@@ -76,17 +89,17 @@ public:
 class RBXInstance {
 public:
     /* 0x */
-    char pad_0000[0x4];
+    char pad_0000[4];
     /* 0x4 */
     class RBXInstance* self; // 0x4
     /* 0x8 */
-    char pad_0008[0x4];
+    char pad_0008[4];
     /* 0xc */
-    class RBXClassDescriptor* class_descriptor; // 0x4
+    class RBXClassDescriptor* class_descriptor; // 0x4*
     /* 0x10 */
-    char pad_0010[0x18];
+    char pad_0010[24];
     /* 0x2c */
-    char* name; // 0x4
+	std::string& name; // 0x4
     /* 0x30 */
     std::shared_ptr<std::vector<std::shared_ptr<RBXInstance>>> children; // 0x4
     /* 0x34 */
@@ -112,8 +125,14 @@ public:
 		if (!this->children)
 			return 0;
 		for (auto child : *this->children)
+		{
+			std::cout << child->class_descriptor->class_name << std::endl;
 			if (child->class_descriptor->class_name == name)
+			{
+				std::cout << "Found Class: " << child->class_descriptor->class_name << std::endl;
 				return reinterpret_cast<T*>(child.get());
+			}
+		}
 		return 0;
 	}
 
@@ -142,28 +161,25 @@ public:
 	{
 		return *(RBXInstance**)(reinterpret_cast<uintptr_t>(this) + 0xC8);
 	}
-};
 
-class RBXClassDescriptor {
-public:
-    /* 0x */
-    char pad_0000[0x4];
-    /* 0x4 */
-    char* class_name;
+	std::string get_name()
+	{
+		return this->name;
+	}
 };
 
 class RBXCharacter {
 public:
     /* 0x */
-    char pad_0000[0x4];
+    char pad_0000[4];
     /* 0x4*/
     class RBXCharacter* self;
     /* 0x8 */
-    char pad_0008[0x4];
+    char pad_0008[4];
     /* 0xc */
     class RBXClassDescriptor* class_descriptor;
     /* 0x10 */
-    char pad_0010[0x18];
+    char pad_0010[24];
     /* 0x2c*/
     std::string& name;
     /* 0x30 */
@@ -207,15 +223,15 @@ public:
 class RBXPlayer {
 public:
     /* 0x */
-    char pad_0000[0x4];
+    char pad_0000[4];
     /* 0x4 */
     class RBXInstance* self;
     /* 0x8 */
-    char pad_0008[0x4];
+    char pad_0008[4];
     /* 0xc */
     class RBXClassDescriptor* class_descriptor;
     /* 0x10 */
-    char pad_0010[0x18];
+    char pad_0010[24];
     /* 0x28 */
     std::string& name;
     /* 0x2C */
@@ -238,9 +254,13 @@ public:
 
 class RBXPlayers {
 public:
-    /* 0x */
-    char pad_0000[0xc];
-    /* 0xc */
+	/* 0x */
+	char pad_0000[4];
+	/* 0x4 */
+	class RBXInstance* self;
+	/* 0x8 */
+	char pad_0008[4];
+	/* 0xc */
     class RBXClassDescriptor* class_descriptor;
     /* 0x10 */
     char pad_0010[0x18];
@@ -297,15 +317,15 @@ public:
 class RBXHumanoid {
 public:
     /* 0x */
-    char pad_0000[0x4];
+    char pad_0000[4];
     /* 0x4 */
     class RBXHumanoid* self;
     /* 0x8 */
-    char pad_0008[0x4];
+    char pad_0008[4];
     /* 0xc */
     class RBXClassDescriptor* class_descriptor;
     /* 0x10 */
-    char pad_0010[0x18];
+    char pad_0010[24];
     /* 0x2c */
     std::string& name;
     /* 0x30 */
