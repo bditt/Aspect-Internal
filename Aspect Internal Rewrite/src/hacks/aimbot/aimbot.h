@@ -8,6 +8,8 @@ struct target_t {
 };
 
 class Aimbot {
+public:
+	const float GravityAcceleration = 500.0f, BulletVelocity = 30000.0f;
 private:
 	target_t aim_target;
 public:
@@ -41,6 +43,8 @@ public:
 
 	void aim_at_exact(vec2);
     void aim_at(vec2);
+
+	float GetBulletDrop(float height, float DepthPlayerTarget);
 
     void update();
 };

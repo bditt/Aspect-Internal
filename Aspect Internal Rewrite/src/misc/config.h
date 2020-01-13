@@ -69,6 +69,7 @@ public:
 		bool m_HentaiESP = false;
 		bool m_ShowScreenCords = false;
 		bool m_ShowInventory = false;
+		bool m_ShowDebugInfo = false;
 
 		int m_MaxDistance = 1000;
 
@@ -90,6 +91,7 @@ public:
 		bool m_Head = true;
 		bool m_TeamCheck = true;
 		bool m_DrawFov = true;
+		bool m_Prediciton = false;
 
 		int m_AimKey = 2;
 		int m_AimFov = 100;
@@ -97,7 +99,9 @@ public:
 		int m_MaxDistance = 1000;
 		int m_AimMethod = 1;
 		int m_DeadZone = 2;
-		
+
+		float m_GravityAcceleration = 500.0f;
+		float m_BulletVelocity = 30000.0f;
 		float m_YOffset = 0.0f;
 		float m_XOffset = 0.0f;
 

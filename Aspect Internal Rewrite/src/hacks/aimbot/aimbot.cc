@@ -7,6 +7,16 @@
 #include "../../global.h"
 #include "aimbot.h"
 
+
+float Aimbot::GetBulletDrop(float height, float DepthPlayerTarget)
+{
+	float pitch = (atan2(height, DepthPlayerTarget));
+	float BulletVelocityXY = config.aim.m_BulletVelocity * cos(pitch);
+	float Time = DepthPlayerTarget / BulletVelocityXY;
+	float TotalVerticalDrop = (0.5f * config.aim.m_GravityAcceleration * Time * Time);
+	return TotalVerticalDrop;
+}
+
 vec2 smooth(vec2 pos)
 {
 	vec2 center{ renderer.s_w / 2, renderer.s_h / 2 };
@@ -82,8 +92,18 @@ void Aimbot::update()
 			auto local_player = sdk.players->get_local_player();
 			if (child->user_id == local_player->user_id)
 				continue;
-			if (child->team->team_name == local_player->team->team_name && config.aim.m_TeamCheck)
-				continue;
+
+			if (config.aim.m_TeamCheck)
+			{
+				if (INSTANCE_CHECK(local_player->team))
+					continue;
+
+				if (INSTANCE_CHECK(child->team))
+					continue;
+
+				if (child->team->team_name == local_player->team->team_name)
+					continue;
+			}
 
 			auto local_character = local_player->character;
 			if (INSTANCE_CHECK(local_character))
@@ -109,6 +129,24 @@ void Aimbot::update()
 			
 			target_pos.y += config.aim.m_YOffset;
 			target_pos.x += config.aim.m_XOffset;
+			if (config.aim.m_Prediciton)
+			{
+				/*
+				float height = target_pos.z - local_pos.z;
+				float DepthPlayerTarget = sqrt(pow(target_pos.y - local_pos.y, 2) + pow(target_pos.x - local_pos.x, 2));
+				target_pos.z += GetBulletDrop(height, DepthPlayerTarget);
+				*/
+				float flTime =
+					sdk.distance_to<vec3>(local_pos, target_pos) /
+					config.aim.m_BulletVelocity;
+
+				//printf("get_body: 0x%p\n", reinterpret_cast<uintptr_t>(head->get_primitive()->get_body()));
+				//printf("get_velocity: 0x%p\n", sdk.get_velocity(head));
+				vec3 velocity = head->get_primitive()->get_body()->get_velocity();
+				target_pos.x += (velocity.x * flTime);
+				target_pos.y += (velocity.y * flTime);
+			}
+
 			float pdistance = sdk.distance_to<vec3>(local_pos, target_pos);
 
 			if (renderer.w2s(target_pos, sc))

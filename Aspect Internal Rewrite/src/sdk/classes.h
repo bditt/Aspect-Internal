@@ -126,10 +126,10 @@ public:
 			return 0;
 		for (auto child : *this->children)
 		{
-			std::cout << child->class_descriptor->class_name << std::endl;
+			//std::cout << child->class_descriptor->class_name << std::endl;
 			if (child->class_descriptor->class_name == name)
 			{
-				std::cout << "Found Class: " << child->class_descriptor->class_name << std::endl;
+				//std::cout << "Found Class: " << child->class_descriptor->class_name << std::endl;
 				return reinterpret_cast<T*>(child.get());
 			}
 		}

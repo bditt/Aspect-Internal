@@ -12,6 +12,14 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "../sdk/stb_image.h"
 
+void rendererdebug(std::string text)
+{
+	if (config.esp.m_ShowDebugInfo)
+	{
+		std::cout << "[Debug] " << text << std::endl;
+	}
+}
+
 bool LoadTextureFromFile(const char* filename, ID3D11ShaderResourceView** out_srv, int* out_width, int* out_height)
 {
 	// Load from disk into a raw RGBA buffer
@@ -420,6 +428,7 @@ void Renderer::render()
 				ImGui::PushID(9);
 				ImGui::Checkbox("Aimbot", &config.aim.m_Enabled);
                 ImGui::Checkbox("- Aim at Head", &config.aim.m_Head);
+				//ImGui::Checkbox("- Prediction", &config.aim.m_Prediciton);
                 ImGui::Checkbox("- Team Check", &config.aim.m_TeamCheck);
                 ImGui::Checkbox("- Draw FOV", &config.aim.m_DrawFov);
                 ImGui::SameLine();
@@ -456,7 +465,18 @@ void Renderer::render()
 				ImGui::PushID(19);
 				ImGui::SliderFloat("", &config.aim.m_XOffset, -2, 2);
 				ImGui::PopID();
-
+				/*
+				ImGui::Text("- GravityAcceleration ");
+				ImGui::SameLine();
+				ImGui::PushID(20);
+				ImGui::SliderFloat("", &config.aim.m_GravityAcceleration, 0, 1000);
+				ImGui::PopID();
+				ImGui::Text("- BulletVelocity ");
+				ImGui::SameLine();
+				ImGui::PushID(21);
+				ImGui::SliderFloat("", &config.aim.m_BulletVelocity, 0, 5000);
+				ImGui::PopID();
+				*/
                 ImGui::EndTabItem();
             }
             if (ImGui::BeginTabItem("Exploits")) {
@@ -616,96 +636,142 @@ void Renderer::render()
         for (auto child : *sdk.players->children) {
 			if (!child)
 				continue;
+
+			rendererdebug("child->character");
 			if (INSTANCE_CHECK(child->character))
 				continue;
 
             /* Local */
+			rendererdebug("sdk.players->get_local_player()");
             auto local_player = sdk.players->get_local_player();
+			rendererdebug("local_player");
 			if (INSTANCE_CHECK(local_player))
 				continue;
             /* Don't continue further if we share the same user_id */
+			rendererdebug("child->user_id == local_player->user_id");
             if (child->user_id == local_player->user_id)
 				continue;
-            /* Don't continue further if teamcheck is on and we are on the same team */
-            if (config.esp.m_TeamCheck && child->team->team_name == local_player->team->team_name)
-				continue;
+			
+			if (config.esp.m_TeamCheck)
+			{
+				if (INSTANCE_CHECK(local_player->team))
+				{
+					continue;
+				}
 
+				if (INSTANCE_CHECK(child->team))
+				{
+					continue;
+				}
+				/* Don't continue further if teamcheck is on and we are on the same team */
+				rendererdebug("config.esp.m_TeamCheck && child->team->team_name == local_player->team->team_name");
+				if (child->team->team_name == local_player->team->team_name)
+					continue;
+			}
+			rendererdebug("local_player->character");
             auto local_character = local_player->character;
+			rendererdebug("local_character");
             if (INSTANCE_CHECK(local_character))
 				continue;
+			rendererdebug("local_head");
             auto local_head = local_character->find_child<RBXInstance>("Head");
+			rendererdebug("IC local_head");
             if (INSTANCE_CHECK(local_head))
 				continue;
+			rendererdebug("local_head->get_primitive()");
             auto local_head_primitive = local_head->get_primitive();
+			rendererdebug("local_head_primitive");
             if (INSTANCE_CHECK(local_head_primitive))
 				continue;
-
+			rendererdebug("local_head_primitive->get_body()");
             auto local_head_body = local_head_primitive->get_body();
+			rendererdebug("local_head_body");
             if (INSTANCE_CHECK(local_head_body))
 				continue;
 			
             /* Head */
+			rendererdebug("child->character->find_child");
             auto child_head = child->character->find_child<RBXInstance>("Head");
+			rendererdebug("child_head");
             if (INSTANCE_CHECK(child_head))
 				continue;
-
+			rendererdebug("child_head->get_primitive()");
             auto head_primitive = child_head->get_primitive();
+			rendererdebug("head_primitive");
             if (INSTANCE_CHECK(head_primitive))
 				continue;
-
+			rendererdebug("head_primitive->get_body()");
             auto head_body = head_primitive->get_body();
+			rendererdebug("head_body");
             if (INSTANCE_CHECK(head_body))
 				continue;
 
             /* Leg */
+			rendererdebug("child->character->find_child");
             auto child_leg = child->character->find_child<RBXInstance>("Left Leg");
+			rendererdebug("child_leg");
             if (INSTANCE_CHECK(child_leg))
                 child_leg = child->character->find_child<RBXInstance>("LeftLowerLeg");
             if (INSTANCE_CHECK(child_leg))
 				continue;
-
+			rendererdebug("child_leg->get_primitive()");
             auto leg_primitive = child_leg->get_primitive();
+			rendererdebug("leg_primitive");
             if (INSTANCE_CHECK(leg_primitive))
 				continue;
+			rendererdebug("leg_primitive->get_body()");
             auto leg_body = leg_primitive->get_body();
+			rendererdebug("leg_body");
             if (INSTANCE_CHECK(leg_body))
 				continue;
 
             /* torso */
+			rendererdebug("child->character->find_child");
             auto child_torso = child->character->find_child<RBXInstance>("Torso");
+			rendererdebug("child_torso");
             if (INSTANCE_CHECK(child_torso))
                 child_torso = child->character->find_child<RBXInstance>("UpperTorso");
             if (INSTANCE_CHECK(child_torso))
 				continue;
 
+			rendererdebug("child_torso->get_primitive()");
             auto torso_primitive = child_torso->get_primitive();
+			rendererdebug("torso_primitive");
             if (INSTANCE_CHECK(torso_primitive))
 				continue;
 
+			rendererdebug("torso_primitive->get_body()");
             auto torso_body = torso_primitive->get_body();
+			rendererdebug("torso_body");
             if (INSTANCE_CHECK(torso_body))
 				continue;
 
+			rendererdebug("head_body->get_position()");
             vec3 head_vec = head_body->get_position();
+			rendererdebug("torso_body->get_position()");
             vec3 torso_vec = torso_body->get_position();
+			rendererdebug("leg_body->get_position()");
             vec3 leg_vec = leg_body->get_position();
+			rendererdebug("local_head_body->get_position()");
             vec3 local_head_vec = local_head_body->get_position();
-
+			rendererdebug("sdk.distance_to<vec3>(local_head_vec, head_vec)");
             int distance = sdk.distance_to<vec3>(local_head_vec, head_vec);
-
+			rendererdebug("distance");
             vec2 screen_leg;
             leg_vec.y -= 3.0f;
             vec2 screen_head;
             head_vec.y += 4.f;
             vec2 screen_torso;
-
+			rendererdebug("!this->w2s(head_vec, screen_head");
             if (!this->w2s(head_vec, screen_head))
 				continue;
+			rendererdebug("!this->w2s(torso_vec, screen_torso)");
             if (!this->w2s(torso_vec, screen_torso))
 				continue;
+			rendererdebug("!this->w2s(leg_vec, screen_leg)");
             if (!this->w2s(leg_vec, screen_leg))
 				continue;
-
+			rendererdebug("Rendering Player.");
             if (distance <= config.esp.m_MaxDistance) {
                 int offset = -45;
                 if (config.esp.m_Names) {
