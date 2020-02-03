@@ -30,6 +30,8 @@ public:
     HWND hWnd;
 
     unsigned int s_w, s_h;
+	int logo_w, logo_h;
+	ID3D11ShaderResourceView* logo_texture;
 
 public:
     union {
@@ -40,6 +42,7 @@ public:
 
     void initialize();
     void terminate();
+	void labelpart(ImDrawList* list, std::shared_ptr<RBXInstance> part, int offset);
     void render();
 	void handle_input(UINT msg, WPARAM w_param, LPARAM l_param);
 };

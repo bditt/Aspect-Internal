@@ -103,7 +103,9 @@ public:
     /* 0x30 */
     std::shared_ptr<std::vector<std::shared_ptr<RBXInstance>>> children; // 0x4
     /* 0x34 */
-    char pad_0034[0x64];
+	class RBXInstance* Parent;
+	/* 0x38 */
+    char pad_0034[0x60];
     /* 0x98 */
     class RBXPrimitive* primitive; // 0x4
     /* 0x9c */
@@ -207,6 +209,8 @@ public:
 				return reinterpret_cast<T*>(child.get());
 		return 0;
 	}
+
+
 };
 
 class RBXTeam
@@ -241,7 +245,7 @@ public:
     /* 0x38 */
     char pad_003C[0x20];
     /* 0x58 */
-    class RBXCharacter* character;
+    class RBXInstance* character;
     /* 0x5C */
     char pad_0060[0x2C];
     /* 0x88 */

@@ -60,7 +60,7 @@ public:
 
 	struct esp_t
 	{
-		bool m_Enabled = false;
+		bool m_Enabled = true;
 		bool m_Names = true;
 		bool m_Distance = true;
 		bool m_Box = true;
@@ -68,20 +68,25 @@ public:
 		bool m_TeamCheck = true;
 		bool m_HentaiESP = false;
 		bool m_ShowScreenCords = false;
-		bool m_ShowInventory = false;
+		bool m_ShowInventory = true;
+		bool m_ShowInventory_Filter_Parts = true;
 		bool m_ShowDebugInfo = false;
+		bool m_LabelAllParts = false;
 
 		int m_MaxDistance = 1000;
+		int m_LabelDistance = 100;
 
 		Color c_TargetDistance{ vec3{1.f, 1.f, .4f} };
 		Color c_TargetName{ vec3{1.f, 1.f, .4f} };
 		Color c_TargetLine{ vec3{1.f, 1.f, .4f} };
 		Color c_TargetBox{ vec3{1.f, 1.f, .4f} };
+		Color c_TargetInventory{ vec3{1.f, 1.f, .4f} };
 
 		Color c_EnemyDistance{ vec3{ 1.f, .54f, .01f } };
 		Color c_EnemyName{ vec3{ 1.f, .54f, .01f } };
 		Color c_EnemyLine{ vec3{ 1.f, .54f, .01f } };
 		Color c_EnemyBox{ vec3{ 1.f, .54f, .01f } };
+		Color c_EnemyInventory{ vec3{ 1.f, .54f, .01f } };
 	} esp;
 
    
@@ -144,6 +149,14 @@ public:
 			int State = 8;
 		} m_ChangeState;
     } exploits;
+
+	struct security
+	{
+		struct
+		{
+			bool m_AutoLogin = true;
+		} m_LoginSecurity;
+	} security;
 
 	int menu_key = 45;
 

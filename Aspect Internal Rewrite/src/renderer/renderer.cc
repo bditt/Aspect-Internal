@@ -25,6 +25,7 @@ bool LoadTextureFromFile(const char* filename, ID3D11ShaderResourceView** out_sr
 	// Load from disk into a raw RGBA buffer
 	int image_width = 0;
 	int image_height = 0;
+	//stbi_set_flip_vertically_on_load(true);
 	unsigned char* image_data = stbi_load(filename, &image_width, &image_height, NULL, 4);
 	if (image_data == NULL)
 		return false;
@@ -301,6 +302,57 @@ void Renderer::initialize()
     GetWindowRect(this->hWnd, &rc);
     this->s_w = rc.right - rc.left;
     this->s_h = rc.bottom - rc.top;
+	/*
+	bool ret = LoadTextureFromFile("Aspect.png", &this->logo_texture, &this->logo_w, &this->logo_h);
+	IM_ASSERT(ret);
+	*/
+}
+
+void Renderer::labelpart(ImDrawList* list, std::shared_ptr<RBXInstance> part, int offset)
+{
+	if (part->class_descriptor->class_name == "Part")
+	{
+		auto Part_Vec = part->get_primitive()->get_body()->get_position();
+		int distance = sdk.distance_to<vec3>(sdk.players->get_local_player()->character->find_child<RBXInstance>("Head")->get_primitive()->get_body()->get_position() , Part_Vec);
+		if (distance > config.esp.m_LabelDistance)
+			return;
+		vec2 Screen_Part;
+		//std::cout << "W2S Part" << std::endl;
+		if (!this->w2s(Part_Vec, Screen_Part))
+			return;
+		Color color = Color(part->name == global.target.target_name
+			? config.esp.c_TargetName : config.esp.c_EnemyName);
+		//std::cout << "Labeling Part" << std::endl;
+		list->AddText(ImVec2(Screen_Part.x, Screen_Part.y + offset),
+			ImColor(color.m_Color.data),
+			part->name.c_str(), 0);
+		//std::cout << "Looping Children" << std::endl;
+		if (!part->children)
+		{
+			//std::cout << "Children Empty" << std::endl;
+			return;
+		}
+		for (auto item : *part->children)
+		{
+			//std::cout << "Recurring." << std::endl;
+			labelpart(list, item, offset + 15);
+		}
+		
+	}
+	if (part->class_descriptor->class_name == "Model")
+	{
+		//std::cout << "Looping Children" << std::endl;
+		if (!part->children)
+		{
+			//std::cout << "Children Empty" << std::endl;
+			return;
+		}
+		for (auto item : *part->children)
+		{
+			//std::cout << "Recurring." << std::endl;
+			labelpart(list, item, offset + 15);
+		}
+	}
 }
 
 void Renderer::render()
@@ -339,6 +391,7 @@ void Renderer::render()
             ImGui::InputText(
                 "", passbuff, 64,
                 ImGuiInputTextFlags_Password | ImGuiInputTextFlags_CharsNoBlank);
+			//ImGui::Checkbox("Remember Me", &config.security.m_LoginSecurity.m_AutoLogin);
             ImGui::PopID();
             if (ImGui::Button("Login")) {
                 if (!security.authenticate(userbuff, passbuff)) {
@@ -360,6 +413,7 @@ void Renderer::render()
 		ImGui::SetNextWindowSize(ImVec2(460, 410));
         ImGui::Begin("Aspect", 0,
             ImGuiWindowFlags_NoCollapse | ImGuiConfigFlags_NoMouseCursorChange);
+		int id = 1;
         if (ImGui::BeginTabBar("Aspect_tab_bar")) {
             if (ImGui::BeginTabItem("ESP")) {
 				ImGui::Checkbox("- ESP Enabled", &config.esp.m_Enabled);
@@ -369,12 +423,14 @@ void Renderer::render()
 
                     ImGui::Text("- Enemy Name Color");
 					ImGui::SameLine();
-					ImGui::PushID(1);
+					ImGui::PushID(id);
+					id += 1;
                     ImGui::CColorPicker("Enemy Name Color", config.esp.c_EnemyName);
 					ImGui::PopID();
 					ImGui::Text("- Target Name Color");
 					ImGui::SameLine();
-					ImGui::PushID(2);
+					ImGui::PushID(id);
+					id += 1;
 					ImGui::CColorPicker("Target Name Color", config.esp.c_TargetName);
 					ImGui::PopID();
 				}
@@ -382,12 +438,14 @@ void Renderer::render()
 					ImGui::Checkbox("- ESP Distance Enabled", &config.esp.m_Distance);
 					ImGui::Text("- Enemy Distance Color");
 					ImGui::SameLine();
-					ImGui::PushID(3);
+					ImGui::PushID(id);
+					id += 1;
 					ImGui::CColorPicker("Enemy Distance Color", config.esp.c_EnemyDistance);
 					ImGui::PopID();
 					ImGui::Text("- Target Distance Color");
 					ImGui::SameLine();
-					ImGui::PushID(4);
+					ImGui::PushID(id);
+					id += 1;
 					ImGui::CColorPicker("Target Distance Color", config.esp.c_TargetDistance);
 					ImGui::PopID();
 				}
@@ -395,12 +453,14 @@ void Renderer::render()
                     ImGui::Checkbox("- ESP Boxes Enabled", &config.esp.m_Box);
                     ImGui::Text("- Enemy Box Color");
 					ImGui::SameLine();
-					ImGui::PushID(5);
+					ImGui::PushID(id);
+					id += 1;
                     ImGui::CColorPicker("Enemy Box Color", config.esp.c_EnemyBox);
 					ImGui::PopID();
 					ImGui::Text("- Target Box Color");
 					ImGui::SameLine();
-					ImGui::PushID(6);
+					ImGui::PushID(id);
+					id += 1;
 					ImGui::CColorPicker("Target Box Color", config.esp.c_TargetBox);
 					ImGui::PopID();
 				}
@@ -408,13 +468,15 @@ void Renderer::render()
                     ImGui::Checkbox("- ESP Tracer Enabled", &config.esp.m_Line);
                     ImGui::Text("- Enemy Tracer Color");
 					ImGui::SameLine();
-					ImGui::PushID(7);
+					ImGui::PushID(id);
+					id += 1;
                     ImGui::CColorPicker("Enemy Tracer Color", config.esp.c_EnemyLine);
 					ImGui::PopID();
 
 					ImGui::Text("- Target Tracer Color");
 					ImGui::SameLine();
-					ImGui::PushID(8);
+					ImGui::PushID(id);
+					id += 1;
 					ImGui::CColorPicker("Target Tracer Color", config.esp.c_TargetLine);
 					ImGui::PopID();
                 }
@@ -422,10 +484,28 @@ void Renderer::render()
                     ImGui::Checkbox("- ESP Team Check Enabled",
                         &config.esp.m_TeamCheck);
                 }
+				if (ImGui::CollapsingHeader("ESP Inventory")) {
+					ImGui::Checkbox("- ESP Show Inventory Enabled", &config.esp.m_ShowInventory);
+					ImGui::Checkbox("- Filter out Parts", &config.esp.m_ShowInventory_Filter_Parts);
+					ImGui::Text("- Enemy Tracer Color");
+					ImGui::SameLine();
+					ImGui::PushID(id);
+					id += 1;
+					ImGui::CColorPicker("Enemy Tracer Color", config.esp.c_EnemyLine);
+					ImGui::PopID();
+
+					ImGui::Text("- Target Tracer Color");
+					ImGui::SameLine();
+					ImGui::PushID(id);
+					id += 1;
+					ImGui::CColorPicker("Target Tracer Color", config.esp.c_TargetLine);
+					ImGui::PopID();
+				}
                 ImGui::EndTabItem();
             }
 			if (ImGui::BeginTabItem("Aimbot")) {
-				ImGui::PushID(9);
+				ImGui::PushID(id);
+				id += 1;
 				ImGui::Checkbox("Aimbot", &config.aim.m_Enabled);
                 ImGui::Checkbox("- Aim at Head", &config.aim.m_Head);
 				//ImGui::Checkbox("- Prediction", &config.aim.m_Prediciton);
@@ -437,32 +517,38 @@ void Renderer::render()
 				ImGui::Hotkey("- Aim Key", &config.aim.m_AimKey);
                 ImGui::Text("- Smooth ");
                 ImGui::SameLine();
-                ImGui::PushID(10);
+				ImGui::PushID(id);
+				id += 1;
                 ImGui::SliderInt("", &config.aim.m_AimSmooth, 2, 100);
                 ImGui::PopID();
 				ImGui::Text("- FOV ");
 				ImGui::SameLine();
-                ImGui::PushID(11);
+				ImGui::PushID(id);
+				id += 1;
 				ImGui::SliderInt("", &config.aim.m_AimFov, 10, 1000);
 				ImGui::PopID();
 				ImGui::Text("- Max Distance ");
 				ImGui::SameLine();
-				ImGui::PushID(12);
+				ImGui::PushID(id);
+				id += 1;
 				ImGui::SliderInt("", &config.aim.m_MaxDistance, 0, 1000);
 				ImGui::PopID();
 				ImGui::Text("- Aimbot Method ");
 				ImGui::SameLine();
-				ImGui::PushID(16);
+				ImGui::PushID(id);
+				id += 1;
 				ImGui::SliderInt("", &config.aim.m_AimMethod, 1, 2);
 				ImGui::PopID();
 				ImGui::Text("- Y Offset ");
 				ImGui::SameLine();
-				ImGui::PushID(18);
+				ImGui::PushID(id);
+				id += 1;
 				ImGui::SliderFloat("", &config.aim.m_YOffset, -2, 2);
 				ImGui::PopID();
 				ImGui::Text("- X Offset ");
 				ImGui::SameLine();
-				ImGui::PushID(19);
+				ImGui::PushID(id);
+				id += 1;
 				ImGui::SliderFloat("", &config.aim.m_XOffset, -2, 2);
 				ImGui::PopID();
 				/*
@@ -483,12 +569,14 @@ void Renderer::render()
                 ImGui::Checkbox("Telekill", &config.exploits.m_Telekill.m_Enabled);
                 ImGui::Text("- Distance");
                 ImGui::SameLine();
-                ImGui::PushID(13);
+				ImGui::PushID(id);
+				id += 1;
                 ImGui::SliderInt("", &config.exploits.m_Telekill.m_Distance, 1, 250);
 				ImGui::PopID();
 				ImGui::Checkbox("- Telekill Team Check", &config.exploits.m_Telekill.m_TeamCheck);
 				ImGui::Hotkey("- Telekill Key ", &config.exploits.m_Telekill.m_key);
-				ImGui::PushID(14);
+				ImGui::PushID(id);
+				id += 1;
 				ImGui::Text("- Elevator Height");
 				ImGui::SameLine();
 				if (ImGui::SliderInt("", &config.exploits.m_Elevator.m_Height, 0, 50)) {
@@ -514,7 +602,8 @@ void Renderer::render()
 					ImGui::Checkbox("- Enabled", &config.exploits.m_Telemove.m_Enabled);
 					ImGui::Text("- Amount");
 					ImGui::SameLine();
-					ImGui::PushID(15);
+					ImGui::PushID(id);
+					id += 1;
 					ImGui::SliderInt("", &config.exploits.m_Telemove.m_Amount, 1, 50);
 					ImGui::PopID();
 
@@ -548,6 +637,13 @@ void Renderer::render()
 						std::cout << "Error: " << err.what() << std::endl;
 					}
 				};
+				ImGui::Checkbox("- Label All Parts (Testing)", &config.esp.m_LabelAllParts);
+				ImGui::Text("- Label Distance Limit ");
+				ImGui::SameLine();
+				ImGui::PushID(id);
+				id += 1;
+				ImGui::SliderInt("", &config.esp.m_LabelDistance, 1, 1000);
+				ImGui::PopID();
 				ImGui::EndTabItem();
 			}
 			ImGui::EndTabBar();
@@ -632,6 +728,17 @@ void Renderer::render()
 		}
 	}
 
+	if (config.esp.m_LabelAllParts)
+	{
+		//std::cout << "Labeling Parts!" << std::endl;
+		for (auto item : *sdk.data_model->find_class<RBXInstance>("Workspace")->children)
+		{
+			//std::cout << "Workspace Item: " << item->name << std::endl;
+			labelpart(list, item, 0);
+			//std::cout << "Labeled Workspace Item: " << item->name << std::endl;
+		}
+	}
+
     if (config.esp.m_Enabled && security.authenticated) {
         for (auto child : *sdk.players->children) {
 			if (!child)
@@ -639,6 +746,10 @@ void Renderer::render()
 
 			rendererdebug("child->character");
 			if (INSTANCE_CHECK(child->character))
+				continue;
+
+			rendererdebug("child->character->parent != Workspace");
+			if (reinterpret_cast<uintptr_t>(child->character->Parent) != reinterpret_cast<uintptr_t>(sdk.Workspace))
 				continue;
 
             /* Local */
@@ -688,6 +799,12 @@ void Renderer::render()
 			rendererdebug("local_head_body");
             if (INSTANCE_CHECK(local_head_body))
 				continue;
+
+			if (INSTANCE_CHECK(child->character->find_child<RBXInstance>("HumanoidRootPart")))
+			{
+				std::cout << "Failed to find HumanoidRootPart" << std::endl;
+				continue;
+			}
 			
             /* Head */
 			rendererdebug("child->character->find_child");
@@ -773,7 +890,7 @@ void Renderer::render()
 				continue;
 			rendererdebug("Rendering Player.");
             if (distance <= config.esp.m_MaxDistance) {
-                int offset = -45;
+                int offset = 0;
                 if (config.esp.m_Names) {
                     offset += 15;
 
@@ -884,6 +1001,11 @@ void Renderer::render()
 
                     list->AddRect(ImVec2(pos.left, pos.top),
                         ImVec2(pos.right, pos.bottom), ImColor(color.m_Color.data));
+					if (config.esp.m_HentaiESP)
+					{
+						//ImGui::Image((void*)my_texture, ImVec2(my_image_width, my_image_height));
+						list->AddImage((void*)this->logo_texture, ImVec2(pos.left, pos.top), ImVec2(pos.right, pos.bottom));
+					}
                 }
 				if (config.esp.m_Line) {
 					Color color = Color(child->name == global.target.target_name
@@ -895,9 +1017,25 @@ void Renderer::render()
 					list->AddLine(ImVec2(this->s_h, this->s_w / 2),
 						ImVec2(screen_leg.x, screen_leg.y), ImColor(color.m_Color.data));
                 }
-				if (config.esp.m_HentaiESP)
+				if (config.esp.m_ShowInventory)
 				{
-					//list->AddImage((void*)my_texture, ImVec2(my_image_width, my_image_height), ImVec2(my_image_width, my_image_height));
+					for (auto item : *child->character->children)
+					{
+						if (config.esp.m_ShowInventory_Filter_Parts && item->class_descriptor->class_name == "Part")
+							continue;
+
+						offset += 15;
+
+						Color color = Color(child->name == global.target.target_name
+							? config.esp.c_TargetInventory : config.esp.c_EnemyInventory);
+
+						if (color.m_Rainbow)
+							color.m_Color = *(vec3*)rainbow_color(frames, color.m_Speed);
+
+						list->AddText(ImVec2(screen_leg.x - 50, screen_leg.y + offset),
+							ImColor(color.m_Color.data),
+							item->name.c_str(), 0);
+					}
 				}
             }
         }

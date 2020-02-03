@@ -111,10 +111,11 @@ unsigned long __stdcall main(LPVOID)
     InitDiscord();
     starttime = time(0);
     UpdatePresence();
-	
+	std::cout << "Enabling SDK!" << std::endl;
 	sdk.initialize();
+	std::cout << "Enabling Renderer!" << std::endl;
     renderer.initialize();
-
+	//std::cout << "Enabling Aspect Lua!" << std::endl;
 	//alua.initialize(sdk.data_model);
 
     std::thread aim([]() {
