@@ -19,7 +19,7 @@ float Aimbot::GetBulletDrop(float height, float DepthPlayerTarget)
 
 vec2 smooth(vec2 pos)
 {
-	vec2 center{ renderer.s_w / 2, renderer.s_h / 2 };
+	vec2 center{ (float)(renderer.s_w / 2), (float)(renderer.s_h / 2) };
 	vec2 target{ 0, 0 };
 	if (pos.x != 0) {
 		if (pos.x > center.x) {
@@ -117,7 +117,11 @@ void Aimbot::update()
 			if (INSTANCE_CHECK(character))
 				continue;
 
+			/*
 			if (reinterpret_cast<uintptr_t>(character->Parent) != reinterpret_cast<uintptr_t>(sdk.Workspace))
+				continue;
+			*/
+			if (!child->character->CheckForParent(reinterpret_cast<uintptr_t>(sdk.Workspace)))
 				continue;
 
 			auto head = character->find_child<RBXInstance>("Head");
@@ -200,7 +204,7 @@ void Aimbot::aim_at(vec2 target)
 	else if (config.aim.m_AimMethod == 2)
 	{
 		
-		SetCursorPos(target.x / config.aim.m_AimSmooth , target.y / config.aim.m_AimSmooth);
+		SetCursorPos(target.x , target.y);
 		INPUT Input = { 0 };
 		//memset(input, 0, sizeof(input[0]));
 		Input.type = INPUT_MOUSE;

@@ -287,12 +287,19 @@ void Renderer::initialize()
 
     this->vt = *reinterpret_cast<uintptr_t*>(swap);
     this->o_present = *reinterpret_cast<present_fn*>(this->vt + 32);
-
+	
     unsigned long o_proc;
     if (!VirtualProtect((LPVOID)this->vt, 64, PAGE_READWRITE, &o_proc))
         return;
     *reinterpret_cast<void**>(this->vt + 32) = &present;
-    VirtualProtect((LPVOID)this->vt, 64, o_proc, &o_proc);
+	/*
+	DetourTransactionBegin();
+	DetourUpdateThread(GetCurrentThread());
+	DetourAttach(&*reinterpret_cast<void**>(this->vt + 32), (PBYTE)present);
+	DetourTransactionCommit();
+	*/
+
+	VirtualProtect((LPVOID)this->vt, 64, o_proc, &o_proc);
 
     /* Hook WndProc */
     this->o_wndproc = GetWindowLong(hWnd, GWLP_WNDPROC);
@@ -501,6 +508,9 @@ void Renderer::render()
 					ImGui::CColorPicker("Target Tracer Color", config.esp.c_TargetLine);
 					ImGui::PopID();
 				}
+				if (ImGui::CollapsingHeader("ESP Testing")) {
+					//ImGui::Checkbox("- ESP Show Debug Info Enabled", &config.esp.m_ShowDebugInfo);
+				}
                 ImGui::EndTabItem();
             }
 			if (ImGui::BeginTabItem("Aimbot")) {
@@ -539,17 +549,17 @@ void Renderer::render()
 				id += 1;
 				ImGui::SliderInt("", &config.aim.m_AimMethod, 1, 2);
 				ImGui::PopID();
-				ImGui::Text("- Y Offset ");
-				ImGui::SameLine();
-				ImGui::PushID(id);
-				id += 1;
-				ImGui::SliderFloat("", &config.aim.m_YOffset, -2, 2);
-				ImGui::PopID();
 				ImGui::Text("- X Offset ");
 				ImGui::SameLine();
 				ImGui::PushID(id);
 				id += 1;
-				ImGui::SliderFloat("", &config.aim.m_XOffset, -2, 2);
+				ImGui::SliderFloat("", &config.aim.m_XOffset, -20, 20);
+				ImGui::PopID();
+				ImGui::Text("- Y Offset ");
+				ImGui::SameLine();
+				ImGui::PushID(id);
+				id += 1;
+				ImGui::SliderFloat("", &config.aim.m_YOffset, -20, 20);
 				ImGui::PopID();
 				/*
 				ImGui::Text("- GravityAcceleration ");
@@ -619,7 +629,26 @@ void Renderer::render()
 				}
 
 				ImGui::Checkbox("ChangeState", &config.exploits.m_ChangeState.m_Enabled);
+				ImGui::Text("- Walkspeed");
+				ImGui::SameLine();
+				if (ImGui::SliderInt("", &config.exploits.m_WalkSpeed.m_Speed, 0, 50)) {
+					[]() {
+						auto local_player = sdk.players->get_local_player();
+						if (INSTANCE_CHECK(local_player))
+							return;
 
+						auto local_character = local_player->character;
+						if (INSTANCE_CHECK(local_character))
+							return;
+
+						auto local_humanoid = local_character->find_class<RBXInstance>("Humanoid");
+						if (INSTANCE_CHECK(local_humanoid))
+							return;
+
+						uintptr_t LH = reinterpret_cast<uintptr_t>(local_humanoid);
+						sdk.setwalkspeed(LH, config.exploits.m_WalkSpeed.m_Speed);
+					}();
+				}
                 ImGui::EndTabItem();
             } 
 			if (ImGui::BeginTabItem("Misc")) {
@@ -637,6 +666,14 @@ void Renderer::render()
 						std::cout << "Error: " << err.what() << std::endl;
 					}
 				};
+				if (ImGui::Button("- Toggle View Matrix Offset."))
+				{
+					sdk.increase_view_matrix_offset = !sdk.increase_view_matrix_offset;
+				}
+				if (ImGui::Button("- Reset View Matrix Offset."))
+				{
+					sdk.view_matrix_offset = 0x0;
+				}
 				ImGui::Checkbox("- Label All Parts (Testing)", &config.esp.m_LabelAllParts);
 				ImGui::Text("- Label Distance Limit ");
 				ImGui::SameLine();
@@ -740,6 +777,17 @@ void Renderer::render()
 	}
 
     if (config.esp.m_Enabled && security.authenticated) {
+		//std::cout << "Local Player Position: " << sdk.players->get_local_player()->character->get_primitive()->get_body()->get_position().x << " " << sdk.players->get_local_player()->character->get_primitive()->get_body()->get_position().y << " " << sdk.players->get_local_player()->character->get_primitive()->get_body()->get_position().z;
+		if (sdk.increase_view_matrix_offset)
+		{
+			sdk.view_matrix_offset += 0x4;
+			uintptr_t render_view = *(uintptr_t*)(*(uintptr_t*)(reinterpret_cast<uintptr_t>(sdk.data_model) + 0x70) + 0x1C);
+			uintptr_t visual_engine = *(uintptr_t*)(render_view + 0x8);
+			sdk.view_matrix = (ViewMatrix_t*)(visual_engine + sdk.view_matrix_offset);
+			std::cout << "view_matrix_offset: " << std::hex << std::uppercase << sdk.view_matrix_offset << std::endl;
+			std::cout << "view_matrix: " << std::hex << std::uppercase << sdk.view_matrix << std::endl;
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		}
         for (auto child : *sdk.players->children) {
 			if (!child)
 				continue;
@@ -748,10 +796,15 @@ void Renderer::render()
 			if (INSTANCE_CHECK(child->character))
 				continue;
 
+			
 			rendererdebug("child->character->parent != Workspace");
+			/*
 			if (reinterpret_cast<uintptr_t>(child->character->Parent) != reinterpret_cast<uintptr_t>(sdk.Workspace))
 				continue;
-
+				*/
+			if (!child->character->CheckForParent(reinterpret_cast<uintptr_t>(sdk.Workspace)))
+				continue;
+			
             /* Local */
 			rendererdebug("sdk.players->get_local_player()");
             auto local_player = sdk.players->get_local_player();
@@ -799,12 +852,6 @@ void Renderer::render()
 			rendererdebug("local_head_body");
             if (INSTANCE_CHECK(local_head_body))
 				continue;
-
-			if (INSTANCE_CHECK(child->character->find_child<RBXInstance>("HumanoidRootPart")))
-			{
-				std::cout << "Failed to find HumanoidRootPart" << std::endl;
-				continue;
-			}
 			
             /* Head */
 			rendererdebug("child->character->find_child");
@@ -920,7 +967,7 @@ void Renderer::render()
                 }
 				if (config.esp.m_ShowScreenCords) {
 					vec2 pos{ screen_head.x, screen_head.y };
-					vec2 center{ renderer.s_w / 2, renderer.s_h / 2 };
+					vec2 center{ (float)(renderer.s_w / 2), (float)(renderer.s_h / 2) };
 					vec2 target{ 0, 0 };
 					if (pos.x != 0) {
 						if (pos.x > center.x) {

@@ -102,8 +102,11 @@ unsigned long __stdcall main(LPVOID)
 	//Sleep(3000);
 	std::cout << "Checking Version!" << std::endl;
 	if (!security.check_version())
-		MessageBox(nullptr, 
+	{
+		MessageBox(nullptr,
 			"Aspect has been updated, please download latest update", "Update", 0);
+		return 0;
+	}
 
     /* Discord */
 	//Sleep(3000);
@@ -116,7 +119,7 @@ unsigned long __stdcall main(LPVOID)
 	std::cout << "Enabling Renderer!" << std::endl;
     renderer.initialize();
 	//std::cout << "Enabling Aspect Lua!" << std::endl;
-	//alua.initialize(sdk.data_model);
+	alua.initialize(sdk.data_model, sdk.view_matrix, renderer.s_w, renderer.s_h);
 
     std::thread aim([]() {
 		while (1) {

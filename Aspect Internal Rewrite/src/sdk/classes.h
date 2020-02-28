@@ -2,6 +2,13 @@
 #include "vec.h"
 #include <sol2/sol.hpp>
 
+class RBXCamera
+{
+public:
+	char pad_0000[132]; //0x0000
+	vec3* Position; //0x0084
+}; //Size: 0x0090
+
 class RBXClassDescriptor {
 public:
 	/* 0x */
@@ -164,10 +171,50 @@ public:
 		return *(RBXInstance**)(reinterpret_cast<uintptr_t>(this) + 0xC8);
 	}
 
+    vec3 get_position()
+    {
+        return this->get_primitive()->get_body()->get_position();
+    }
+
+    RBXInstance* get_character()
+    {
+        return *(RBXInstance**)(reinterpret_cast<uintptr_t>(this) + 0x58);
+    }
+
 	std::string get_name()
 	{
 		return this->name;
 	}
+
+    bool CheckForParent(uintptr_t Parent)
+    {
+        if (!this || reinterpret_cast<uintptr_t>(this) == 0xF)
+        {
+            return false;
+        }
+
+        if (!this->Parent || reinterpret_cast<uintptr_t>(this->Parent) == 0xF)
+        {
+            return false;
+        }
+        //std::cout << "Checking if Parent is DataModel!" << std::endl;
+        if (this->Parent->name == "Game" || this->Parent->name == "game")
+        {
+            //std::cout << "Parent == DataModel" << std::endl;
+            return false;
+        }
+        //std::cout << "Checking if Parent == Parent" << std::endl;
+        if (reinterpret_cast<uintptr_t>(this->Parent) != Parent)
+        {
+            //std::cout << "Parent != Parent" << std::endl;
+            return this->Parent->CheckForParent(Parent);
+        }
+        else
+        {
+            //std::cout << "Parent == Parent" << std::endl;
+            return true;
+        }
+    }
 };
 
 class RBXCharacter {

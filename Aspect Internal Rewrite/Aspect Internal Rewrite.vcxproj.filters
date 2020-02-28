@@ -140,5 +140,12 @@
     <ClInclude Include="src\lua\hook_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="libs\detours\detours.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="libs\detours\detours64.lib" />
+    <Library Include="libs\detours\detours.lib" />
   </ItemGroup>
 </Project>

@@ -122,6 +122,8 @@ void Config::Serialize(json& root)
 
 	esp["m_MaxDistance"] = this->esp.m_MaxDistance;
 
+	//esp["m_ShowInventory"] = this->esp.m_ShowInventory;
+
 	this->esp.c_TargetDistance.Serialize(esp["c_TargetDistance"]);
 	this->esp.c_TargetName.Serialize(esp["c_TargetName"]);
 	this->esp.c_TargetLine.Serialize(esp["c_TargetLine"]);
@@ -183,6 +185,8 @@ void Config::Deserialize(json& root)
 	this->esp.m_Box = esp["m_Box"].get<bool>();
 
 	this->esp.m_MaxDistance = esp["m_MaxDistance"].get<int>();
+
+	//this->esp.m_ShowInventory = esp["m_ShowInventory"].get<bool>();
 
 	this->esp.c_TargetDistance.Deserialize(esp["c_TargetDistance"]);
 	this->esp.c_TargetName.Deserialize(esp["c_TargetName"]);

@@ -145,6 +145,14 @@ public:
         } m_Elevator;
 
 		struct {
+			bool m_Enabled = true;
+			int m_Speed = 0;
+
+			int m_Increase = 107;
+			int m_Decrease = 109;
+		} m_WalkSpeed;
+
+		struct {
 			bool m_Enabled = false;
 			int State = 8;
 		} m_ChangeState;

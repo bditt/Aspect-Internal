@@ -1,7 +1,25 @@
 #pragma once
 
 struct vec2 {
-    float x, y;
+    union {
+        float data[2];
+        struct {
+            float x;
+            float y;
+        };
+    };
+
+    vec2()
+    {
+        x = 0;
+        y = 0;
+    }
+
+    vec2(float ax, float ay)
+    {
+        x = ax;
+        y = ay;
+    }
 };
 
 struct vec4 {

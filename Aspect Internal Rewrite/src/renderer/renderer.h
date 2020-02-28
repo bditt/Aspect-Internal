@@ -1,8 +1,14 @@
 #pragma once
 #ifndef RENDERER_H
 #define RENDERER_H
-
+#include <detours/detours.h>
 #include "imgui/custom/custom.h"
+
+#ifdef _WIN64
+#pragma comment(lib,"detours64")
+#else
+#pragma comment(lib,"detours")
+#endif
 
 struct input_t
 {
