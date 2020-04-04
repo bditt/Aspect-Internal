@@ -40,42 +40,42 @@ public:
 
     vec3* get_position_ptr()
     {
-        return (vec3*)(reinterpret_cast<uintptr_t>(this) + 0xD4);
+        return (vec3*)(reinterpret_cast<uintptr_t>(this) + 0xCC);
     }
 
     void set_pos_x(float x)
     {
-        *(float*)(reinterpret_cast<uintptr_t>(this) + 0xD4) = x;
+        *(float*)(reinterpret_cast<uintptr_t>(this) + 0xCC) = x;
     }
 
     void set_pos_y(float y)
     {
-        *(float*)(reinterpret_cast<uintptr_t>(this) + 0xD8) = y;
+        *(float*)(reinterpret_cast<uintptr_t>(this) + 0xD0) = y;
     }
 
     void set_pos_z(float z)
     {
-        *(float*)(reinterpret_cast<uintptr_t>(this) + 0xDC) = z;
+        *(float*)(reinterpret_cast<uintptr_t>(this) + 0xD4) = z;
     }
 
     float get_pos_x()
     {
-        return *(float*)(reinterpret_cast<uintptr_t>(this) + 0xD4);
+        return *(float*)(reinterpret_cast<uintptr_t>(this) + 0xCC);
     }
 
     float get_pos_y()
     {
-        return *(float*)(reinterpret_cast<uintptr_t>(this) + 0xD8);
+        return *(float*)(reinterpret_cast<uintptr_t>(this) + 0xD0);
     }
 
     float get_pos_z()
     {
-        return *(float*)(reinterpret_cast<uintptr_t>(this) + 0xDC);
+        return *(float*)(reinterpret_cast<uintptr_t>(this) + 0xD4);
     }
 
     vec3 get_velocity() { return *(this->get_velocity_ptr()); }
 
-    vec3* get_velocity_ptr() { return (vec3*)(this + 0xe0); }
+    vec3* get_velocity_ptr() { return (vec3*)(this + 0xE0); }
 };
 
 class RBXPrimitive {
@@ -112,7 +112,7 @@ public:
     /* 0x34 */
 	class RBXInstance* Parent;
 	/* 0x38 */
-    char pad_0034[0x60];
+    char pad_0034[0x68];
     /* 0x98 */
     class RBXPrimitive* primitive; // 0x4
     /* 0x9c */
@@ -162,7 +162,7 @@ public:
 
     RBXPrimitive* get_primitive()
     {
-        return *(RBXPrimitive**)(reinterpret_cast<uintptr_t>(this) + 0x98);
+        return *(RBXPrimitive**)(reinterpret_cast<uintptr_t>(this) + 0xA0);
     }
 
 

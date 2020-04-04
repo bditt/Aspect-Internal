@@ -68,7 +68,7 @@ public:
 		bool m_TeamCheck = true;
 		bool m_HentaiESP = false;
 		bool m_ShowScreenCords = false;
-		bool m_ShowInventory = true;
+		bool m_ShowInventory = false;
 		bool m_ShowInventory_Filter_Parts = true;
 		bool m_ShowDebugInfo = false;
 		bool m_LabelAllParts = false;
