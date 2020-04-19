@@ -67,7 +67,7 @@ public:
 		printf("LocalPlayer Humanoid: 0x%p\n", reinterpret_cast<uintptr_t>(players->get_local_player()->character->find_class("Humanoid")));
         uintptr_t render_view = *(uintptr_t*)(*(uintptr_t*)(reinterpret_cast<uintptr_t>(data_model) + 0x70) + 0x1C);
 		uintptr_t visual_engine = *(uintptr_t*)(render_view + 0x8);
-        view_matrix = (ViewMatrix_t*)(visual_engine + 0x10C);
+        view_matrix = (ViewMatrix_t*)(visual_engine + 0x14C);
         printf("0x%p, 0x%p, 0x%p\n", render_view, visual_engine, view_matrix);
 		//std::cout << "Local WalkSpeed = " << players->get_local_player()->character->find_class("Humanoid")->GetWalkSpeed() << std::endl;
 		//std::cout << "Setting up Aspect Lua." << std::endl;

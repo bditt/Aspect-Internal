@@ -83,10 +83,10 @@ Config config{ "Aspect" };
 unsigned long __stdcall main(LPVOID)
 {
 	/* Console */
-	//DWORD dummy;
-	//VirtualProtect((PVOID)&FreeConsole, 1, PAGE_EXECUTE_READWRITE, &dummy);
-	//*(BYTE*)(&FreeConsole) = 0xC3;
-	//Console("Aspect Internal");
+	DWORD dummy;
+	VirtualProtect((PVOID)&FreeConsole, 1, PAGE_EXECUTE_READWRITE, &dummy);
+	*(BYTE*)(&FreeConsole) = 0xC3;
+	Console("Aspect Internal");
     /* Disable crash reports */
 	std::cout << "Enabling Anti Ban!" << std::endl;
     using RtlSetUnhandledExceptionFilterFn = std::decay_t<decltype(SetUnhandledExceptionFilter)>;
